@@ -1,0 +1,61 @@
+%tr
+  %td Item ID
+  %td
+    = item.id
+%tr
+  %td Order Number
+  %td
+    = @order.number
+%tr
+  %td Customer Provided Note
+  %td
+    = @order.note
+%tr
+  %td Order Comment
+  %td
+    = @order.comment
+%tr
+  %td Order Item Comment
+  %td
+    = item.comment_field
+%tr
+  %td Category Total
+  %td
+    = item.items_with_same_category.count
+%tr
+  %td Category Item
+  %td
+    = item.items_with_same_category.index(item) + 1
+%tr
+  %td Remake
+  %td
+    = item.remake? ? 'Yes' : 'No'
+%tr
+  %td Order Location
+  %td
+    = item.sales_location_name
+%tr
+  %td Category
+  %td
+    = item.product_category
+%tr
+  %td Product Name
+  %td
+    = item.product_title
+%tr
+  %td Product SKU
+  %td
+    = item.product_sku
+%tr
+  %td Product attribute - Fabric Code
+  %td
+    = item.fabric_code_value
+%tr
+  %td Manufacturer Fabric Code
+  %td
+    = item.fabric&.manufacturer_fabric_code
+%tr
+  %td Manufacturer
+  %td
+    = item.manufacturer
+= render 'orders/copy_table/meta_values', item: item

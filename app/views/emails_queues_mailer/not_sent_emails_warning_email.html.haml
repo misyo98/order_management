@@ -1,0 +1,9 @@
+%h1 Some emails were not sent!
+
+%p Informing you that listed emails were not sent:
+%ul
+  - @not_sent_emails.each do |email|
+    %li
+      = "ID #{email.id} - #{email.recipient&.full_name}"
+
+%p Please try manually triggering them or contact technical support to resolve the issue.

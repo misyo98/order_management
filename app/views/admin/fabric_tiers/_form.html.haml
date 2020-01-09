@@ -1,0 +1,26 @@
+= form_for @fabric_tier, id: 'fabric_tier_form' do |f|
+  #fabric_errors.hidden
+  %fieldset.inputs
+    %ol
+      %li
+        %label
+          Title
+        = f.text_field :title, class: 'form-control'
+
+  %fieldset.inputs
+    %ol
+      %li
+        %label
+          Order
+        = f.number_field :order, class: 'form-control'
+
+    %h3.tier-categories-separator Fabric Tier Categories
+
+    %div.col-lg-3#fabric_tier_categories{ 'data-id': f.object.id }
+      = f.fields_for :fabric_tier_categories do |tier_category|
+        = render 'fabric_tiers/fabric_tier_category_fields', f: tier_category
+      %br
+      .links
+        = link_to_add_association 'Add Fabric Tier Category', f, :fabric_tier_categories, class: 'btn btn-success col-lg-6 col-lg-offset-8'
+  %br
+  = f.submit 'Submit', class: 'btn btn-primary col-lg-4 col-lg-offset-1', data: { 'disable-with' => 'Processing...' }

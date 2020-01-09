@@ -1,0 +1,10 @@
+alteraion_images = "<%= j render 'alteration_images/index.html.haml', images: @images %>"
+
+vex.open({
+  content: alteraion_images,
+  unsafeContent: '',
+  showCloseButton: true,
+  escapeButtonCloses: true,
+  overlayClosesOnClick: true,
+  appendLocation: 'body',
+});

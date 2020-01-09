@@ -1,0 +1,41 @@
+= form_for @fabric_tier_category, class: 'form-inline' do |f|
+  %fieldset.inputs
+    %ol
+      %li
+        %label
+          Customization Category
+        = f.select :fabric_category_id, FabricCategory.pluck(:title, :id), include_blank: true
+
+  %fieldset.inputs
+    %ol
+      %li
+        %label
+          Fabric Tier
+        = f.select :fabric_tier_id, FabricTier.pluck(:title, :id), include_blank: true
+        .text-muted
+          Note: Change this only if you need to move Tier Category to another Fabric Tier
+          with proceding deletion of already existing Tier Category for corresponding Fabric Category of destinated Fabric Tier.
+
+      .form-group
+        - if @fabric_tier_category.price
+          - @fabric_tier_category.price.each do |currency, value|
+            %li
+              .price
+                %table
+                  %tr
+                    %td
+                      %label
+                        Currency
+                      = text_field_tag 'price_array[][currency]', currency, id: 'fabric_currency_field', class: 'form-control mb-2 mr-sm-2', placeholder: 'Currency', size: 35
+                    %td
+                      %label
+                        Value
+                      = text_field_tag 'price_array[][value]', value, class: 'form-control mb-2 mr-sm-2', placeholder: 'Value', size: 35
+                %br
+                = button_tag 'Remove currency', id: 'remove_currency_button', class: 'btn btn-danger'
+                %br
+
+      %li.fabric-prices
+      = button_tag 'Add currency', id: 'add_currency_button', class: 'btn btn-success'
+
+  = f.submit "Submit", class: 'btn btn-primary', data: { 'disable-with' => 'Processing...' }

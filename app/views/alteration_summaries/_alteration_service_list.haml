@@ -1,0 +1,16 @@
+%table.table
+  %thead
+    %tr
+      %th Alteration Service
+      %th Cost
+  %tbody
+    - services.each do |id, items|
+      %tr
+        %th= categories.find(id).name
+        %th
+      - items.each do |service|
+        %tr
+          %td= service.formatted_name
+          %td
+            - tailor = summary.alteration_tailors.first.decorate
+            = service.formatted_price_field(tailor)

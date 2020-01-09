@@ -1,0 +1,20 @@
+- profile_category = @profile_categories[category.id]
+- with_fitting_garment = @fits[category.id]
+- selected_garment_fit_ids = profile_category&.fitting_garment&.fitting_garment_measurement_ids || []
+.category-table{ id: "category-table-#{category.order}", data: { id: category.id, status: profile_category&.status } }
+  .table
+    %table.table.table-bordered.table-highlight.table-hover.auto-width
+      %thead.thead-inverse
+      - MeasurementDecorator.resolve_headers(review: @review, category: category).each do |header|
+        %th{ id: header.parameterize.underscore, class: table_classes(header: header, with_fitting_garment: with_fitting_garment) }
+          - if header == 'Fitting Garment'
+            = select_tag "fitting_garments[#{category.id}]", options_for_select(fitting_garment_collection(category.id), profile_category&.fitting_garment_id), prompt: 'Fitting Garment', class: 'fitting-garment-selector', disabled: @review
+          - else
+            = header
+      %tbody
+        = hidden_field_tag "#{category.name}", category.id
+        = fields_for @profile do |f|
+          = f.fields_for :measurements, @profile.measurements.select { |measurement| measurement.category.id == category.id }.sort_by { |measurement| measurement.category_param.order} do |measurement|
+            = render partial: measurement_partial(measurement.object.category_param_id), locals: { f: measurement, with_fitting_garment: with_fitting_garment, selected_garment_fit_ids: selected_garment_fit_ids }
+        %div{ style: 'margin-bottom: 15px;' }
+          = render partial: 'profile_comments/category_comment', locals: { category: category }

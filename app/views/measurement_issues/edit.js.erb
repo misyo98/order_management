@@ -1,0 +1,11 @@
+var target = $('.edit-issue-link[data-issue-id=' + "<%= j raw @measurement_issue.id %>" +']')
+form = "<%= j render '/measurement_issues/form', issueable: @issueable, measurement_issue: @measurement_issue %>"
+
+target.popover({
+  placement: 'bottom',
+  title: 'Edit Issue <a href="javascript:;" class="close">&times;</a>',
+  html: true,
+  content: form,
+  trigger: 'manual'
+});
+target.popover('show');

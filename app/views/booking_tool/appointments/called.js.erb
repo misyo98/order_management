@@ -1,0 +1,5 @@
+<% appointment = BookingTool::AppointmentDecorator.decorate(@appointment)%>
+appt_id = "<%= j raw appointment.id %>"
+call_count_with_date = "<%= j appointment.call_count_with_date %>"
+
+$('#ops-' + appt_id).find('.call-count').html(call_count_with_date)

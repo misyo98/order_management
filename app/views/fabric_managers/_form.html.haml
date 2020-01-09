@@ -1,0 +1,12 @@
+= form_tag fabric_managers_path(q: params[:q]), method: :post, remote: true, class: 'form-inline' do
+  = text_field_tag 'fabric_manager[manufacturer_fabric_code]', nil, class: 'form-control mb-2 mr-sm-2', autocomplete: false,
+    autocomplete: :off, placeholder: 'Manufacturer Fabric Code', size: 50
+
+  = select_tag 'fabric_manager[status]', options_for_select(FabricManager::STATUSES.map { |key, value| [value, key] }),
+    id: 'fabric_manager_status', class: 'selectpicker'
+
+  = text_field_tag 'fabric_manager[estimated_restock_date]', nil, placeholder: 'Leave empty if Restock Date is unknown',
+    autocomplete: :off, id: 'fabric_manager_estimated_restock_date', class: 'form-control datepicker', size: 40
+
+  = button_tag 'Add to list', type: :submit, id: 'submit_fabric_manager', class: 'btn btn-primary'
+%br

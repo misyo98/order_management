@@ -1,0 +1,18 @@
+- if category_id.in? f.object.categories.map(&:category_id)
+  .category-status.hidden{ id: "profile-category-#{category_id}"}
+    = render 'profile/edit/category_status', f: f, category_id: category_id
+
+.table.measurement-table{ data: { 'alteration-form' => 1 }, id: "measurement-table-#{category_id}"}
+  %i.btn.btn-primary.show_body_measurements Show body
+  %i.btn.btn-primary.show_validations Show validations
+  %br
+  %br
+  %table.table.table-bordered.table-highlight.table-hover
+    %thead.thead-inverse
+    - @profile.edit_headers(category: category).each do |header|
+      = render partial: 'profile/table_header', locals: { header: header }
+    %tbody
+      = f.fields_for :measurements, f.object.category_measurements(category_id: category_id) do |measurement|
+        = render partial: measurement.object.partial, locals: { f: measurement }
+
+%div{ id: "info-box-#{category_id}" }

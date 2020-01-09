@@ -1,0 +1,12 @@
+= form_tag reparse_order_items_line_items_path, method: :patch, class: 'formtastic active_admin_import_model' do
+  %fieldset.inputs
+    %ol
+      %li.file.input.optional
+        %label.label{ for: "order_id" }
+          Order ID
+        = number_field_tag :order_id
+
+  %fieldset.actions
+    %ol
+      %li.action.input_action
+        = submit_tag 'Reparse existing Order', class: 'btn btn-primary', data: { 'disable-with' => 'Processing...' }

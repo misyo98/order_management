@@ -1,0 +1,13 @@
+.panel_contents
+  = search_form_for(@q, url: issues_path, method: :get, id: "q_search", class: "filter_form") do |f|
+    %span.filter-row
+      = f.label :customer_id, 'Customer ID'
+      = f.search_field :measurement_profile_customer_id_eq
+    %span.filter-row
+      = f.label :customer_name, 'Customer Name'
+      = f.search_field :measurement_profile_customer_first_name_or_measurement_profile_customer_last_name_cont
+    %span.filter-row
+      = f.label :customer_id, 'Outfitter'
+      = f.search_field :measurement_profile_categories_author_first_name_or_measurement_profile_categories_author_last_name_cont
+
+    = f.submit 'Filter'

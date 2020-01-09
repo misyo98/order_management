@@ -1,0 +1,25 @@
+.modal.fade{ id: "callback-modal", tabindex: "-1", role: "dialog", 'aria-hidden' => "true" }
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button{ type: "button", class: "close", data: { dismiss: "modal" } }
+          %span{ 'aria-hidden' => "true" } &times;
+          %span{ class: "sr-only" } Close
+
+      = form_tag update_callback_date_booking_tool_appointment_path(appointment_id), method: :patch, format: :js, remote: true, authenticity_token: true do
+        .modal-body
+          %h2.text-center Select callback date
+          %br
+          #appointment-errors
+          %br
+            .form-group.row
+              %label.col-sm-2.col-form-label
+                Callback Date:
+              .col-sm-4
+                = text_field_tag :callback_date, nil, placeholder: 'Callback Date', autocomplete: :off,
+                  data: { provide: 'datepicker', 'date-format': 'yyyy-mm-dd' }
+
+        .modal-footer
+          %button{ class: 'btn btn-default', data: { dismiss: 'modal' } }
+            Close
+          = submit_tag 'Call later', class: 'btn btn-default'

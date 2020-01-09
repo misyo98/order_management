@@ -1,0 +1,17 @@
+<% if @to_be_fixed_profile_categories.any? %>
+  profile_list = "<%= j render 'admin/user/profile_list', profile_categories: @to_be_fixed_profile_categories %>"
+
+  $('#current_user').popover({
+    placement: 'bottom',
+    title: 'Warning <a href="javascript:;" class="close">&times;</a>',
+    html: true,
+    content: profile_list,
+    trigger: 'manual'
+  });
+
+  $('#current_user').popover('show');
+
+  $('.close').on('click', function(e) {
+    $(this).closest('.popover').popover('hide');
+  });
+<% end %>

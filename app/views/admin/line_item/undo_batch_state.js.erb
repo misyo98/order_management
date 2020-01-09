@@ -1,0 +1,23 @@
+message = "<%= j @response_object.message %>"
+html = '<div class="flash flash_notice">' + message + '</div>'
+
+<% @response_object.items.each do |item| %>
+  <% item = item.decorate %>
+  status_col_html = "<%= j render 'admin/line_item/columns/status_col', item: item %>"
+  required_action_col_html = "<%= j render 'admin/line_item/columns/required_action_col', item: item %>"
+  actions_col_html = "<%= j render 'admin/line_item/columns/actions_col', item: item %>"
+  refunded_amount_col_html = "<%= j render 'admin/line_item/columns/refunded_amount_col', item: item %>"
+
+  id = "<%= item.id.to_s %>"
+  target_id = '#line_item_' + id
+
+  $(target_id).find('td.col-status').html(status_col_html)
+  $(target_id).find('td.col-required_action').html(required_action_col_html)
+  $(target_id).find('td.col-actions').html(actions_col_html)
+  $(target_id).find('td.col-refunded_amount').html(refunded_amount_col_html)
+<% end %>
+
+$('.flashes').html(html)
+$('.collection_selection').attr('checked', false)
+$('.batch-state-trigger').remove()
+$.purrSuccess()

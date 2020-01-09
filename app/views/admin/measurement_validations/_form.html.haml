@@ -1,0 +1,149 @@
+- grouped_dropdown_value_opts = form_grouped_dropdown_opts(category_param_values, category_params).compact
+#accord.accordion
+  .card
+    #headingOne.card-header
+      %h2
+        %button.btn.btn-default{'data-target' => '#measurement-aliases', 'data-toggle' => 'collapse', type: 'button'}
+          Formatted Measurements
+          %span.caret
+    #measurement-aliases.collapse{'aria-labelledby' => 'accord', 'data-parent' => '#accord'}
+      .card-body
+        .row
+          - category_params.group_by(&:category_id).each do |category_id, params|
+            .col.col-sm-3
+              - category_name = categories.find { |c| c.id == category_id }.name
+              %h3
+                = category_name
+              - params.each do |param|
+                %li
+                  = "{{#{param.category.parameterized_name}.#{param.param.parameterized_name}}}"
+  .card
+    #headingTwo.card-header
+      %h2
+        %button.btn.btn-default{'data-target' => '#measurement-value-aliases', 'data-toggle' => 'collapse', type: 'button'}
+          Formatted Dropdown Values
+          %span.caret
+    #measurement-value-aliases.collapse{'aria-labelledby' => 'accord', 'data-parent' => '#accord'}
+      .card-body
+        .row
+          - values.each do |value|
+            .col.col-sm-3
+              %li
+                = "'#{value.parameterized_name}'"
+  .card
+    #headingThree.card-header
+      %h2
+        %button.btn.btn-default{'data-target' => '#measurement-validation-examples', 'data-toggle' => 'collapse', type: 'button'}
+          Examples and explanations
+          %span.caret
+    #measurement-validation-examples.collapse{'aria-labelledby' => 'accord', 'data-parent' => '#accord'}
+      .card-body
+        = render 'admin/measurement_validations/examples'
+%hr
+= form_for [category_param, measurement_validation] do |f|
+  = render 'admin/measurement_validations/form_errors', measurement_validation: measurement_validation
+  .form-row
+    .form-group.col-md-2
+      = f.label 'Left operand', class: 'col-sm col-form-label-sm'
+      = f.text_field :left_operand, { class: 'form-control' }
+      %small.form-text.text-muted
+        Must evaluate to number! Can be either {{value}} or number
+    .form-group.col-md-2
+      = f.label 'Comparison operator', class: 'col-sm col-form-label-sm'
+      = f.text_field :comparison_operator, { class: 'form-control' }
+      %small.form-text.text-muted
+        Can be one of: >, <, ==, !=, >=, <=
+    .form-group.col-md-8
+      = f.label 'Expression', class: 'col-sm col-form-label-sm'
+      = f.text_area :original_expression, { class: 'form-control' }
+      %small.form-text.text-muted
+        Must evaluate to number! Example: ({{jacket.chest.final_garment}} + {{jacket.neck.value}}) - 5
+  .form-row
+    .form-group.col-md-12
+      %label.col-sm.col-form-label-sm AND(&&) Condition
+      = f.text_area :original_and_condition, { class: 'form-control' }
+      %small.form-text.text-muted
+        Must evaluate to true or false! Example: {{body_shape_postures.square_back_neck.body}} == 'yes'
+  .form-row
+    .form-group.col-md-12
+      = f.label 'Error message', class: 'col-sm col-form-label-sm'
+      = f.text_area :error_message, { class: 'form-control' }
+      %small.form-text.text-muted
+        Free text field with ability to use {{expression_result}} which will evaluate to dynamic result of the expression.
+        Example: Can't be smaller than {{expression_result}}
+  .form-row
+    .form-group.col-md-12
+      = f.label 'Comment', class: 'col-sm col-form-label-sm'
+      %label.col-sm.col-form-label-sm
+      = f.text_area :comment, { class: 'form-control' }
+  .form-row
+    .form-group.col-md-12
+      = f.label 'Restrict for fits:', class: 'col-sm col-form-label-sm'
+      %label.col-sm.col-form-label-sm
+      = f.select :fits, Fit.fits.map { |fit, enum| [fit.humanize, fit] }, { }, class: 'selectpicker', multiple: true
+  .form-row
+    .form-group.col-md-12
+      %h3 Extra Parameters
+    = f.fields_for :validation_parameters do |parameter|
+      = render 'admin/measurement_validations/validation_parameter_fields', f: parameter
+    .links.form-group.col-md-12
+      = link_to_add_association('Add parameter', f, :validation_parameters,
+          partial: 'admin/measurement_validations/validation_parameter_fields',
+          class: 'btn btn-primary')
+  .form-row
+    .col-lg-4
+      %h3 Add Fits For Test Validation
+    .col-lg-12
+      .row
+      .row
+        .col-lg-12
+          #fit-fields
+            = fields_for :fits do
+              = render 'admin/measurement_validations/fit_fields', f: f, categories: categories
+            .links.form-group.col-auto
+              = link_to_add_association('Add fit', f, :validation_parameters,
+                  partial: 'admin/measurement_validations/fit_fields',
+                  force_non_association_create: true,
+                  'data-association-insertion-node': '#fit-fields',
+                  'data-association-insertion-method': 'prepend',
+                  class: 'btn btn-primary',
+                  render_options: { locals: { categories: categories }})
+      .col-md-2
+  .form-row
+    .col-lg-4
+      %h3 Add Measurements For Test Validation
+    .col-lg-12
+      .row
+      .row
+        .col-lg-12
+          .thumbnail.color-light-grey
+            #measurement-fields
+              = fields_for :measurements do
+                = render 'admin/measurement_validations/measurement_fields', category_params: category_params, f: f, grouped_dropdown_value_opts: grouped_dropdown_value_opts, category_param: category_param
+              .links.form-group.col-auto
+                = link_to_add_association('Add measurement', f, :validation_parameters,
+                    partial: 'admin/measurement_validations/measurement_fields',
+                    force_non_association_create: true,
+                    'data-association-insertion-node': '#measurement-fields',
+                    'data-association-insertion-method': 'prepend',
+                    class: 'btn btn-primary',
+                    render_options: { locals: { category_params: category_params, grouped_dropdown_value_opts: grouped_dropdown_value_opts, category_param: nil }})
+      .col-md-2
+  .form-row
+    .form-group.col-md-12
+      .btn-group.btn-group-md
+        = f.hidden_field :category_param_id
+        = f.hidden_field :id
+        = f.submit 'Run test', type: :button, class: 'btn btn-warning', id: 'run-test-measurement-validation', data: { 'category-param-id' => category_param.id }
+        = f.submit 'Save validation rule', class: 'btn btn-success'
+
+.clearfix
+%hr
+%h3 Validation Process Logs:
+.bs-callout.bs-callout-warning
+  .content
+    %ul.list-unstyled#validation-result-container
+      %li
+        .text-muted
+          After you fill out the form and add required for your validation measurements
+          you can test it. Test results will appear here.

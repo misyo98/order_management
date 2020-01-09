@@ -1,0 +1,58 @@
+%table.table.table-bordered.table-highlight.table-hover.auto-width
+  %th Category
+  %th Measurement
+  %th Body (inches)
+  %th Allowance
+  - category_with_fitting_garment = @customer.profile.categories.detect { |p_c| p_c.category_id == category.id && p_c.fitting_garment_id }
+  - if category_with_fitting_garment.present?
+    %th
+      = "Fitting garment:"
+      %br
+      = category_with_fitting_garment.fitting_garment.name
+    %th Changes +/-
+  %th Adjustments during check
+  %th Final Garment
+  %th Measurement Check
+  %th Issues
+  %h2= "#{category.name}"
+  - @customer.profile.measurements.select { |measurement| measurement.category.id == category.id }.each do |measurement|
+    %tr{ data: { 'category-param-id' => measurement.category_param_id } }
+      %td= measurement.category_name
+      %td= measurement.category_param.param.title
+      %td
+        = text_field_tag 'body', measurement.value, name: name(attribute: :value, id: measurement.category_param_id),
+          id: measurement_id(measurement.category_param), class: [input_classes(@checks[measurement.category_param.id]), 'form-control'],
+          step: :any, data: { category: measurement.category_param.category_id }, readonly: true
+      %td
+        = text_field_tag 'allowance', measurement.allowance, name: name(attribute: :allowance, id: measurement.category_param_id), step: :any,
+          data: allowances(measurement.category_param&.allowance), id: allowance_id(measurement.category_param), class: 'form-control', readonly: true
+      - if category_with_fitting_garment.present?
+        %td
+          = text_field_tag 'fitting_garment_value', measurement.fitting_garment_value,
+            id: "fitting_garment_value_#{category_to_id(measurement.category_param)}_#{param_to_id(measurement.category_param)}",
+            class: [input_classes(@checks[measurement.category_param.id]), 'form-control'],
+            step: :any, data: { category: measurement.category_param.category_id }, readonly: true
+        %td
+          = text_field_tag 'fitting_garment_changes', measurement.fitting_garment_changes,
+            id: "fitting_garment_changes_#{category_to_id(measurement.category_param)}_#{param_to_id(measurement.category_param)}",
+            class: [input_classes(@checks[measurement.category_param.id]), 'form-control'],
+            step: :any, data: { category: measurement.category_param.category_id }, readonly: true
+      %td
+        = text_field_tag 'adjustment', measurement.adjustment,
+          name: name(attribute: :adjustment, id: measurement.adjustment), step: :any,
+          data: allowances(measurement.category_param&.allowance), id: allowance_id(measurement.category_param), class: 'form-control', readonly: true
+      %td
+        = text_field_tag 'final_garment', measurement.final_garment, name: name(attribute: :final_garment, id: measurement.category_param_id),
+          id: garment_id(measurement.category_param), class: 'form-control final-garments', step: :any,
+          data: { init_value: measurement.final_garment, category: measurement.category_param.category_id }, readonly: true
+      %td{ data: submission_check_html_data(measurement), class: check_classes(@checks[measurement.category_param_id]) }
+        = check_html(@checks[measurement.category_param_id])
+      %td
+        - if measurement.measurement_issues.any?
+          = render 'customers/see_submission/issues_list', issues: measurement.measurement_issues
+
+      = hidden_field_tag :category_param_id, measurement.category_param_id, name: name(attribute: :category_param_id, id: measurement.category_param_id)
+      = hidden_field_tag :category_param_value_id, measurement.category_param_value_id, name: name(attribute: :category_param_value_id, id: measurement.category_param_id)
+      = hidden_field_tag :id, measurement.id, name: name(attribute: :id, id: measurement.category_param_id)
+
+  = render 'customers/see_submission/comments', category: category

@@ -1,0 +1,31 @@
+content = "<%= j render 'show' %>"
+<% copy_button_needed = copy_button_needed?(@order, params[:scope]) %>
+
+<% if copy_button_needed %>
+  shared_copy_table = "<%= j render 'orders/copy_table/copy_table_shared' %>"
+<% end %>
+
+vex.open({
+  content: content,
+  unsafeContent: '',
+  showCloseButton: true,
+  escapeButtonCloses: true,
+  overlayClosesOnClick: true,
+  appendLocation: 'body',
+  // afterOpen: function($vexContent) {
+  //   $vexContent.parents('.vex.vex-theme-flat-attack').css('font-size', '1em');
+  // }
+});
+<% if copy_button_needed %>
+  <% @order.line_items.each do |item| %>
+    item_copy_table_info = "<%= j render 'orders/copy_table/copy_table_item_info', item: item %>"
+
+    $('td#copy-table-container-<%= raw item.id %>').prepend(shared_copy_table)
+    $('td#copy-table-container-<%= raw item.id %>').find('.copy-table').find('tbody').append(item_copy_table_info)
+  <% end %>
+
+  new Clipboard('.copy');
+
+<% end %>
+
+$('.best_in_place').best_in_place();

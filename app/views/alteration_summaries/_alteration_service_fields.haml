@@ -1,0 +1,14 @@
+%tr.nested-fields
+  %td
+    = f.hidden_field :category_id, { value: cat.id, id: 'service-category' }
+    = f.hidden_field :order, { value: 100 }
+    = f.hidden_field :custom, { value: true }
+    = f.hidden_field :author_id, { value: current_user.id, id: 'service-author' }
+    = f.select :name, [], {}, class: 'service-select', data: { 'category-id' => cat.id }
+  %td
+    = f.fields_for :alteration_service_tailors, f.object.alteration_service_tailors.build do |service_tailor_form|
+      = service_tailor_form.hidden_field :alteration_tailor_id, { value: @tailor.id, id: 'alteration-tailor-id' }
+      = service_tailor_form.number_field :price, { id: 'service-price' }
+  %td
+    = link_to 'Assign', '#', class: 'btn btn-success create-tailor-service'
+    = link_to 'Remove', '#', class: 'btn btn-danger remove-tailor-service'

@@ -1,0 +1,70 @@
+= render 'download_csv', url: generate_csv_booking_tool_appointments_path(scope: :dropped, q: dropped_params) if current_user.admin?
+%table.table
+  %thead
+    %tr
+      %th First Name
+      %th Last Name
+      - if can_see_email?
+        %th Email
+      %th Dropped Date
+      %th Booking Type
+      %th Phone
+      %th.appointment-order-comments
+        Order Comments
+      %th Location
+      %th Existing customer? (last purchase date)
+      %th Customer ID
+      %th Previous Order IDs
+      %th Callback Date
+      %th Required Action: "Call and try to book his appointment"
+      %th.appointment-comments
+        Appointment comments
+      %th Acquisition Channel
+      %th Call count(last call date)
+      %th Action buttons
+      %th History
+  %tbody
+    - appointments.each do |appointment|
+      - appointment = BookingTool::AppointmentDecorator.decorate(appointment, context: { sales_people: sales_people })
+      %tr{ id: "ops-#{appointment.id}" }
+        %td
+          = appointment.first_name
+        %td
+          = appointment.last_name
+        - if can_see_email?
+          %td
+            = appointment.email
+        %td
+          = appointment.maybe_dropped_dates
+        %td
+          = appointment.booking_type
+        %td
+          = appointment.phone
+        %td
+          = appointment.maybe_order_comment
+        %td
+          = appointment.city
+        %td
+          = appointment.existing_customer
+          = appointment.maybe_last_purchase_date
+        %td
+          = appointment.maybe_customer_link
+        %td
+          = appointment.previous_order_numbers
+        %td
+          = appointment.formatted_active_booking
+        %td{ class: "callback-date-#{appointment.id}" }
+          = appointment.callback_date
+        %td
+          = appointment.required_action
+        %td
+          = appointment.comment_field
+        %td
+          = appointment.maybe_acquisition_channel
+        %td.call-count
+          = appointment.call_count_with_date
+        %td
+          = appointment.dropped_action_links
+        %td
+          = appointment.maybe_booking_history_link
+%br

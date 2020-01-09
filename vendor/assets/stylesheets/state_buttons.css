@@ -1,0 +1,159 @@
+.border--navy, .state-button.send-delivery-appt-email, .state-button.login-acc {
+  border-color: #001F3F;
+  color: hsla(210, 100%, 75%, 1.0);
+  /*background-color: #001F3F;*/
+  font-weight:bold;
+}
+.border--blue, .state-button.send-delivery-appt-email, .state-button.completed {
+  border-color: #0074D9;
+  color: hsla(208, 100%, 85%, 1.0);
+  /*background-color: #0074D9;*/
+  font-weight:bold;
+}
+.border--aqua, .state-button.wait {
+  border-color: #7FDBFF;
+  color: hsla(197, 100%, 20%, 1.0);
+  /*background-color: #7FDBFF;*/
+  font-weight:bold;
+}
+.border--teal, .state-button.fabric-ordered, .state-button.book-delivery {
+  border-color: #39CCCC;
+  color: #111111;
+  /*background-color: #39CCCC;*/
+  font-weight:bold;
+}
+.border--olive, .state-button.fabric-received, .resend-delivery-email, .back-to-delivery-email-sent, .measured {
+  border-color: #3D9970;
+  color: hsla(153, 43%, 15%, 1.0);
+  /*background-color: #3D9970;*/
+  font-weight:bold;
+}
+.border--green, .state-button.item-submitted, .state-button.trigger-manufacturing, .remake-approved {
+  border-color: #2ECC40;
+  color: hsla(127, 63%, 15%, 1.0);
+  /*background-color: #2ECC40;*/
+  font-weight:bold;
+}
+.border--lawngreen, .state-button.fit-confirmed-completed {
+  border-color: #7CFC00;
+  color: #111111;
+  /*background-color: #2ECC40;*/
+  font-weight:bold;
+}
+.border--lime, .state-button.open-alteration-form, .state-button.prepare-shipment, .state-button.approve-changes {
+  border-color: #01FF70;
+  color: hsla(146, 100%, 20%, 1.0);
+  /*background-color: #01FF70; */
+  font-weight:bold;
+}
+.border--yellow, .state-button.delivery-arranged, .state-button.alteration-appointment-arranged,
+.state-button.wait-for-other-items-from-alteration, .state-button.create-acc, .state-button.hold {
+  border-color: #FFDC00;
+  color: hsla(52, 100%, 20%, 1.0);
+  /*background-color: #FFDC00;*/
+  font-weight:bold;
+}
+.border--orange, .state-button.open-alteration-form, .state-button.alteration-requested, .state-button.reschedule {
+  border-color: #FF851B;
+  color: hsla(28, 100%, 20%, 1.0);
+  /*background-color: #FF851B; */
+  font-weight:bold;
+}
+.border--red, .state-button.manufacturer-order-created, .state-button.remake-requested,
+.state-button.refund, .state-button.cancel, .state-button.delete, .state-button.copy,
+.state-button.delete-item {
+  border-color: #FF4136;
+  color: hsla(3, 100%, 25%, 1.0);
+  /*background-color: #FF4136;*/
+  font-weight:bold;
+}
+.border--fuchsia, .state-button.oos-resolved, .state-button.sent-to-alterations-tailor {
+  border-color: #F012BE;
+  color: hsla(314, 88%, 21%, 1.0);
+  /*background-color: #F012BE;*/
+  font-weight:bold;
+}
+.border--purple, .state-button.at-office, .state-button.back-from-alteration, .state-button.called, .state-button.shipped-fit-not-confirmed {
+  border-color: #B10DC9;
+  color: hsla(292, 88%, 82%, 1.0);
+  /*background-color: #B10DC9; */
+  font-weight:bold;
+}
+.border--maroon, .state-button.ship-items, .state-button.change-state {
+  border-color: #85144B;
+  color: hsla(331, 74%, 70%, 1.0);
+  /*background-color: #85144B;*/
+  font-weight:bold;
+}
+.border--gray, .state-button.remove {
+  border-color: #AAAAAA;
+  color: #111111;
+  /*background-color: #AAAAAA;*/
+  font-weight:bold;
+}
+.border--silver, .state-button.wait-for-other-items, .state-button.no-show {
+  border-color: #DDDDDD;
+  color: #111111;
+  /*background-color: #DDDDDD; */
+  font-weight:bold;
+}
+
+.state-button:hover {
+  color: #FF4500;
+}
+.delayed, .late-delivery {
+  .state-button:hover {
+    color: #ffffff;
+  }
+}
+
+.delayed, .late-delivery {
+  .state-button.ship-items, .state-button.open-alteration-form, .state-button.prepare-shipment, .state-button.change-state {
+    background-color: #85144B;
+  }
+  .state-button.send-delivery-appt-email, .state-button.login-acc {
+    background-color: #001F3F;
+  }
+  .state-button.send-delivery-appt-email, .state-button.completed {
+    background-color: #0074D9;
+  }
+  .state-button.wait {
+    background-color: #7FDBFF;
+  }
+  .state-button.fabric-ordered, .state-button.book-delivery {
+    background-color: #39CCCC;
+  }
+  .state-button.fabric-received, .state-button.resend-delivery-email {
+    background-color: #3D9970;
+  }
+  .state-button.item-submitted, .state-button.trigger-manufacturing, .state-button.remake-approved {
+    background-color: #2ECC40;
+  }
+  .state-button.fit-confirmed-completed {
+    background-color: #2ECC40;
+  }
+  .state-button.delivery-arranged, .state-button.alteration-appointment-arranged,
+  .state-button.wait-for-other-items-from-alteration, .state-button.no-show {
+    background-color: #FFDC00;
+  }
+  .state-button.open-alteration-form, .state-button.alteration-requested, .state-button.prepare-shipment,
+  .state-button.reschedule, .state-button.approve-changes {
+    background-color: #FF851B;
+  }
+  .state-button.manufacturer-order-created, .state-button.remake-requested, .state-button.refund,
+  .state-button.cancel, .state-button.delete-item {
+    background-color: #FF4136;
+  }
+  .state-button.oos-resolved, .state-button.sent-to-alterations-tailor {
+    background-color: #F012BE;
+  }
+  .state-button.at-office, .state-button.back-from-alteration, .state-button.called {
+    background-color: #B10DC9;
+  }
+  .state-button.wait-for-other-items {
+    background-color: #DDDDDD;
+  }
+  .state-button.remove {
+    background-color: #AAAAAA;
+  }
+}

@@ -1,0 +1,629 @@
+html {
+  -webkit-overflow-scrolling: touch;
+}
+html.not-scroll {
+  -webkit-overflow-scrolling: auto;
+}
+.col-measurement_status {
+  min-width: 200px;
+}
+.col-id {
+  min-width: 50px;
+}
+.col-status, .col-acquisition_channel_-_checkout {
+  min-width: 100px;
+}
+.col-status, .col-acquisition_channel {
+  min-width: 100px;
+}
+.col-order_number {
+  min-width: 75px;
+}
+.col-order_date,
+.col-last_email_sent_date,
+.col-delivery_appointment_date,
+.col-estimated_delivery_date,
+.col-occasion_date {
+  min-width: 70px;
+}
+.col-wc_status {
+  min-width: 70px;
+}
+.col-item_comment, .col-order_comment,
+.col-comment_-_sales_deduction,
+.col-comment_-_ops_deduction,
+.col-comment,
+.col-non-altered_items,
+.col-refund_reason {
+  min-width: 80px;
+}
+.col-first_name,
+.col-delivery_method_post_alteration {
+  min-width: 100px;
+}
+.col-last_name {
+  min-width: 70px;
+}
+.col-country {
+  min-width: 70px;
+}
+.col-email {
+  min-width: 70px;
+}
+.col-phone {
+  min-width: 120px;
+}
+.col-customer {
+  min-width: 70px;
+}
+.col-name {
+  min-width: 70px;
+}
+.col-date_sent_to_alterations_tailor {
+  min-width: 80px;
+}
+.col-quantity {
+  min-width: 70px;
+}
+.col-items_in_order {
+  min-width: 70px;
+}
+.col-currency {
+  min-width: 70px;
+}
+.col-list_price {
+  min-width: 70px;
+}
+.col-paid_price {
+  min-width: 70px;
+}
+.col-order_total {
+  min-width: 70px;
+}
+.col-sales_person,
+.col-deduction_sales_to_deduct_from,
+.col-deduction_ops_to_deduct_from,
+.col-sales_person_to_deduct_from,
+.col-ops_person_to_deduct_from,
+.col-fabric_brand {
+  min-width: 70px;
+}
+.col-location_of_sale {
+  min-width: 70px;
+}
+.col-category,
+.col-remake_category {
+  min-width: 70px;
+}
+.col-measurement_status {
+  min-width: 70px;
+}
+.col-fabric_code {
+  min-width: 70px;
+}
+.col-manufacturer_fabric_code {
+  min-width: 70px;
+}
+.col-fabric_type {
+  min-width: 70px;
+}
+.col-fabric_status {
+  min-width: 70px;
+}
+.col-fabric_ordered_date {
+  min-width: 70px;
+}
+.col-manufacturer_order_status {
+  min-width: 70px;
+}
+.col-manufacturer_order_number {
+  min-width: 70px;
+}
+.col-inbound_tracking_number {
+  min-width: 70px;
+}
+.col-inbound_shipped_date {
+  min-width: 70px;
+}
+.col-inbound_shipment_received_date {
+  min-width: 70px;
+}
+.col-further_order_items_in_progress,
+.col-urgent {
+  min-width: 70px;
+}
+.col-alteration_tailor {
+  min-width: 90px;
+}
+.col-courier_company {
+  min-width: 70px;
+}
+.col-outbound_tracking_number {
+  min-width: 70px;
+}
+.col-next_appointment {
+  min-width: 70px;
+}
+.col-remake {
+  min-width: 70px;
+}
+.col-shipping_company {
+  min-width: 70px;
+}
+.col-shipping_address_1 {
+  min-width: 70px;
+}
+.col-shipping_address_2 {
+  min-width: 70px;
+}
+.col-shipping_city {
+  min-width: 70px;
+}
+.col-shipping_state {
+  min-width: 90px;
+}
+.col-shipping_postcode {
+  min-width: 120px;
+}
+.col-shipping_first_name {
+  min-width: 70px;
+}
+.col-shipping_last_name {
+  min-width: 70px;
+}
+.col-shipping_country,
+.col-vat_export,
+.col-self_measured {
+  min-width: 70px;
+}
+.col-requested_completion_date,
+.col-garment_fit {
+  min-width: 70px;
+}
+.col-customer_type {
+  min-width: 70px;
+}
+
+#index_table_line_items tbody {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 450px;
+}
+#index_table_line_items thead,
+#index_table_line_items tbody {
+  display: block;
+}
+.col-id {
+  min-width: 61px;
+  width: 61px;
+}
+.col-status, .col-acquisition_channel_-_checkout {
+  min-width: 300px;
+  width: 300px;
+}
+.col-status, .col-acquisition_channel {
+  min-width: 300px;
+  width: 300px;
+}
+.col-required_action {
+  min-width: 250px;
+  width: 250px;
+}
+.col-order_number {
+  min-width: 87px;
+  width: 87px;
+}
+.col-order_date,
+.col-last_email_sent_date,
+.col-delivery_appointment_date,
+.col-estimated_delivery_date,
+.col-occasion_date {
+  min-width: 105px;
+  width: 105px;
+}
+.col-wc_status {
+  min-width: 90px;
+  width: 90px;
+}
+.col-item_comment, .col-order_comment,
+.col-comment_-_sales_deduction,
+.col-comment_-_ops_deduction,
+.col-comment,
+.col-non-altered_items,
+.col-customer_note_woocommerce,
+.col-refund_reason {
+  min-width: 230px;
+  width: 230px;
+}
+.col-coupons {
+  min-width: 230px;
+  width: 350px;
+}
+td.col.col-coupons {
+  min-width: 350px;
+}
+
+.col-first_name,
+.col-delivery_method_post_alteration {
+  min-width: 120px;
+  width: 120px;
+}
+.col-last_name {
+  min-width: 120px;
+  width: 120px;
+}
+.col-country,
+.col-urgent {
+  min-width: 76px;
+  width: 76px;
+}
+.col-email {
+   min-width: 300px;
+   width: 300px;
+}
+.col-phone {
+  min-width: 120px;
+  width: 120px;
+}
+.col-customer {
+  min-width: 86px;
+  width: 86px;
+}
+.col-name {
+  min-width: 180px;
+  width: 180px;
+}
+.col-quantity {
+  min-width: 81px;
+  width: 81px;
+}
+.col-items_in_order {
+  min-width: 85px;
+  width: 85px;
+}
+.col-currency {
+  min-width: 83px;
+  width: 83px;
+}
+.col-location_of_sale {
+  min-width: 120px;
+  width: 120px;
+}
+.col-date_sent_to_alterations_tailor {
+  min-width: 130px;
+  width: 130px;
+}
+.col-category,
+.col-remake_category {
+  min-width: 112px;
+  width: 112px;
+}
+.col-measurement_status {
+  min-width: 170px;
+  width: 170px;
+}
+.col-fabric_code {
+  min-width: 195px;
+  width: 195px;
+}
+.col-manufacturer_fabric_code {
+  min-width: 139px;
+  width: 139px;
+}
+.col-fabric_status {
+  min-width: 180px;
+  width: 180px;
+}
+.col-fabric_ordered_date {
+  min-width: 109px;
+  width: 109px;
+}
+.col-manufacturer_order_status {
+  min-width: 142px;
+  width: 142px;
+}
+.col-manufacturer_order_number {
+  min-width: 147px;
+  width: 147px;
+}
+.col-sales_person,
+.col-deduction_sales_to_deduct_from,
+.col-deduction_ops_to_deduct_from,
+.col-sales_person_to_deduct_from,
+.col-ops_person_to_deduct_from,
+.col-fabric_brand {
+  min-width: 134px;
+  width: 134px;
+}
+td.col.col-fabric_brand {
+  min-width: 134px;
+  width: 134px;
+  padding-left: 20px;
+}
+.col-inbound_tracking_number {
+  min-width: 200px;
+  width: 200px;
+}
+.col-inbound_shipped_date {
+  min-width: 121px;
+  width: 121px
+}
+.col-inbound_shipment_received_date {
+  min-width: 174px;
+  width: 174px;
+}
+.col-further_order_items_in_progress {
+  min-width: 172px;
+  width: 172px;
+}
+.col-alteration_tailor {
+  min-width: 110px;
+  width: 110px;
+}
+.col-courier_company {
+  min-width: 104px;
+  width: 104px;
+}
+.col-outbound_tracking_number {
+  min-width: 157px;
+  width: 157px;
+}
+.col-next_appointment {
+  min-width: 111px;
+  width: 111px;
+}
+.col-remake {
+  min-width: 81px;
+  width: 81px;
+}
+.col-shipping_company {
+  min-width: 150px;
+  width: 150px;
+}
+.col-shipping_address_2,
+.col-shipping_address_1 {
+  min-width: 162px;
+  width: 162px;
+}
+.col-shipping_city {
+    min-width: 120px;
+    width: 130px;
+}
+.col-shipping_state {
+  min-width: 120px;
+  width: 120px;
+}
+.col-shipping_postcode {
+  min-width: 120px;
+  width: 120px;
+}
+.col-shipping_first_name {
+  min-width: 126px;
+  width: 126px;
+}
+.col-shipping_last_name {
+  min-width: 130px;
+  width: 130px;
+}
+.col-actions {
+  min-width: 760px;
+}
+.col-fabric_type {
+  min-width: 82px;
+  width: 82px;
+}
+.col-requested_completion_date,
+.col-garment_fit {
+  min-width: 130px;
+  width: 130px;
+}
+.col-refunded_amount {
+  min-width: 90px;
+  width: 90px;
+}
+.col-shipping_country,
+.col-reminder_emails_on_off,
+.col-self_measured,
+.col-vat_export {
+  min-width: 85px;
+  width: 85px;
+}
+.col-canvas {
+  min-width: 72px;
+  width: 72px;
+}
+.col-suit_fitting {
+  min-width: 70px;
+  width: 70px;
+}
+.col-shirt_fit {
+  min-width: 70px;
+  width: 70px;
+}
+.col-to_be_shipped_date {
+  min-width: 110px;
+  width: 110px;
+}
+.col-order_total,
+.col-paid_price,
+.col-list_price {
+  min-width: 75px;
+  width: 75px;
+}
+.col-customer_type {
+  min-width: 70px;
+  width: 70px;
+}
+.col-manufacturer {
+  min-width: 100px;
+  width: 110px;
+}
+td.col.col-manufacturer {
+  min-width: 100px;
+  width: 110px;
+  padding-left: 30px;
+}
+th.col.col-manufacturer {
+  min-width: 100px;
+  width: 110px;
+}
+.col-fabric_tracking_number {
+  min-width: 250px;
+  width: 260px;
+}
+td.col.col-fabric_tracking_number {
+  min-width: 250px;
+  width: 260px;
+  padding-left: 35px;
+}
+th.col.col-fabric_tracking_number {
+  min-width: 225px;
+  width: 225px;
+  margin-left: 20px;
+}
+.col-alteration_costs {
+  min-width: 70px;
+  width: 80px;
+}
+td.col.col-alteration_costs {
+  min-width: 80px;
+  width: 80px;
+  padding-left: 20px;
+}
+th.col.col-alteration_costs {
+  min-width: 70px;
+  width: 80px;
+}
+.col-comment_for_tailor {
+  min-width: 160px;
+  width: 170px;
+}
+td.col.col-comment_for_tailor {
+  min-width: 180px;
+  width: 170px;
+  padding-left: 25px;
+}
+th.col.col-comment_for_tailor {
+  min-width: 160px;
+  width: 170px;
+}
+.col-meters_required {
+  min-width: 70px;
+  width: 80px;
+}
+td.col.col-meters_required {
+  min-width: 70px;
+  width: 80px;
+}
+th.col.col-meters_required {
+  min-width: 70px;
+  width: 80px;
+}
+.col-warning_extra_fabric {
+  min-width: 50px;
+  width: 60px;
+}
+td.col.col-warning_extra_fabric {
+  min-width: 50px;
+  width: 60px;
+  padding-left: 20px;
+  padding-right: 30px;
+}
+th.col.col-warning_extra_fabric {
+  min-width: 50px;
+  width: 60px;
+}
+.col.col-manufacturer_order_number_not_made {
+  min-width: 200px;
+  width: 210px;
+}
+td.col.col-manufacturer_order_number_not_made {
+  min-width: 200px;
+  width: 210px;
+  padding-left: 30px;
+}
+th.col.col-manufacturer_order_number_not_made {
+  min-width: 200px;
+  width: 210px;
+}
+.col-date_entered_state {
+  min-width: 100px;
+  width: 110px;
+}
+td.col.col-date_entered_state {
+  min-width: 100px;
+  width: 110px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+th.col.col-date_entered_state {
+  min-width: 100px;
+  width: 110px;
+}
+.col-fabric_ordered {
+  min-width: 70px;
+  width: 80px;
+  margin-right: 20px;
+}
+td.col.col-fabric_ordered {
+  min-width: 70px;
+  width: 80px;
+  padding-left: 10px;
+  padding-right: 30px;
+}
+th.col.col-fabric_ordered {
+  min-width: 70px;
+  width: 80px;
+}
+.col-tags {
+  min-width: 300px;
+  width: 300px;
+}
+td.col.col-tags {
+  min-width: 300px;
+  width: 300px;
+  padding-left: 10px;
+}
+th.col.col-tags {
+  min-width: 310px;
+  width: 310px;
+}
+.col-special_customizations {
+  min-width: 100px;
+  width: 100px;
+}
+td.col.col-special_customizations {
+  min-width: 100px;
+  width: 100px;
+  padding-left: 20px;
+}
+th.col.col-special_customizations {
+  min-width: 110px;
+  width: 110px;
+}
+.col-days_in_current_state {
+  min-width: 120px;
+  width: 120px;
+}
+td.col.col-days_in_current_state {
+  min-width: 120px;
+  width: 120px;
+  padding-left: 30px;
+}
+th.col.col-days_in_current_state {
+  min-width: 120px;
+  width: 120px;
+}
+.col-remind_to_get_measured {
+  min-width: 120px;
+  width: 120px;
+}
+td.col.col-remind_to_get_measured {
+  min-width: 120px;
+  width: 120px;
+  padding-left: 30px;
+}
+th.col.col-remind_to_get_measured {
+  min-width: 120px;
+  width: 120px;
+}

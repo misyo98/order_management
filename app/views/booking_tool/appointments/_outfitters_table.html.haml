@@ -1,0 +1,76 @@
+%table.table
+  %thead
+    %tr
+      %th First Name
+      %th Last Name
+      %th Phone
+      %th.appointment-order-comments
+        Order Comments 
+      %th Appointment date
+      %th Appointment time
+      %th Booking type
+      %th Existing customer? (last purchase date)
+      %th Customer ID
+      %th Previous Order IDs
+      %th Previous outfitter
+      %th Wedding Date
+      %th Purchased
+      %th Has Active Booking?
+      %th Reason for no purchase
+      %th Alternative purchase email
+      %th.appointment-comments
+        Appointment comments
+      %th Acquisition Channel
+      %th Action buttons
+      %th History
+  %tbody
+    - appointments.each do |appointment|
+      - appointment = BookingTool::AppointmentDecorator.decorate(appointment, context: { sales_people: sales_people })
+      %tr{ id: "outiftters-#{appointment.id}", class: appointment.maybe_outfitters_outdated_class, data: { appt_id: appointment.id } }
+        %td
+          = appointment.first_name
+        %td
+          = appointment.last_name
+        %td
+          = appointment.phone
+        %td
+          = appointment.maybe_order_comment
+        %td.app-day
+          = appointment.day
+        %td
+          = appointment.time
+        %td
+          = appointment.booking_type
+        %td
+          = appointment.existing_customer
+          = appointment.maybe_last_purchase_date
+        %td
+          = appointment.maybe_customer_link
+        %td
+          = appointment.previous_order_numbers
+        %td
+          = appointment.previous_outfitter
+        %td
+          = appointment.wedding_date_field
+        %td.purchase-field
+          = appointment.formatted_purchased
+        %td
+          = appointment.formatted_active_booking
+        %td
+          = appointment.resolve_no_purchase_reason_field
+        %td
+          - if appointment.needs_follow_up
+            = select_tag :customer_email, appointment.customer_email, { class:'form-control customer-select',
+                                                                        data: { api_url: load_customers_api_customers_path } }
+            = link_to 'javascript:;', class: 'remove-selected-email' do
+              %span Remove
+
+        %td
+          = appointment.comment_field
+        %td
+          = appointment.maybe_acquisition_channel
+        %td
+          = appointment.outfitter_action_links
+        %td
+          = appointment.maybe_booking_history_link
+%br

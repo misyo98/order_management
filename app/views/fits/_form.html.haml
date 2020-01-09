@@ -1,0 +1,4 @@
+= form_for @profile, url: fits_path(customer_id: @customer.id), method: :post, remote: true, html: { class: 'form-horizontal', id: 'fit-form' } do |f|
+  = hidden_field_tag :unchangeable_categories, unchangeable_categories(@profile).to_json
+  = f.fields_for :fits do |fit|
+    = render partial: '/fits/fit', locals: { f: fit }

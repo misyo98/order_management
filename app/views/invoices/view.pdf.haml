@@ -1,0 +1,69 @@
+- invoice = @invoice
+- decorated_summaries = []
+.container
+  %table.table.auto-width.table-no-borders
+    %tbody
+      %tr
+        %td
+          %b From
+        %td{colspan: 3}
+          = invoice.alteration_tailor.name
+        %td
+          %b Invoice Number
+        %td
+          = invoice.id
+      %tr
+      %tr
+        %td
+          %b To
+        %td{colspan: 3}
+          EDIT SUITS CO.
+        %td
+          %b Invoice Date
+        %td
+          = invoice.created_at&.to_s(:long)
+
+    %table.table.table-bordered.auto-width.default-table.nobreak.table-no-padding
+      %thead
+        %th.col-category Date Sent to Tailor
+        %th.col-category Date Back From Tailor
+        %th.col-category Date Service Added
+        %th.col-category Customer Name
+        %th.col-category Manufacturer Number
+        %th.col-category Altered Category
+        %th.col-category Alteration Service
+        %th.col-category Cost
+        %th.col-category Currency
+      %tbody
+        - invoice.alteration_summaries.each do |summary|
+          - decorated_summary = summary.decorate
+          - decorated_summaries << decorated_summary
+          %tr
+            %td
+              = decorated_summary.alteration_send_date
+            %td
+              = decorated_summary.alteration_back_date
+            %td
+              = decorated_summary.service_updated_at&.to_s(:long)
+            %td
+              = decorated_summary.customer_name
+            %td
+              = decorated_summary.manufacturer_code
+            %td
+              = decorated_summary.altered_categories_field
+            %td
+              = decorated_summary.alteration_service_names.html_safe
+            %td
+              = decorated_summary.amount
+            %td
+              = decorated_summary.currency
+    %table.table.auto-width.table-no-borders
+      %tbody
+        %tr
+          %td{colspan: 6}
+          %td
+            %b TOTAL
+          %td
+            = decorated_summaries.inject(0) { |sum, summary| sum += summary.amount; sum }
+          %td
+            = decorated_summaries.map(&:currency).uniq.join(', ')

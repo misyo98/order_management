@@ -1,0 +1,12 @@
+- if item.errors.any?
+  %span.error_text
+    = item.errors.full_messages.join(' ')
+.form-group
+  = label_tag 'Amount'
+  = number_field_tag(:amount, nil, class: ['form-control', item.errors.any? && 'error_field'], id: 'refund-amount', data: { url: update_refund_line_item_path(item), id: item.id })
+.form-group
+  = label_tag 'Refund Reason'
+  = select_tag :reason, options_for_select(RefundReason.pluck(:title)), id: 'refund-reason', class: ['form-control', item.errors.any? && 'error_field'], include_blank: true
+#refund-comment-group.form-group.hidden
+  = label_tag 'Other reason'
+  = text_field_tag :comment, nil, id: 'refund-comment', class: 'form-control'

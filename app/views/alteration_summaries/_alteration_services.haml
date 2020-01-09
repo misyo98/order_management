@@ -1,0 +1,36 @@
+- decorated_tailor = @tailor.decorate
+- summary_services = summary.alteration_summary_services.pluck(:alteration_service_id)
+#alteration-service-tailor-errors.bg-danger
+= form_for summary, url: { action: 'update_services' }, method: :patch, remote: true do |f|
+  %table.table
+    %thead
+      %tr
+        %th Alteration Service
+        %th= decorated_tailor.alteration_costs
+        %th
+    %tbody
+      - categories.each do |cat|
+        %tr
+          %th= cat.name
+          %th
+        - if services[cat.id]
+          - services[cat.id].each do |service|
+            %tr
+              %td= service.name
+              %td= service.price
+              %td= f.check_box_tag "alteration_summary[alteration_service_ids][]", service.id, summary_services.include?(service.id)
+        = f.fields_for :alteration_services, f.object.alteration_services.build do |service_form|
+          = render 'alteration_service_fields', { f: service_form, cat: cat }
+          %tr{ id: "new-service-#{cat.id}", align: 'right' }
+            %td{ colspan: 3 }
+              = link_to_add_association 'Add other service', f, :alteration_services,
+                render_options: { locals: { cat: cat } },
+                'data-association-insertion-method': 'before',
+                'data-association-insertion-node': "#new-service-#{cat.id}",
+                class: 'btn btn-success add-custom-alteration-service'
+  - if summary.similar_items_count > 1
+    .warning.text-center.alert.alert-warning
+      = "Because the same alteration is requested on #{summary.similar_items_count} items, |
+        the cost will automatically be multiplied by #{summary.similar_items_count}. |
+        Please do not add a new service for this." |
+  = f.submit 'Save'

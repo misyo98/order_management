@@ -1,0 +1,9 @@
+var issues_list = $('.issue-container[data-issueable-id=' + "<%= j raw @issueable.id %>" +']').find('.issues-list')
+var popover = $('.issue-container[data-issueable-id=' + "<%= j raw @issueable.id %>" +']').find('.add-issue-link')
+html = "<%= j render '/measurement_issues/issues_list', issues: @issueable.measurement_issues, issueable: @issueable %>"
+
+issues_list.html(html);
+
+$.measurement_issues.resolve_submit_buttons_state();
+
+popover.popover('hide');

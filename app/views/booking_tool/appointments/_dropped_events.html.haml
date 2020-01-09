@@ -1,0 +1,11 @@
+%table.table
+  %thead
+    %b
+      Customer dropped several times on this dates:
+    %tr
+      %th Date
+  %tbody
+    - @droped_dates.each do |date|
+      %tr
+        %td.col-caller-name
+          = date.to_datetime.strftime('%B %d %Y, %H:%M:%S')

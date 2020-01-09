@@ -1,0 +1,10 @@
+.panel_contents#orders_q_search{ data: { url: line_items_path, method: :get } }
+  = search_form_for(@q, url: line_items_path, method: :get, id: "q_search", class: "filter_form") do |f|
+    = f.label :order_number, 'Order Number'
+    = f.search_field :order_number_matches
+    = f.label :item_id, 'Item ID'
+    = f.search_field :id_eq
+    = f.label 'First Name'
+    = f.search_field :first_name_matches
+
+    = f.submit 'Filter', class: 'orders-custom-filters-submit'

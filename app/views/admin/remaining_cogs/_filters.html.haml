@@ -1,0 +1,10 @@
+.panel_contents
+  = search_form_for(@q, url: remaining_cogs_path, method: :get, id: "q_search", class: "filter_form") do |f|
+    = f.label :order_number, 'Order Number'
+    = f.search_field :order_number_eq
+    = f.label :cost_bucket, 'Cost Bucket'
+    = f.search_field :cost_bucket_label_cont
+    = f.label 'NO MATCH'
+    = check_box_tag 'q[line_item_id_null]', 1, params.dig(:q, :line_item_id_null)
+
+    = f.submit 'Filter'

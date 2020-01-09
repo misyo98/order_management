@@ -1,0 +1,7 @@
+- if issues.any?
+  %ul
+  - issues.each do |issue|
+    %li.issue{ data: { fixed: issue.fixed.to_s } }
+      = link_to issue.issue_subject.title, edit_measurement_issue_path(issue.id),
+        remote: true, class: 'edit-issue-link', data: { 'issue-id' => issue.id }
+      = render 'measurement_issues/issue_label', issue: issue

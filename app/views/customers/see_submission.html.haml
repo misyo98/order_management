@@ -1,0 +1,12 @@
+= render 'customers/see_submission/info'
+= render 'customers/see_submission/fits_form'
+= render 'customers/see_submission/measurements_form'
+
+= javascript_include_tag 'application', 'data-turbolinks-track' => false
+
+:javascript
+  $.methods.maybeUpdateDefaultChecks()
+  $.methods.setDefaultAbsChecks()
+  $.methods.setDefaultReadonlies()
+  $.methods.setPercentageWarnings()
+  $.methods.setRealPercentageWarnings()

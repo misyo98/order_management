@@ -1,0 +1,8 @@
+.card{style: 'width: 36.5rem; text-align: center;'}
+  .card-header
+    PROFILES THAT NEED FIXING:
+  %ul.list-group.list-group-flush
+    - profile_categories.each do |profile, profile_categories|
+      - customer = profile.customer
+      %li.list-group-item
+        = link_to customer.full_name, new_measurement_path(customer_id: customer.id, review: false)

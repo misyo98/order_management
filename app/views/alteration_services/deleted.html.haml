@@ -1,0 +1,20 @@
+- @deleted_services.each do |category_id, alteration_services|
+  %h2= "#{@categories[category_id]} services"
+  %table.table.table-striped.table-hover{cellspacing: "0", width: "100%"}
+    %thead
+      %tr
+        %th.col-md-1 ID
+        %th.col-md-1 Category ID
+        %th.col-md-1 Name
+        %th.col-md-1 Price
+        %th.col-md-1 Author
+        %th.col-md-1 Deleted at
+    %tbody
+      - alteration_services.each do |alteration_service|
+        %tr
+          %td= alteration_service.id
+          %td= alteration_service.category_id
+          %td= alteration_service.name
+          %td= @services.find { |service| service.alteration_service_id == alteration_service.id }&.price
+          %td= alteration_service.author&.full_name
+          %td= alteration_service.deleted_at.to_date

@@ -1,0 +1,5 @@
+var item_id = '<%= raw @line_item.id %>'
+$('#tags-links-' + item_id).html("<%= j render partial: 'admin/line_item/tag_links', locals: { tags: @line_item.tags } %>");
+$('#tags-form-' + item_id).addClass('hidden')
+$('#tags-form-' + item_id).siblings('.assign-tags').removeClass('hidden')
+$.purrSuccess()

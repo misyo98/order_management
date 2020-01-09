@@ -1,0 +1,12 @@
+%h2 Meta Fields
+- if line_item.meta.any?
+  %table
+    %tr
+      %th Label
+      %th Value
+    - line_item.meta.each do |meta_field|
+      %tr
+        %td
+          = meta_field['key']
+        %td
+          = meta_field['value']

@@ -1,0 +1,12 @@
+%table.table
+  %thead
+    %tr
+      %th Date
+      %th Event
+  %tbody
+    - booking_history.each do |history_event|
+      %tr
+        %td.col-caller-name
+          = history_event.date.strftime('%B %d, %Y')
+        %td.col-date
+          = history_event.text

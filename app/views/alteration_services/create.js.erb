@@ -1,0 +1,15 @@
+var service_class = ".service-create-<%= "#{@service.name.split(' ').join('')}" %>"
+var table_tr = $(document).find(service_class).closest('tr');
+
+<% if @service.errors.any? %>
+  errors = "<%= j render 'alteration_services/service_errors', service: @service %>";
+  table_tr.find(service_class).removeClass(service_class);
+  $('#alteration-service-errors').html(errors);
+  $.purrError(errors);
+<% else %>
+  $('#alteration-service-errors').html('');
+  table_tr.before("<%= j render 'alteration_services/created_service', service: @service, service_tailor: @service_tailor %>");
+  table_tr.find(service_class).removeClass(service_class);
+  table_tr.addClass('hidden');
+  $.purrSuccess();
+<% end %>

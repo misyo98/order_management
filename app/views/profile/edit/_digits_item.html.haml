@@ -1,0 +1,32 @@
+%tr.hidden{data: { category_param_id: f.object.category_param_id }}
+  %td.col-sm-1.category-name-field
+    = f.object.category_field
+  %td.col-sm-2.param-name-field
+    = f.object.param_field
+  %td.col-sm-1.body-value-field.hidden
+    = f.text_field :value, value: f.object.value, class: 'form-control value',
+      step: :any, readonly: true, data: { 'default-value' => f.object.value }
+  %td.col-sm-1
+    = f.object.final_garment_form_field(f)
+  %td.col-sm-1.hidden
+    = f.hidden_field :allowance, value: f.object.allowance
+  %td.col-sm-1.hidden
+    = f.hidden_field :category_param_id, value: f.object.category_param_id
+  %td.col-sm-1.hidden
+    = f.hidden_field :category_param_value_id, value: f.object.category_param_value_id
+
+  = f.fields_for :alterations do |alter_form|
+    - next if alter_form.object.persisted?
+
+    %td.col-sm-1
+      = alter_field(alter_form, f)
+      = alter_author_field(alter_form, f)
+      = alter_measurement_field(alter_form, f)
+      = alter_category_id_field(alter_form, f)
+
+  %td.col-sm-1
+    = f.object.post_alter_garment_form_field(f, @profile)
+
+  - unless f.object.category_name == 'Height'
+    %td{ data: check_html_data(f), class: [check_classes(@checks[f.object.category_param_id]), 'hidden'] }
+      = check_html(@checks[f.object.category_param_id])

@@ -1,0 +1,24 @@
+%tr.hidden{data: { category_param_id: f.object.category_param_id }}
+  %td.col-sm-1.category-name-field
+    = f.object.category_field
+  %td.col-sm-1.param-name-field
+    = f.object.param_field
+  %td.col-sm-1
+    = f.object.value_field(f)
+  %td.col-sm-1.hidden
+    = f.hidden_field :category_param_id, value: f.object.category_param_id
+  %td.col-sm-1.hidden
+    = f.hidden_field :category_param_value_id, value: f.object.category_param_value_id
+  %td.col-sm-1.hidden
+    = f.hidden_field :category_param_value_name, value: f.object.category_param_value.value.parameterized_name
+
+  = f.fields_for :alterations do |alter_form|
+    - next if alter_form.object.persisted?
+
+    %td.col-sm-1
+      = alter_value_field(alter_form, f)
+      = alter_author_field(alter_form, f)
+      = alter_measurement_field(alter_form, f)
+      = alter_category_id_field(alter_form, f)
+    %td{ data: check_html_data(f), class: [check_classes(@checks[f.object.category_param_id]), 'hidden'], style: 'width: 200px;' }
+      = check_html(@checks[f.object.category_param_id])

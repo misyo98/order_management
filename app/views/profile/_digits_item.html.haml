@@ -1,0 +1,50 @@
+- category_param = category_param(f.object.category_param_id)
+- fitting_garment_different = selected_garment_fit_ids.any? && !f.object.fitting_garment_measurement_id.in?(selected_garment_fit_ids)
+%tr{data: { category_param_id: f.object.category_param_id }}
+  %td
+    = category_name(f.object.category_param_id)
+  %td
+    = param_title(f.object.category_param_id)
+  %td
+    = measurement_field(f, with_fitting_garment)
+  %td
+    = allowance_field(f, with_fitting_garment)
+  %td{class: ['fitting-garment-td fitting-selector', !with_fitting_garment && 'hidden', fitting_garment_different && 'alert-td-msg']}
+    = f.text_field :fitting_garment_value, name: name(attribute: :fitting_garment_value, id: f.object.category_param_id),
+        class: 'form-control fitting-garment-value', id: fitting_garment_value_id(category_param), readonly: true
+    = link_to 'change', fitting_garments_path(q: { category_id_eq: category_param.category_id }, category_param_id: f.object.category_param_id),
+        remote: true, class: ['change-fitting-garment-link', (!with_fitting_garment || @review) && 'hidden']
+    - if fitting_garment_different
+      %span.alert-text-msg.uppercase
+        %br
+        %b
+          = "Fitting Garment: #{f.object.fitting_garment_measurement&.fitting_garment&.name}"
+  %td{class: ['fitting-garment-td', !with_fitting_garment && 'hidden']}
+    = f.text_field :fitting_garment_changes, name: name(attribute: :fitting_garment_changes, id: f.object.category_param_id),
+        class: 'form-control fitting-garment-changes', id: fitting_garment_changes_id(category_param), disabled: @review || (selected_garment_fit_ids.any? && f.object.fitting_garment_value.blank?)
+  - if reviewable?(review_action: @review)
+    %td
+      = adjustment_field(f)
+  %td
+    = garment_or_final_garment_field(f, with_fitting_garment)
+  %td{ data: check_html_data(f), class: check_classes(@checks[f.object.category_param_id]) }
+    = check_html(@checks[f.object.category_param_id])
+  %td.issues
+    - unless @review
+      .confirm-errors-container.hidden
+        = f.fields_for :error_confirmation, f.object.error_confirmation || f.object.build_error_confirmation do |confirmation|
+          = confirmation.check_box :confirmed, { name: "profile[measurements_attributes][#{f.object.category_param_id}][error_confirmation_attributes][confirmed]", class: 'confirm-errors-checkbox custom-control-input', style: 'margin-left: 50px; margin-bottom: 10px;' }
+          %label{ style: "font-size: 10px;" } I confirm that i would like to submit this measurement for review
+          = confirmation.hidden_field :id, name: "profile[measurements_attributes][#{f.object.category_param_id}][error_confirmation_attributes][id]"
+    - if f.object.persisted?
+      .issue-container{ data: { issueable_id: f.object.id } }
+        .issues-list
+          = render '/measurement_issues/issues_list', issues: f.object.measurement_issues, issueable: f.object
+        - if @review
+          .clearfix
+            = link_to 'Add Issue', new_measurement_issue_path(issueable_type: 'Measurement', issueable_id: f.object.id), remote: true, class: 'add-issue-link'
+
+  = f.hidden_field :category_param_id, name: name(attribute: :category_param_id, id: f.object.category_param_id)
+  = f.hidden_field :category_param_value_id, name: name(attribute: :category_param_value_id, id: f.object.category_param_id)
+  = f.hidden_field :fitting_garment_measurement_id, name: name(attribute: :fitting_garment_measurement_id, id: f.object.category_param_id), class: 'fitting-garment-measurement-id'
+  = f.hidden_field :id, name: name(attribute: :id, id: f.object.category_param_id)

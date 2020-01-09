@@ -1,0 +1,29 @@
+%script{:src => "https://js.pusher.com/4.3/pusher.min.js"}
+#result
+%br/
+= link_to 'Generate CSV', generate_csv_fabric_infos_path({ format: :js }.deep_merge!(params)), id: 'generate-csv', remote: true
+= link_to 'Download CSV', download_csv_fabric_infos_path, class: 'hidden', id: 'download-csv'
+
+:javascript
+  var pusher = new Pusher("#{Rails.application.secrets[:pusher_key]}", {
+    cluster: 'eu',
+    encrypted: true
+  });
+  var channel = pusher.subscribe('csv-channel');
+
+  document.getElementById('generate-csv').onclick = function() {notifyAboutCsv()};
+  function notifyAboutCsv() {
+    var elem = document.getElementById('generate-csv');
+    elem.parentElement.removeChild(elem);
+    html_str = ['Your CSV file is under construction. We will notify you when it іs ready. ',
+                 'Do not refresh the page, until csv is being generated. You will see the button for downloading the csv file once it is done.'
+               ]
+    $('#result').append(html_str);
+    $('#result').prop('class', 'alert alert-warning')
+  }
+
+  channel.bind('fabric-infos-csv-generated-event', function(data) {
+    $('#download-csv').removeClass('hidden');
+    $('#result').html('Now you can download your CSV. Click the button Download CSV below.');
+    $('#download-csv').attr('href', $('#download-csv').attr('href') + '?data_id=' + data.id );
+  });

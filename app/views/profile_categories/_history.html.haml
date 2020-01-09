@@ -1,0 +1,15 @@
+%table.table
+  %thead
+    %tr
+      %th Status
+      %th Author
+      %th Created At
+  %tbody
+    - history_events.order(id: :desc).each do |event|
+      %tr
+        %td.col-status
+          = event.status&.humanize
+        %td.col-author
+          = event.author&.full_name
+        %td.col-created-at
+          = event.created_at.to_s(:long)

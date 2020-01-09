@@ -1,0 +1,8 @@
+summary_id = <%= @summary.id %>
+
+<% if @summary.errors.empty? %>
+  $("#alteration_summary_" + summary_id).remove()
+  $.purrSuccess('Returned from alteration!')
+<% else %>
+  $.purrError("<%= @summary.errors.full_messages.join('; ') %>")
+<% end %>

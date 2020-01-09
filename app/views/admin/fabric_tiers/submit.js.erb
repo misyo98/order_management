@@ -1,0 +1,11 @@
+<% if @fabric_tier.errors.any? %>
+  errors = "<%= j render 'admin/fabric_tiers/errors', fabric_tier: @fabric_tier %>"
+  $('#fabric_errors').html(errors)
+  $('#fabric_errors').removeClass('hidden');
+  $('html, body').animate({ scrollTop: 0 }, 'slow');
+<% else %>
+  $('#fabric_errors').html()
+  $('#fabric_errors').addClass('hidden');
+  $.purrSuccess('Submitted successfully')
+  window.location.href = "<%= j fabric_tier_path(@fabric_tier) %>"
+<% end %>

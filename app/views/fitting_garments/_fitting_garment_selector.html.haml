@@ -1,0 +1,4 @@
+- garments_collection = fitting_garments.map { |f_g| [f_g.name, f_g.id] }
+.issue-form
+  .field
+    = select_tag :fitting_garment, options_for_select(garments_collection), prompt: 'Fitting Garment', class: 'fitting-garment-single-selector'

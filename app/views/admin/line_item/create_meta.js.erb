@@ -1,0 +1,5 @@
+<% if @result.success? %>
+  $('#all_fields').html("<%= j render 'admin/line_item/meta_fields', line_item: @line_item %>");
+<% else %>
+  $.purrError("<%= @result.error_messages.join('. ') %>");
+<% end %>

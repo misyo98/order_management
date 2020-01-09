@@ -1,0 +1,8 @@
+%h1 
+  Dear @author.first_name,
+
+%p 
+  "#{@submitter.name} just submitted an adjustment for #{@customer.name_for_email}. You submitted his measurements on #{@customer.profile.created_at.strftime('%B %d, %Y %H:%M')} ." 
+
+%p 
+  "See the submitted adjustment #{ link_to 'here', customer_url(@customer) }."

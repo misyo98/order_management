@@ -1,0 +1,8 @@
+<% @ordered_brands.each do |id, order| %>
+  var id = '<%= id %>'
+  var order = '<%= order %>'
+
+  $('#fabric_brand_' + id).find('.col-order').html(order)
+<% end %>
+
+$.purrSuccess('Fabric Brands order successfully updated.')

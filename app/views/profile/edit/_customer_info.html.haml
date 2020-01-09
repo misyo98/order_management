@@ -1,0 +1,28 @@
+%h2 Select customer
+.hidden
+  = render partial: 'fits/form'
+%fieldset
+  .form-group.row
+    = label_tag 'Customer name', nil, class:'col-sm-2 col-form-label'
+    .col-xs-4
+      = text_field_tag :customer, @customer.name_for_select, class:'form-control', data: { 'profile-id' => @customer.profile.id }, disabled: true
+  .form-group.row
+    = label_tag 'Order number', nil, class:'col-sm-2 col-form-label'
+    .col-xs-4
+      = text_field_tag :customer_orders, @customer.order_numbers, id: 'customer_order', class:'form-control', disabled: true
+  .form-group.row
+    = label_tag 'Email', nil, class:'col-sm-2 col-form-label'
+    .col-xs-4
+      = text_field_tag :customer_email, @customer.email, id: 'customer_email', class:'form-control', disabled: true
+  .form-group.row
+    = label_tag 'Outfitter name', nil, class:'col-sm-2 col-form-label'
+    .col-xs-4
+      = text_field_tag :outfitter, @outfitter.name, class:'form-control', disabled: true
+  .form-group.row
+    = label_tag 'Manufacturer Number*', nil, class:'col-sm-2 col-form-label'
+    .col-xs-4
+      = text_field_tag :manufacturer, defined?(summary) ? summary.alteration_infos.first.manufacturer_code : @item_params[:pes_numbers]&.join(', '), class:'form-control'
+  .form-group.row
+    = label_tag 'Sales Location', nil, class:'col-sm-2 col-form-label'
+    .col-xs-4
+      = @item_params[:sales_locations]&.join(', ')

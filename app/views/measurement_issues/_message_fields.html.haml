@@ -1,0 +1,7 @@
+.nested-fields
+  .field
+    = f.label "Comment by: #{f.object.author&.full_name || current_user.full_name}"
+    = f.text_area :body, class: 'form-control input-md', rows: 3
+    = f.hidden_field :author_id, value: current_user.id
+  - if f.object.new_record?
+    = link_to_remove_association "remove_comment", f

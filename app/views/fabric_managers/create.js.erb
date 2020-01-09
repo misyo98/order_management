@@ -1,0 +1,9 @@
+<% if @fabric_manager.errors.any? %>
+  $.purrError("<%= @fabric_manager.errors.full_messages.join('. ') %>")
+<% else %>
+  $('#fabric_management_body').html("<%= j render 'fabric_managers/list', fabric_managers: @fabric_managers %>");
+  $.purrSuccess('Successfully Created.')
+<% end %>
+
+$('.selectpicker').selectpicker()
+$('.best_in_place').best_in_place()

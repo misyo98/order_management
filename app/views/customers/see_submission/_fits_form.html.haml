@@ -1,0 +1,15 @@
+.container
+  = form_for @profile, url: fits_path(customer_id: @customer.id), method: :post, remote: true, html: { class: 'form-horizontal', id: 'fit-form' } do |f|
+    %h2 Select items
+    %table
+      = f.fields_for :fits do |fit|
+        - next if fit.object.category.name == @body_category.name || fit.object.category.name == @height_category.name
+        %tr.fit-row
+          %td.col-xs-3
+            %b= fit.object.category.name
+          %td.col-xs-2
+            = check_box_tag '', fit.object.checked, fit.object.checked, { disabled: true }
+          %td.col-xs-4
+            = fit.object.fit.humanize
+          %td.col-xs-4
+            %b= fit.object.profile.categories.detect { |cat| cat.category_id == fit.object.category_id }&.status&.humanize

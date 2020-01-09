@@ -1,0 +1,13 @@
+table = "<%= j render 'index', events: @events %>"
+
+vex.open({
+  content: table,
+  unsafeContent: '',
+  showCloseButton: false,
+  escapeButtonCloses: false,
+  overlayClosesOnClick: true,
+  appendLocation: 'body',
+  // afterOpen: function($vexContent) {
+  //   $vexContent.parents('.vex').css({perspective: 'none'});
+  // }
+});

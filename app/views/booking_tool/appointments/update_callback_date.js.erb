@@ -1,0 +1,12 @@
+<% if @appointment.errors.any? %>
+  error_html = "<%= j render 'errors', errors: @appointment.errors.full_messages %>"
+  $('#appointment-errors').html(error_html)
+  $.purrError('Something went wrong')
+<% else %>
+  id = '<%= @appointment.id %>'
+  date = '<%= @date %>'
+
+  $('.callback-date-' + id).html(date)
+  $('#callback-modal').modal('hide');
+  $.purrSuccess('Callback Date Updated')
+<% end %>

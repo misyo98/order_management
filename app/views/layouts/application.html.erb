@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>OrderManagementApp</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => false %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => false %>
+  <%= csrf_meta_tags %>
+  <%= content_for :header %>
+</head>
+<body
+  <% if content_for?(:body_attributes) %>
+    <%= yield(:body_attributes) %>
+  <% end %>>
+
+<%= yield %>
+
+</body>
+</html>

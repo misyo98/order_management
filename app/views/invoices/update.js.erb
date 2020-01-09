@@ -1,0 +1,6 @@
+<% if @invoice.errors.any? %>
+  error_html = "<%= j render 'errors', errors: @invoice.errors.full_messages %>"
+  $('#invoice-errors').html(error_html)
+<% else %>
+  window.location.reload()
+<% end %>

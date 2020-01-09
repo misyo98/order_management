@@ -1,0 +1,23 @@
+= form_for @profile, url: url, method: :patch, html: { class: :'measurement-form form-horizontal', multipart: true }, remote: true do |f|
+  - @category_ids.each do |category_id|
+    - category = @categories.detect { |category| category.id == category_id }
+    - if @summary.persisted?
+      = render partial: 'alteration_summaries/table', locals: { f: f, category_id: category_id, category: category }
+    - else
+      = render partial: 'profile/edit/table', locals: { f: f, category_id: category_id, category: category }
+
+  %h3 Questions
+  = render partial: 'alteration_summaries/form', locals: { summary: @summary }
+
+  = hidden_field_tag :without_extra_fields, @without_extra_fields
+  = hidden_field_tag :line_item_ids, @item_params[:line_item_ids]
+  = hidden_field_tag :requested_action, nil
+  = hidden_field_tag :request_url, @request_url
+  = hidden_field_tag :selected_categories, nil, id: 'selected-categories-field'
+  = hidden_field_tag :violate_validations_hash, {}, id: 'violate_validations_hash'
+  = f.button 'Remake requested', name: "commit", value: "Remake requested", type: :button,
+    class: 'btn btn-outline-primary btn-success btn-lg measurement_alteration_submit',
+    id: 'alteration-remake-button' unless @without_extra_fields
+  = f.button @without_extra_fields.nil? ? 'Alteration requested' : 'Adjust', name: 'commit', value: 'Alteration requested', type: :button,
+    class: 'btn btn-outline-primary btn-success btn-lg measurement_alteration_submit',
+    id: 'alteration-button'

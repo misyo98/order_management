@@ -1,0 +1,10 @@
+table = "<%= j render 'alteration_service_list', summary: @summary, services: @services, categories: @categories %>"
+
+vex.open({
+  content: table,
+  unsafeContent: '',
+  showCloseButton: true,
+  escapeButtonCloses: false,
+  overlayClosesOnClick: true,
+  appendLocation: 'body',
+});

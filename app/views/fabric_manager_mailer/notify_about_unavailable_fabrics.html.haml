@@ -1,0 +1,24 @@
+%p
+  %h2
+    = "#{@user.full_name}, Fabric OOS/Discontinued list was updated. Resulting summary:"
+- if @added.any?
+  %b The following fabrics were added to the list:
+  - @added.each do |notification|
+    %p
+      = notification.fields_for_email
+- if @updated.any?
+  %b The following fabrics were updated in the list:
+  - @updated.each do |notification|
+    %p
+      = notification.fields_for_email
+- if @removed.any?
+  %b The following fabrics were removed form the list:
+  - @removed.each do |notification|
+    %p
+      = notification.fields_for_email
+%br
+%p
+  Please ensure that all books in the showrooms have been updated accordingly so that outfitters are aware.
+%br
+%p
+  Thanks.

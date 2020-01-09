@@ -1,0 +1,13 @@
+= form_tag update_shipments_line_items_path, class: 'formtastic active_admin_import_model' do
+  %fieldset.inputs
+    %ol
+      %li.file.input.optional
+        %label.label{ for: "active_admin_import_model_file" } 
+          Tracking Number
+        = text_field_tag :code
+
+  %fieldset.actions
+    %ol
+      %li.action.input_action
+        = submit_tag "Submit", class: 'btn btn-primary', data: { 'disable-with' => 'Processing...' }
+        

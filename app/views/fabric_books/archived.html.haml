@@ -1,0 +1,14 @@
+%table.table.table-striped.table-hover{cellspacing: "0", width: "100%"}
+  %thead
+    %tr
+      %th.col-md-1 ID
+      %th.col-md-1 Title
+      %th.col-md-1 Was used in Fabric Info IDs
+  %tbody
+    - @deleted_fabric_books.each do |fabric_book|
+      %tr
+        %td= link_to fabric_book.id, fabric_book_path(fabric_book)
+        %td= fabric_book.title
+        %td= fabric_book.decorate.fabric_infos_id_links
+
+    = paginate @deleted_fabric_books

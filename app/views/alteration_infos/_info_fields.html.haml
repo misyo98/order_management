@@ -1,0 +1,62 @@
+%div{ class: "alteration-info-fields-for-#{info.category_id}" }
+  %div{ style: 'margin-bottom: 15px;' }
+    = fields_for info do |f|
+      - if f.object.category_name == 'Jacket'
+        .form-group
+          .col-sm-2.control-label
+            = f.label       :lapel_flaring
+            = check_box_tag 'alteration_info_checkmark', nil, !f.object.lapel_flaring.blank?, class: 'alteration-info-checkmark'
+          .col-sm-6.alteration-info-field{ class: f.object.lapel_flaring.blank? ? 'hidden' : '' }
+            = f.text_field  :lapel_flaring, name: "alteration_infos[#{info.category_id}][lapel_flaring]", class: 'form-control'
+          .col-sm-2
+            %span
+              Please change the body positions accordingly
+        .form-group
+          .col-sm-2.control-label
+            = f.label         :shoulder_fix
+            = check_box_tag 'alteration_info_checkmark', nil, !f.object.shoulder_fix.blank?, class: 'alteration-info-checkmark'
+          .col-sm-6.alteration-info-field{ class: f.object.shoulder_fix.blank? ? 'hidden' : '' }
+            = f.text_field    :shoulder_fix, name: "alteration_infos[#{info.category_id}][shoulder_fix]", class: 'form-control'
+          .col-sm-2
+            %span
+              Please change the biceps accordingly
+        .form-group
+          .col-sm-2.control-label
+            = f.label         :move_button
+            = check_box_tag 'alteration_info_checkmark', nil, !f.object.move_button.blank?, class: 'alteration-info-checkmark'
+          .col-sm-6.alteration-info-field{ class: f.object.move_button.blank? ? 'hidden' : '' }
+            = f.text_field    :move_button, name: "alteration_infos[#{info.category_id}][move_button]", class: 'form-control'
+          .col-sm-2
+            %span
+              Please change the body positions accordingly
+        .form-group
+          .col-sm-2.control-label
+            = f.label         :square_back_neck
+            = check_box_tag 'alteration_info_checkmark', nil, !f.object.square_back_neck.blank?, class: 'alteration-info-checkmark'
+          .col-sm-6.alteration-info-field{ class: f.object.square_back_neck.blank? ? 'hidden' : '' }
+            = f.text_field    :square_back_neck, name: "alteration_infos[#{info.category_id}][square_back_neck]", class: 'form-control'
+          .col-sm-2
+            %span
+              Please change the body positions accordingly
+        .form-group
+          .col-sm-2.control-label
+            = f.label         :armhole
+            = check_box_tag 'alteration_info_checkmark', nil, !f.object.armhole.blank?, class: 'alteration-info-checkmark'
+          .col-sm-6.alteration-info-field{ class: f.object.armhole.blank? ? 'hidden' : '' }
+            = f.text_field    :armhole, name: "alteration_infos[#{info.category_id}][armhole]", class: 'form-control'
+          .col-sm-2
+            %span
+              Please change the biceps accordingly
+
+      %b.present-comment-warning= "Original comment on #{info.category_name}:"
+      - original_comment = info.profile.customer.comments.where(category_id: info.category_id).order(body: :desc).first&.body
+      = text_field_tag 'original comment', original_comment,
+        class: ['form-control', original_comment.present? && 'present-comment-warning'], disabled: true
+      %br
+      = f.label "Comment on #{info.category_name}"
+      = f.text_area    :comment, name: "alteration_infos[#{info.category_id}][comment]", class: 'form-control'
+      = f.hidden_field :manufacturer_code, name: "alteration_infos[#{info.category_id}][manufacturer_code]", class: 'manufacturer-id'
+      = f.hidden_field :category_id, name: "alteration_infos[#{info.category_id}][category_id]"
+      = f.hidden_field :profile_id, name: "alteration_infos[#{info.category_id}][profile_id]"
+      = f.hidden_field :author_id,  name: "alteration_infos[#{info.category_id}][author_id]"
+      = f.hidden_field :id,  name: "alteration_infos[#{info.category_id}][id]"

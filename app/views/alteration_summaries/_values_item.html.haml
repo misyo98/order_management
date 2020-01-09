@@ -1,0 +1,16 @@
+%tr{data: { category_param_id: f.object.category_param_id }}
+  %td.col-sm-1
+    = f.object.category_field
+  %td.col-sm-1 
+    = f.object.param_field
+  %td.col-sm-1 
+    = f.object.value_field(f)
+
+  = f.fields_for :alterations do |alter_form|
+    - next unless alter_form.object.in? @alterations
+    
+    %td.col-sm-1
+      = alter_form.hidden_field :id
+      = alter_form.hidden_field :category_id, value: f.object.category_id
+      = alter_form.select :category_param_value_id, values_collection(f.object.category_param), { selected: alter_form.object.category_param_value_id }, 
+        class: 'form-control'

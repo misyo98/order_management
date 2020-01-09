@@ -1,0 +1,20 @@
+= form_tag create_shipping_costs_and_duties_path, method: :post, class: 'formtastic active_admin_import_model' do
+  %fieldset.inputs
+    %ol
+      %li.file.input.optional
+        %label.label{ for: "active_admin_import_model_file" } 
+          Tracking Number
+        = text_field_tag :tracking_number
+      %li.file.input.optional
+        %label.label{ for: "active_admin_import_model_file" } 
+          Shipping costs (USD)
+        = number_field_tag :shipping_costs
+      %li.file.input.optional
+        %label.label{ for: "active_admin_import_model_file" } 
+          Duty (USD)
+        = number_field_tag :duty
+
+  %fieldset.actions
+    %ol
+      %li.action.input_action
+        = submit_tag "Submit", class: 'btn btn-primary', data: { 'disable-with' => 'Processing...' }

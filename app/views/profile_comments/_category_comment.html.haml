@@ -1,0 +1,13 @@
+= fields_for resolve_comment_object(objects: @comments, category_id: category.id) do |f|
+  %h3
+    = "Comment for #{category.name}"
+  = f.text_area :body, class: ['form-control comment-field', f.object.body.present? && 'present-comment-warning'], name: "comments[category_#{category.id}_comment][body]", readonly: @review
+  = f.hidden_field :resource_id, value: @customer.id, name: "comments[category_#{category.id}_comment][resource_id]"
+  = f.hidden_field :id, name: "comments[category_#{category.id}_comment][id]"
+  = f.hidden_field :resource_type, value: @customer.class.name, name: "comments[category_#{category.id}_comment][resource_type]"
+  = f.hidden_field :namespace, value: 'root', name: "comments[category_#{category.id}_comment][namespace]"
+  = f.hidden_field :category_id, value: category.id, name: "comments[category_#{category.id}_comment][category_id]"
+  = f.hidden_field :author_id, value: current_user.id, name: "comments[category_#{category.id}_comment][author_id]"
+  = f.hidden_field :updater_id, value: current_user.id, name: "comments[category_#{category.id}_comment][updater_id]"
+  = f.hidden_field :author_type, value: current_user.class.name, name: "comments[category_#{category.id}_comment][author_type]"
+  = f.hidden_field :submission, value: @review, name: "comments[category_#{category.id}_comment][submission]"

@@ -1,0 +1,15 @@
+= render partial: '/shared/loader'
+
+.container
+  #fakeloader
+  .header-nav
+    = link_to 'Back to profile', customer_path(@customer), class: 'header-nav-link btn btn-primary', data: { turbolinks: false }
+    = link_to 'Dashboard', root_path, class: 'header-nav-link btn btn-primary', data: { turbolinks: false }
+
+  - if @summary.present?
+    = render partial: 'alteration_summaries/additional_fields', locals: { summary: @summary }
+
+  = render partial: 'profile/edit/customer_info', locals: { summary: @summary }
+
+  .measurement-form-container#alteration-form
+    = render partial: 'profile/edit/form', locals: { url: update_with_alterations_alteration_summary_path(@summary) }

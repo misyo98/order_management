@@ -1,0 +1,81 @@
+%table.table
+  %thead
+    %tr
+      %th First Name
+      %th Last Name
+      - if can_see_email?
+        %th Email
+      %th Phone
+      %th Appointment date
+      %th Appointment time
+      %th Calendar
+      %th Booking type
+      %th Existing customer? (last purchase date)
+      %th Customer ID
+      %th Previous Order IDs
+      %th Previous outfitter
+      %th Cancelled
+      %th Purchased
+      %th Reason for no purchase
+      %th Wedding Date
+      %th Callback Date
+      %th Updated by outfitter
+      %th Required action
+      %th.appointment-comments
+        Appointment comments
+      %th Call count(last call date)
+      %th Action buttons
+      %th History
+  %tbody
+    - appointments.each do |appointment|
+      - appointment = BookingTool::AppointmentDecorator.decorate(appointment, context: { sales_people: sales_people })
+      %tr{ id: "ops-#{appointment.id}", class: appointment.maybe_ops_outdated_class }
+        %td
+          = appointment.first_name
+        %td
+          = appointment.last_name
+        - if can_see_email?
+          %td
+            = appointment.email
+        %td
+          = appointment.phone
+        %td.app-day
+          = appointment.day
+        %td
+          = appointment.time
+        %td
+          = appointment.calendar
+        %td
+          = appointment.booking_type
+        %td
+          = appointment.existing_customer
+          = appointment.maybe_last_purchase_date
+        %td
+          = appointment.maybe_customer_link
+        %td
+          = appointment.previous_order_numbers
+        %td
+          = appointment.previous_outfitter
+        %td
+          = appointment.formatted_cancelled
+        %td
+          = appointment.formatted_purchased
+        %td
+          = appointment.resolve_no_purchase_reason_field
+        %td
+          = appointment.wedding_date
+        %td{ class: "callback-date-#{appointment.id}" }
+          = appointment.callback_date
+        %td
+          = appointment.outfitter_that_updated
+        %td
+          = appointment.required_action
+        %td
+          = appointment.comment_field
+        %td.call-count
+          = appointment.call_count_with_date
+        %td
+          = appointment.ops_action_links
+        %td
+          = appointment.maybe_booking_history_link
+%br

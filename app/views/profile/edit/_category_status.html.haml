@@ -1,0 +1,8 @@
+= f.fields_for f.object.find_profile_category(category_id: category_id) do |category_fields|
+  %fieldset
+    .form-group.row
+      = category_fields.label "#{category_fields.object.category_name} Measurements Status", nil, class:'col-md-3 col-form-label'
+      .col-xs-4
+        = category_fields.select :status, ProfileCategory.statuses.keys.map { |s| [s.humanize, s] }, { }, 
+          name: "profile_categories[#{category_fields.object.id}][status]", class:"form-control #{category_fields.object.category_name.parameterize}-category-status", 
+          id: "profile-category-input-#{category_fields.object.id}"

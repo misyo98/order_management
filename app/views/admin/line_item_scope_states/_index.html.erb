@@ -1,0 +1,16 @@
+<table border="0" cellspacing="0" cellpadding="0" width="100%" class="index_table index">
+  <thead>
+    <tr>
+      <th class="col col-country">State</th>
+      <th class="col col-category">Queues</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @states.each do |state, queues| %>
+      <tr class="odd">
+        <td class="col"><span class="label label-primary"><%= state %></span></td>
+        <td class="col"><%= queues.join(', ') %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

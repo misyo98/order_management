@@ -1,0 +1,31 @@
+.nested-fields
+  .fabric-tier-categories-group
+    .fabric-tier-category
+      %h3
+        Fabric Tier Category
+      %fieldset.inputs
+        %ol
+          %li
+            %label
+              Fabric Category
+            = f.select :fabric_category_id, @fabric_categories_hash, {}, { class: 'fabric-category-selection' }
+            = select_tag 'qwe', @fabric_categories_hash, class: 'fabric-category-hash hidden'
+
+      %fieldset.inputs
+        %ol
+          %li
+            .price
+              %table
+                %tr
+                  %td
+                    .sgd-currency-field
+                      %h4 SGD Price
+                      = f.text_field :SGD, value: f.object.price.nil? ? nil : f.object&.price['SGD'], autocomplete: :off, class: 'fabric-sgd-currency'
+                  %td
+                    .gbp-currency-field
+                      %h4 GBP Price
+                      = f.text_field :GBP, value: f.object.price.nil? ? nil : f.object&.price['GBP'], autocomplete: :off, class: 'fabric-gbp-currency'
+
+    = link_to_remove_association 'Remove Fabric Tier Category', f, class: 'btn btn-danger col-lg-6 col-lg-offset-8'
+    %br
+%br

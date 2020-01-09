@@ -1,0 +1,10 @@
+= form_for @comment, url: profile_comments_path, method: :post, html: { id: :'comment-form' } do |f|
+  .form-group
+    = f.text_area :body, class: 'form-control'
+  = f.hidden_field :resource_id, value: @customer.id
+  = hidden_field_tag 'active_admin_comment[category_ids]'
+  = f.hidden_field :resource_type, value: @customer.class.name
+  = f.hidden_field :namespace, value: 'root'
+  = f.hidden_field :author_id, value: current_user.id
+  = f.hidden_field :author_type, value: current_user.class.name
+  = f.hidden_field :submission

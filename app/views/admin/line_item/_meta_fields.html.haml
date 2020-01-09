@@ -1,0 +1,17 @@
+#all_fields
+  %h2 Meta Fields
+  = form_for @line_item, url: update_meta_line_item_path(line_item), method: :patch, remote: true, id: 'meta-fields-form' do |f|
+    - line_item.meta.each do |meta_field|
+      = f.fields_for 'meta[]', [] do |meta_fields|
+        = meta_fields.label meta_field['key']
+        = meta_fields.text_field :value, value: meta_field['value']
+        = meta_fields.hidden_field :key, value: meta_field['key']
+        = meta_fields.hidden_field :label, value: meta_field['label']
+        = link_to '', destroy_meta_line_item_path(@line_item, label: meta_field['label'], value: meta_field['value']), class: 'far fa-trash-alt', method: :delete, remote: true
+      %br
+      %br
+
+    = submit_tag 'Update Meta fields', class: 'btn btn-primary', data: { disable_with: 'Processing...' }
+  %br
+  = link_to 'New Meta Field', new_meta_line_item_path(@line_item), class: 'btn btn-success', remote: true
+  .new-meta-form

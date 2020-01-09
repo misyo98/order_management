@@ -1,0 +1,24 @@
+$(document).ready ->
+  if $('#index_table_fitting_garments').length
+    pusher = new Pusher("<%= Rails.application.secrets[:pusher_key] %>", { cluster: 'eu', encrypted: true })
+
+    import_progress_channel = pusher.subscribe('fitting-garments-import-progress-channel');
+
+    import_progress_channel.bind 'fitting-garments-import-progress-event', (data) ->
+      $('.progress').removeClass('hidden');
+      $('.progress-bar').attr('aria-valuenow', data['progress']);
+      $('.progress-bar').css('width', data['progress'] + '%')
+      $('.progress-bar').text(data['progress'] + '%')
+      $('.fitting-garments-progress-message').html('Fabric Garments Import in process! Please do not start a new one at the moment.');
+      $('.fitting-garments-progress-message').removeClass('hidden');
+
+
+    import_channel = pusher.subscribe('fitting-garments-import-channel');
+
+    import_channel.bind 'fitting-garments-imported-event', (data) ->
+      $('.progress').addClass('hidden');
+      $('.flash_notice').remove()
+      $('.fitting-garments-imported-message').html(data['message']);
+      $('.fitting-garments-imported-message').removeClass('hidden');
+      $('.fitting-garments-progress-message').addClass('hidden');
+

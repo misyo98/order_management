@@ -1,0 +1,30 @@
+%tr{data: { category_param_id: f.object.category_param_id }}
+  %td
+    = category_name(f.object.category_param_id)
+  %td
+    = param_title(f.object.category_param_id)
+  %td
+    = category_param_value_field(f)
+  - if reviewable?(review_action: @review)
+    %td
+      = adjustment_value_field(f)
+  %td{ data: check_html_data(f), class: check_classes(@checks[f.object.category_param_id]) }
+    = check_html(@checks[f.object.category_param_id])
+  %td.issues
+    .mistake-approve-container
+    - unless @review
+      .confirm-errors-container.hidden
+        = f.fields_for :error_confirmation, f.object.error_confirmation || f.object.build_error_confirmation do |confirmation|
+          = confirmation.check_box :confirmed, { name: "profile[measurements_attributes][#{f.object.category_param_id}][error_confirmation_attributes][confirmed]", class: 'confirm-errors-checkbox custom-control-input', style: 'margin-left: 50px; margin-bottom: 10px;' }
+          %label{ style: "font-size: 10px;" } I confirm that i would like to submit this measurement for review
+          = confirmation.hidden_field :id, name: "profile[measurements_attributes][#{f.object.category_param_id}][error_confirmation_attributes][id]"
+    - if f.object.persisted?
+      .issue-container{ data: { issueable_id: f.object.id } }
+        .issues-list
+          = render '/measurement_issues/issues_list', issues: f.object.measurement_issues, issueable: f.object
+        - if @review
+          .clearfix
+            = link_to 'Add Issue', new_measurement_issue_path(issueable_type: 'Measurement', issueable_id: f.object.id), remote: true, class: 'add-issue-link'
+
+  = f.hidden_field :category_param_id, name: name(attribute: :category_param_id, id: f.object.category_param_id)
+  = f.hidden_field :id, name: name(attribute: :id, id: f.object.category_param_id)

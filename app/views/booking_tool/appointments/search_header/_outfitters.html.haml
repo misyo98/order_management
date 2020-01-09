@@ -1,0 +1,20 @@
+= select_tag 'q[calendar_id_in]', options_for_select(@calendars, params[:q]&.dig(:calendar_id_in)),
+             { prompt: 'select calendar(s)', class: 'form-control', id: 'filter-id', multiple: true, size: 4 }
+
+= text_field_tag 'q[day_gteq]', params[:q]&.dig(:day_gteq), placeholder: 'start yyyy-mm-dd', autocomplete: :off, class: 'form-control',
+                  data: { provide: 'datepicker', 'date-format': 'yyyy-mm-dd' }
+
+= text_field_tag 'q[day_lteq]', (params[:q]&.dig(:day_lteq) || Date.today), autocomplete: :off, placeholder: 'end yyyy-mm-dd',
+                  class: 'form-control', data: { provide: 'datepicker', 'date-format': 'yyyy-mm-dd' }
+
+= select_tag 'q[order_tool_outfitter_id_eq]', options_for_select(User.all.map { |user| [user.full_name, user.id] }, params[:q]&.dig(:order_tool_outfitter_id_eq)),
+                  include_blank: 'Please select outfitter', class: 'form-control'
+
+= text_field_tag 'q[contact_first_name_cont]', params[:q]&.dig(:contact_first_name_cont), placeholder: 'Customer First Name', class: 'form-control'
+
+= text_field_tag 'q[contact_last_name_cont]', params[:q]&.dig(:contact_last_name_cont), placeholder: 'Customer Last Name', class: 'form-control'
+
+= submit_tag 'Filter', class: 'btn btn-info btn-squares'
+= link_to 'Clear', request.path, class: 'btn btn-danger btn-square'
+= button_tag 'Set as default calendars', class: 'btn btn-success btn-square', id:'set-as-default-service',
+              data: { url: set_default_calendars_booking_tool_appointments_path }, type: 'button'

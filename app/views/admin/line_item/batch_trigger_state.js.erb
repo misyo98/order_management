@@ -1,0 +1,47 @@
+<% if @response_object.success? %>
+
+  <% flash_type = 'flash_notice' %>
+  <% link = link_to undo_batch_state_line_items_path(ids: @response_object.ids), method: :patch, remote: true do %>
+                <%= '<span class="far fa-times-circle" aria-hidden="true"></span> Undo'.html_safe %>
+              <% end %>
+  flash = "<%= j flash_type %>"
+  message = "<%= j @response_object.message %>"
+  undoLink = "<%= j link %>"
+  html = '<div class="flash ' + flash + '">' + message + '<span>' + undoLink + '</span></div>'
+
+  <% @response_object.items.each do |item| %>
+    <% item = item.decorate %>
+    status_col_html = "<%= j render 'admin/line_item/columns/status_col', item: item %>"
+    required_action_col_html = "<%= j render 'admin/line_item/columns/required_action_col', item: item %>"
+    actions_col_html = "<%= j render 'admin/line_item/columns/actions_col', item: item %>"
+    refunded_amount_col_html = "<%= j render 'admin/line_item/columns/refunded_amount_col', item: item %>"
+
+    id = "<%= item.id.to_s %>"
+    target_id = '#line_item_' + id
+
+    $(target_id).find('td.col-status').html(status_col_html)
+    $(target_id).find('td.col-required_action').html(required_action_col_html)
+    $(target_id).find('td.col-actions').html(actions_col_html)
+    $(target_id).find('td.col-refunded_amount').html(refunded_amount_col_html)
+  <% end %>
+
+  $('.batch-state-trigger').remove()
+  $.purrSuccess()
+  batchItemStateTrigger()
+  $.addScrollingTouch();
+<% else %>
+  $.removeScrollingTouch();
+
+  <% flash_type = 'flash_alert' %>
+  flash = "<%= j flash_type %>"
+  errors = "<%= j @response_object.pretty_errors.join('; ') %>"
+  message = "<%= j @response_object.message %>"
+  html = '<div class="flash ' + flash + '">' + message + '. Errors: ' +  errors + '</div>'
+
+  errors = "<%= j render 'admin/line_item/batch_error_list', errors: @response_object.errors, ids: @response_object.ids, event: @response_object.event %>"
+  $('#batch-state-error-modal-body').html(errors)
+  $('#batch-state-error-modal').modal('show');
+
+<% end %>
+
+$('.flashes').html(html)

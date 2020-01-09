@@ -1,0 +1,30 @@
+.measurements-csv-container
+  .measurements-download-container.hidden
+    .measurements-csv-progress-message.alert.alert-warning.hidden
+    .progress.hidden
+      .progress-bar.progress-bar-striped.active{ 'aria-valuemax' => '100', 'aria-valuemin' => '0', 'aria-valuenow' => '0', :role => 'progressbar', :style => 'width:0%' }
+        0%
+
+    #result
+    = link_to 'Download CSV', download_measurements_csv_customers_path, class: 'btn btn-success hidden', id: 'measurements_download_csv'
+    %br
+
+  .measurements-filters-container
+    = search_form_for(@q, url: generate_measurements_csv_customers_path, method: :get, id: "q_search", class: "filter_form", remote: true) do |f|
+      %span.filter-row
+        = f.label :customer_shipping_country, 'Country'
+        = f.select :author_country_eq, options_for_select(['GB', 'SG'], params[:q]&.dig(:author_country_eq)),
+          { include_blank: true }, { class: 'selectpicker' }
+      %br
+      %span.filter-row
+        = f.label :fits_fit_in, 'Fit'
+        = f.select :fits_fit_in, options_for_select(Fit.fits, params[:q]&.dig(:fits_fit_in)), { include_blank: true },
+          { class: 'selectpicker', multiple: true }
+      %br
+      %span.filter-row
+        = f.label :categories_status, 'Status'
+        = f.select :categories_status_in, options_for_select(ProfileCategory.statuses, params[:q]&.dig(:categories_status_in)),
+          { include_blank: true }, { class: 'selectpicker', multiple: true }
+      %br
+
+      = f.submit 'Generate CSV', id: 'generate_measurements_csv_button', class: 'btn btn-primary'

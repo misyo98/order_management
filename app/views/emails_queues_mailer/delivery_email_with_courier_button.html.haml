@@ -1,0 +1,41 @@
+%p
+  = "Dear #{@recipient.first_name},"
+
+%p
+  = "We are pleased to inform you that the items of order #{@order_number} are ready at our showroom."
+
+%p
+  %b
+    If you require a fitting for these items, please book your fitting appointment here:
+    %br
+      = link_to "#{@link}", "#{@link}?order_token=#{@token}"
+
+%p The fitting appointment will only take around 15-20 minutes. Should you require any alterations we will alter your items with our skilled tailors.
+
+%br
+
+%p
+  %b
+    If you do not require a fitting, you can opt for a courier delivery to your shipping address:
+  %p
+    %b Current Shipping Address:
+    %p
+      = "#{@recipient.shipping_address_1}, #{@recipient.shipping_address_2}"
+    %p
+      = "#{@recipient.shipping_city}, #{@recipient.shipping_postcode}"
+    %p
+      = @recipient.shipping_country
+  %p
+    To confirm your address and request for a shipment, click here:
+    = link_to "Confirm Courier Delivery", "#{ENV['website']}/confirm-courier-delivery?customer_token=#{@token}&order_number=#{@order_number}", target: '_blank'
+%br
+
+%p Please note that deliveries happen during office hours and someone needs to be present to sign for receipt. We are sorry to inform you that we cannot accommodate to any specific delivery timing requests.
+
+%p If you would like us to send your items to an alternative address, please reply to this email with your new shipping address.
+
+%p If you would prefer to pick up your items at our showroom without fitting, please reply to this email with your preferred pickup day and time so we can prepare your items for collection.
+%br
+
+%p Best regards, and we are looking forward to seeing you soon!
+%p Edit Suits Co.

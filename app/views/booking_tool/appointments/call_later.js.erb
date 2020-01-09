@@ -1,0 +1,14 @@
+modal = "<%= j render 'callback_modal', appointment_id: @appointment_id %>";
+container = document.getElementById('callback-modal-container');
+
+if (container) {
+  $(container).html(modal);
+} else {
+  container = document.createElement("div");
+  container.setAttribute("id", "callback-modal-container");
+  container.innerHTML = modal
+  document.body.appendChild(container);
+}
+
+$('#callback-modal').modal('show');
+$('#callback_date').datepicker();

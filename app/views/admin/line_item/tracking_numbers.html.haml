@@ -1,0 +1,15 @@
+= form_tag import_tracking_numbers_line_items_path, multipart: true, class: 'formtastic active_admin_import_model' do
+  %fieldset.inputs
+    %ol
+      %li.file.input.optional
+        %label.label{ for: "active_admin_import_model_file" }
+          File
+        = file_field_tag :file, accept: 'text/csv'
+
+  %fieldset.actions
+    %ol
+      %li.action.input_action
+        = submit_tag "Import CSV", class: 'btn btn-primary', data: { 'disable-with' => 'Processing...' }
+      - if can? :download_csv, LineItem
+        %li.action.input_action
+          = link_to "Download Exmaple CSV", tracking_numbers_example_csv_line_items_path, class: 'btn btn-primary', target: '_blank'

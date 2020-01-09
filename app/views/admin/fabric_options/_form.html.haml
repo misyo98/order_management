@@ -1,0 +1,86 @@
+= form_for @fabric_option, class: 'form-inline' do |f|
+  %fieldset.inputs
+    %ol
+      %li
+        %label
+          Customization Tab ID
+        = f.select :fabric_tab_id, @fabric_tabs_hash, include_blank: true
+
+  %fieldset.inputs
+    %ol
+      %li
+        - if @dependable_array.present?
+          = f.select :depends_on_option_value_ids, @dependable_array, { }, { multiple: true, size: 55, class: 'selectpicker-for-depends-on' }
+        .text-muted Note: To select Depends On, Customization Option must be submitted first.
+
+  %fieldset.inputs
+    %ol
+      %li
+        %label
+          Title
+        = f.text_field :title
+
+  %fieldset.inputs
+    %ol
+      %li
+        %label
+          Order
+        = f.number_field :order
+
+  %fieldset.inputs
+    %ol
+      %li
+        %label
+          Button Type
+        = f.select :button_type, FabricOption::BUTTON_TYPES.map { |key, value| [value, key] }, {}, { id: 'button_type_select' }
+        .text-button-fields.hidden
+          %br
+          = f.label :max_characters
+          = f.number_field :max_characters, placeholder: 'Type maximum number of characters', class: 'text-button-max-characters'
+          %br
+          = f.label :max_characters
+          = f.text_field :allowed_characters, placeholder: 'Type allowed special characters', class: 'text-button-allowed-characters'
+
+  %fieldset.inputs
+    %ol
+      %li
+        %label
+          Placeholder
+        = f.text_field :placeholder
+
+  %fieldset.inputs
+    %ol
+      %li
+        %label
+          Outfitter Selection
+        = f.select :outfitter_selection, FabricOption::OUTFITTER_SELECTION.map { |key, value| [value, key] }
+
+  %fieldset.inputs
+    %ol
+      %li
+        %label
+          Tuxedo
+        = f.select :tuxedo, FabricOption::TUXEDO_SELECTION.map { |key, value| [value, key] }
+
+  %fieldset.inputs
+    %ol
+      %li
+        %label
+          Premium
+        = f.select :premium, FabricOption::PREMIUM_SELECTION.map { |key, value| [value, key] }
+
+  %fieldset.inputs
+    %ol
+      %li
+        %label
+          Fusible
+        = f.select :fusible, FabricOption::FUSIBLE_SELECTION.map { |key, value| [value, key] }
+
+  %fieldset.inputs
+    %ol
+      %li
+        %label
+          Manufacturer
+        = f.select :manufacturer, FabricOption::MANUFACTURERS.map { |key, value| [value, key] }
+
+  = f.submit "Submit", class: 'btn btn-primary', data: { 'disable-with' => 'Processing...' }

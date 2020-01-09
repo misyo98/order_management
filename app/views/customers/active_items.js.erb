@@ -1,0 +1,10 @@
+content = "<%= j render 'items', line_items: @line_items %>"
+
+vex.open({
+  content: content,
+  unsafeContent: '',
+  showCloseButton: false,
+  escapeButtonCloses: false,
+  overlayClosesOnClick: true,
+  appendLocation: 'body',
+});

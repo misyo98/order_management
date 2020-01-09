@@ -1,0 +1,6 @@
+%br
+= form_tag create_meta_line_item_path(@line_item), method: :post, remote: true, class: 'form-inline' do
+  = text_field_tag :label, nil, class: 'form-control mb-2 mr-sm-2', placeholder: 'Meta Name'
+  = text_field_tag :value, nil, class: 'form-control mb-2 mr-sm-2', placeholder: 'Meta Value'
+  = button_tag 'Save', type: :submit, class: 'btn btn-primary'
+%br

@@ -1,0 +1,59 @@
+%div{ class: @without_extra_fields.nil? ? "alteration-summary" : "alteration-summary hidden" }
+  / %div{ style: 'margin-bottom: 15px;' }
+  = fields_for summary do |f|
+    .form-group
+      .col-sm-2.control-label
+        = f.label       :urgent, class: 'required'
+      .col-sm-6
+        = f.select  :urgent, { yes: true, no: false }, { include_blank: true }, class: 'form-control'
+    .form-group
+      .col-sm-2.control-label
+        = f.label       :payment_required, class: 'required'
+      .col-sm-6
+        = f.select      :payment_required, { yes: true, no: false }, {}, class: 'form-control'
+    .form-group
+      .col-sm-2.control-label
+        = f.label       :requested_completion, class: 'required'
+      .col-sm-6
+        = f.text_field  :requested_completion, class: 'form-control', autocomplete: :off, data: { provide: 'datepicker', 'date-format': 'yyyy-mm-dd' }
+    .form-group
+      .col-sm-2.control-label
+        = f.label       :alteration_request_taken, class: 'required'
+      .col-sm-6
+        = f.text_field  :alteration_request_taken, class: 'form-control', autocomplete: :off, data: { provide: 'datepicker', 'date-format': 'yyyy-mm-dd' }
+    .form-group
+      .col-sm-2.control-label
+        = f.label       :delivery_method, class: 'required'
+      .col-sm-6
+        = f.select      :delivery_method, f.object.class::DELIVERY_METHODS, { include_blank: true }, class: 'form-control'
+    .form-group
+      .col-sm-2.control-label
+        = f.label       :non_altered_items, class: 'required'
+      .col-sm-6
+        = f.select  :non_altered_items, f.object.class::NON_ALTERED_ITEMS, { include_blank: true }, class: 'form-control'
+    .form-group
+      .col-sm-2.control-label
+        = f.label       :remaining_items, class: 'required'
+      .col-sm-6
+        = f.select  :remaining_items, f.object.class::REMAINING_ITEMS, { include_blank: true }, class: 'form-control'
+    .form-group
+      .col-sm-2.control-label
+        = f.label       :additional_instructions
+      .col-sm-6
+        = f.text_area  :additional_instructions, class: 'form-control'
+    .form-group
+      .col-sm-2.control-label
+        = f.label :images
+      .col-sm-8
+        - f.object.images.each do |image|
+          .image-block
+            = link_to image_tag(image.image_url, height: '120', width: '100%'), image.image_url, class: :fancybox, rel: :group, id: "image-block-#{image.id}" if f.object.images.any?
+            = link_to 'Delete image', alteration_summary_alteration_image_path(summary, image), class: 'far fa-trash-alt', method: :delete, remote: true, data: { confirm: 'Are you sure?' }
+        %p
+        = f.file_field :image, multiple: true, accept: 'image/png, image/gif, image/jpeg', name: 'alteration_images[image][]', class: 'custom-file-input image-input'
+    - if params['line_item_id']
+      .form-group
+        .col-sm-2.control-label
+          = f.label :save_without_changes
+        .col-sm-6.save_without_changes_check_box
+          = check_box_tag :save_without_changes, nil

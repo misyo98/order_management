@@ -1,0 +1,18 @@
+= form_for @enabled_fabric_category, class: 'form-inline' do |f|
+  %fieldset.inputs
+    %ol
+      %li
+        %label
+          -if @enabled_fabric_category.fabric_info.present?
+            = "Fabric Info ID (currently: ID#{@enabled_fabric_category.fabric_info_id} : #{@enabled_fabric_category.fabric_info.fabric_code})"
+          - else
+            = 'No Fabric Info linked yet'
+        = select_tag 'enabled_fabric_category[fabric_info_id]', [], id: "select-fabric-info"
+  %fieldset.inputs
+    %ol
+      %li
+        %label
+          Fabric category
+        = f.select :fabric_category_id, @fabric_category_hash, include_blank: true
+
+  = f.submit "Submit", class: 'btn btn-primary', data: { 'disable-with' => 'Processing...' }

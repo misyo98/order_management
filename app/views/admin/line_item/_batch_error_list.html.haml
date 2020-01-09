@@ -1,0 +1,9 @@
+- errors.uniq.each do |error_hash|
+  %li
+    = "#{error_hash[:attribute].to_s.humanize} #{error_hash[:message]}"
+
+= content_tag :div, id: 'batchErrorForm', name: 'line_item', data: { url: batch_update_line_items_path, method: :patch, ids: ids, state_event: event } do
+  - errors.uniq.each do |error_hash|
+    - next unless can_be_batch_updated?(error_hash[:attribute])
+
+    = input_for_error(error_hash[:attribute])

@@ -1,0 +1,35 @@
+%table.table
+  %thead
+    %tr
+      %th Step
+      %th Date
+      %th User
+  %tbody
+    - events.each do |event|
+      %tr
+        %td
+          = event.resolve_step
+        %td
+          = event.date
+        %td
+          = event.username
+
+        - if event.display_tailor?
+          %tr
+            %td
+              = event.tailor_step
+            %td
+              = event.date
+            %td
+              = event.username
+
+        - if event.display_courier?
+          %tr
+            %td
+              = event.courier_step
+            %td
+              = event.date
+            %td
+              = event.username
+
+

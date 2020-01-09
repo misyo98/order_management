@@ -1,0 +1,29 @@
+.modal.fade{ id: "select-columns-modal", tabindex: "-1", role: "dialog", 'aria-labelledby' => "myModalLabel", 'aria-hidden' => "true"} 
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button{ type: 'button', class: "close", data: { dismiss: "modal" } }
+          %span{ 'aria-hidden' => "true" } &times;
+          %span{ class: "sr-only" } Close
+        %h4{ class: 'modal-title', id: 'myModalLabel' }
+          Choose Columns
+      
+      .modal-body
+        .bs-actionsbox
+          .btn-group.btn-group-sm.btn-block
+            %button.columns-actions-btn.columns-select-all.btn.btn-default{ type: :button }
+              Select All
+            %button.columns-actions-btn.columns-deselect-all.btn.btn-default{ type: :button }
+              Deselect All
+        .checkboxes
+          - collection.each do |column|
+            %ul
+              %li
+                = label_tag column.label
+                = check_box_tag column.name, column.name, column.visible, class: 'column-for-select', id: column.id, data: { 'submit-path' => column.update_path }
+        
+      .modal-footer
+        %button{ class: 'btn btn-default', data: { dismiss: 'modal' } }
+          Close
+        %button{ class: 'btn btn-primary submit-column-visibility', data: { dismiss: 'modal', url: batch_update_columns_path } }
+          Save

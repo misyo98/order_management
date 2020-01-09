@@ -1,0 +1,10 @@
+.container
+  = form_for @profile, url: @profile.url(@customer), method: @profile.http_method, html: { class: 'measurement-form form-horizontal see-submission-form', multipart: true, id: 'measurement-submission-form' }, remote: true do |f|
+    - @categories.each do |category|
+      .category-table{ id: "category-table-#{category.order}", data: { id: category.id, status: @profile_categories[category.id]&.status } }
+        - if category.name == @body_category.name
+          = render 'customers/see_submission/values_table', category: category
+        - else
+          = render 'customers/see_submission/digits_table', category: category
+
+    = link_to 'Back to the Customer', customer_path(@customer), id: 'back_to_customer_button', class: 'btn btn-primary btn-lg'

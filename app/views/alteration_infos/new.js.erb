@@ -1,0 +1,6 @@
+form = "<%= j render partial: 'info_fields', locals: { info: @info } %>"
+category_id = "<%= @info.category_id %>"
+$(form).prependTo('#info-box-' + category_id)
+manufacturer_code = $('#manufacturer').val()
+$('.manufacturer-id').val(manufacturer_code)
+$('#measurement-table-' + category_id).show()

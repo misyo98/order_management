@@ -1,0 +1,11 @@
+var target = $('tr[data-category-param-id=' + "<%= j raw @category_param_id %>" +']').find('.change-fitting-garment-link');
+form = "<%= j render '/fitting_garments/fitting_garment_selector', fitting_garments: @fitting_garments %>"
+
+target.popover({
+  placement: 'bottom',
+  title: 'Select garment for column <a href="javascript:;" class="close">&times;</a>',
+  html: true,
+  content: form,
+  trigger: 'manual'
+});
+target.popover('show');

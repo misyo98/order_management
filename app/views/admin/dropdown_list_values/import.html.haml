@@ -1,0 +1,5 @@
+= form_tag '/dropdown_list_values/do_import', multipart: true do
+  %label File to Upload
+  = file_field_tag 'file', class: 'form-control'
+  %br
+  = submit_tag 'Import', class: 'btn btn-primary'

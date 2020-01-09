@@ -1,0 +1,50 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+en:
+  time:
+    formats:
+      order_date: '%Y/%m/%d'
+  date:
+    formats:
+      order_date: '%Y/%m/%d'
+  active_admin:
+    powered_by: Edit Suits Co.
+  activerecord:
+    errors:
+      models:
+        line_item_scope:
+          attributes:
+            label:
+              invalid_que: No special characters allowed
+        emails_queue:
+          attributes:
+            sent_at:
+              already_sent: Message to this recipient has already been sent within last 48 hours
+  updated_item:
+    one: 'One item was successfully updated'
+    other: '%{count} items were successfully updated'
+  imported_numbers:
+    one: 'One item was successfully updated. %{message}'
+    other: '%{count} items were successfully updated. %{message}'
+  created_item:
+    one: 'One item were successfully updated'
+    other: '%{count} items were successfully updated'

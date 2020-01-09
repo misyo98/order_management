@@ -1,0 +1,25 @@
+.panel_contents
+  = search_form_for(@q, url: accounting_path, method: :get, id: "q_search", class: "filter_form") do |f|
+    %span.filter-row
+      = f.label :sales_person, 'Sales Person'
+      = f.search_field :sales_person_first_name_or_sales_person_last_name_cont
+    %span.filter-row
+      = f.label :order_number, 'Order Number'
+      = f.search_field :order_number_eq
+    %span.filter-row
+      = f.label :paid_or_create_date_gteq, 'From Date(order paid date)'
+      = f.search_field :paid_or_create_date_gteq, class: :datepicker, autocomplete: :off
+    %span.filter-row
+      = f.label :paid_or_create_date_lteq, 'To Date(order paid date)'
+      = f.search_field :paid_or_create_date_lteq, class: :datepicker, autocomplete: :off
+    %span.filter-row
+      = f.label :order_currency_matches, 'Currency'
+      = f.search_field :order_currency_matches
+    %span.filter-row
+      = f.label :id_eq, 'Item ID'
+      = f.search_field :id_eq
+    %span.filter-row
+      = f.label :state_in, 'State'
+      = f.select :state_in, options_for_select(LineItemDecorator::REQUIRED_ACTIONS.keys),{ include_blank: true }, { class: 'selectpicker', multiple: true }
+
+    = f.submit 'Filter'

@@ -1,0 +1,140 @@
+- decorated_summary = @summary.decorate
+.container.alt-summary-show-pdf
+  = link_to 'Back to customers profile', customer_url(id: @summary.profile.customer_id)
+  = link_to 'Back to previous page', @request_url
+  %table.table.auto-width.table-no-borders
+    %tbody
+      %tr
+        %td
+          %b Alteration Request
+        %td{colspan: 2}
+          = decorated_summary.formatted_created_at
+        %td
+          %b EDIT SUITS CO.
+      %tr
+        %td
+          %b Manufacturer Number:
+        %td{colspan: 2}
+          = decorated_summary.manufacturer_code
+        %td.urgent-summary
+          = decorated_summary.maybe_urgent_label
+          %br
+          = decorated_summary.maybe_payment_required_label
+      %tr
+        %td
+          %b Customer Name:
+        %td{colspan: 2}
+          = decorated_summary.customer_name
+        %td
+          %b Location of Sales:
+
+      %tr
+        %td
+          %b Outfitter:
+        %td{colspan: 2}
+          = decorated_summary.created_by
+        %td
+          = decorated_summary.locations_of_sales
+
+      %tr
+        %td
+          %b Is this order urgent?:
+        %td{colspan: 2}
+          = decorated_summary.maybe_urgent_text
+        %td.lightgrey
+          %b Requested completion date:
+
+      %tr
+        %td
+          %b Requested delivery method:
+        %td{colspan: 2}
+          = decorated_summary.formatted_delivery_method
+        %td.lightgrey.requested-completion
+          = decorated_summary.formatted_completion_date
+
+      %tr
+        %td
+          %b Non altered items:
+        %td{colspan: 2}
+          = decorated_summary.formatted_non_altered_items
+        %td
+
+      %tr
+        %td
+          %b Remaining items:
+        %td{colspan: 2}
+          = decorated_summary.formatted_remaining_items
+        %td
+          - @summary.alteration_numbers.each do |number, count|
+            = "#{number}: Alteration no. #{count}"
+            %br
+      %tr
+        %td
+          %b Additional instructions:
+        %td{colspan: 3}
+          = @summary.additional_instructions
+
+  - @categories.each do |category|
+    - info = @summary.alteration_infos.detect { |info| info.category_id == category.id }
+    - next unless info
+
+    %table.table.table-bordered.auto-width.default-table.nobreak.table-no-padding
+      %thead
+        %th.col-category Category
+        %th.col-category Measurement
+        %th.col-category Change (inches)
+        %th.col-category Final Garment (inches)
+      %tbody
+        - @summary.alterations.select { |alteration| alteration&.measurement&.category_id == category.id }.each do |alteration|
+          - alteration = alteration.decorate
+          - next if alteration.not_for_display?
+          %tr
+            %td
+              = category.name
+            %td
+              = alteration.measurement.param_title
+            %td{ class: [alteration.value && "lightgrey", 'alter-field'] }
+              = alteration.value && alteration.value > 0 ? "+#{alteration.value}" : alteration.value
+            %td
+              = alteration.measurement.post_alter_garment
+    - if category.name == 'Jacket'
+      %table.table.table-bordered.auto-width.default-table.table-no-padding
+        %thead
+        %tbody
+          %tr
+            %td
+              %b Lapel flaring
+            %td.lightgrey.comment-field
+              = info.lapel_flaring
+          %tr
+            %td
+              %b Shoulder fix
+            %td.lightgrey.comment-field
+              = info.shoulder_fix
+          %tr
+            %td
+              %b Move button
+            %td.lightgrey.comment-field
+              = info.move_button
+          %tr
+            %td
+              %b Square back neck
+            %td.lightgrey.comment-field
+              = info.square_back_neck
+          %tr
+            %td
+              %b Armhole
+            %td.lightgrey.comment-field
+              = info.armhole
+    %table.auto-width
+      %thead
+        %th
+      %tbody
+        %tr
+          %td
+            %b
+              = "Comments(#{category.name})"
+        %tr
+          %td.lightgrey.comment-field
+            = info.comment
+    %br

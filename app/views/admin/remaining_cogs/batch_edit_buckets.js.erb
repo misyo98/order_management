@@ -1,0 +1,5 @@
+html = "<%= j render 'admin/remaining_cogs/batch_bucket_modal_body', collection: @buckets %>"
+modal = $('#batch-update-buckets-modal')
+
+modal.find('.modal-body').html(html)
+modal.modal('show')

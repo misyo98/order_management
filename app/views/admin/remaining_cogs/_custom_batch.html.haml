@@ -1,0 +1,11 @@
+.table_tools
+  .batch_actions_selector.dropdown_menu
+    %a.dropdown_menu_button{ href: '#'}
+      Batch Actions
+
+    .dropdown_menu_list_wrapper.custom-batch-dropdown-list
+      .dropdown_menu_nipple.custom-batch-dropdown-nipple
+        %ul.dropdown_menu_list
+          %li
+            %button{ class: 'btn btn-default custom_batch_action', data: { url: batch_edit_buckets_remaining_cogs_path } }
+              Update Cost Bucket

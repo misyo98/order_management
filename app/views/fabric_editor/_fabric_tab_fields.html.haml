@@ -1,0 +1,33 @@
+%ul{ id: "#{dom_id(f.object)}" }
+  .nested-fields
+    .fabric-tabs-group
+      %span
+        %table
+          %tr
+            %td
+              %i.far.fa-caret-square-up.fa-2x.expand-fabric-box
+            %td
+              %h4
+                = f.object.persisted? ? "Customization Tab ID: #{f.object.id}" : 'New Customization Tab:'
+            %td
+              %h4.fabric-tab-title-header
+                = f.object.title.present? ? f.object.title : nil
+        %br
+        .fabric-tab
+          .field
+            = f.hidden_field :id
+          .field
+            = f.label :title
+            = f.text_field :title, class: 'form-control fabric-tab-title'
+            %br
+          = link_to_remove_association 'Remove Customization Tab', f, class: 'btn btn-danger col-lg-6 col-lg-offset-3'
+          %br
+            %h3.fabric-label
+              Customization Options
+            #fabric_options{ 'data-id': f.object.id }
+              = f.fields_for :fabric_options, f.object.fabric_options.order(:order) do |option|
+                = render 'fabric_editor/fabric_option_fields', f: option
+              .links
+                %br
+                = link_to_add_association 'Add Customization Option', f, :fabric_options, class: 'btn btn-success col-lg-6 col-lg-offset-3'
+                %br

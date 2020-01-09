@@ -1,0 +1,15 @@
+.nested-fields
+  .form-group.col-md-4
+    %h4.align-center New Parameter
+    %br
+    = f.label :name, class: 'col-sm col-form-label-sm'
+    = f.text_field :name, { class: 'form-control' }
+    %small.form-text.text-muted
+      After definition can be used in expression like: {{name}}
+  .form-group.col-md-12
+    = f.label :expression, class: 'col-sm col-form-label-sm'
+    = f.text_area :original_expression, { class: 'form-control' }
+    %small.form-text.text-muted
+      Must evaluate to number! Example: {{body_shape_postures.square_back_neck.body}} == 'full_figure' ? 1.75 : 1
+  .form-group.col-md-12
+    = link_to_remove_association 'Remove parameter', f, class: 'btn btn-danger'

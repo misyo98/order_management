@@ -1,0 +1,9 @@
+%table.table.table-striped
+  %thead
+    %tr
+      %th= @fabric_tier.title
+  %tbody
+    - @fabric_tier_prices.decorate.each do |tier_category_price|
+      %tr
+        %td= tier_category_price.fabric_category.title
+        %td= tier_category_price.country_specific_category_price

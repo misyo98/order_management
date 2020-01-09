@@ -1,0 +1,39 @@
+%table.table-condensed.table-bordered.fabric-tiers-table.table-hover
+  %thead
+    %tr
+      %th.fabric-tiers-empty-header{ colspan: 3 }
+
+      - FabricTierCategory::CURRENCIES.each do |currency|
+        %th.fabric-currency-header{ class: "#{currency.downcase}-color", colspan: @fabric_categories.count }
+          = currency
+    %tr
+      %th
+        ID
+      %th.fabric-tier-title-header
+        Title
+      %th.fabric-tier-order-header
+        Order
+
+      - FabricTierCategory::CURRENCIES.each do
+        - @fabric_categories.each do |fabric_category|
+          %th.fabric-tiers-category-header
+            %p
+              = fabric_category.title
+  %tbody
+    - @fabric_tiers.each do |fabric_tier|
+      %tr
+        %td
+          = link_to fabric_tier.id, fabric_tier_path(fabric_tier)
+        %td
+          = fabric_tier.title
+        %td
+          = fabric_tier.order
+
+        - FabricTierCategory::CURRENCIES.each do |currency|
+          - @fabric_categories.each do |fabric_category|
+            %td
+              - tier_category = resolve_tier_category(fabric_tier: fabric_tier, fabric_category: fabric_category)
+              = number_field_tag :tier_category_price, tier_category.price[currency], class: 'form-control tier-category-price',
+                data: { 'fabric_tier_id': fabric_tier.id, 'fabric_category_id': fabric_category.id, 'currency': currency }
+        %td
+          = link_to 'Delete', fabric_tier_path(fabric_tier), method: :delete, class: 'fa fa-trash'

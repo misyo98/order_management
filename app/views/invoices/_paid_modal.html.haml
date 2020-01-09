@@ -1,0 +1,35 @@
+.modal.fade{ id: "paid-modal", tabindex: "-1", role: "dialog", 'aria-labelledby' => "myModalLabel", 'aria-hidden' => "true" }
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button{ type: "button", class: "close", data: { dismiss: "modal" } }
+          %span{ 'aria-hidden' => "true" } &times;
+          %span{ class: "sr-only" } Close
+
+      = form_for invoice, remote: true, authenticity_token: true do |f|
+        .modal-body
+          %h2.text-center Mark invoice as paid
+          %br
+          #invoice-errors
+          %br
+            .form-group.row
+              %label.col-sm-2.col-form-label
+                Transaction slip:
+              = f.file_field :file, class: 'form-control-file'
+              %small.form-text.text-muted
+                Allowed formats: .jpeg, .jpg, .png
+
+            .form-group.row
+              %label.col-sm-2.col-form-label
+                Payment Date:
+              .col-sm-4
+                = f.text_field :payment_date, class: 'form-control datepicker', placeholder: 'Payment Date', autocomplete: :off,
+                  data: { provide: 'datepicker', 'date-format': 'yyyy-mm-dd' }
+
+            .form-group.row
+              .col-sm-10
+                = f.hidden_field :status, value: 'paid', class: 'btn btn-default'
+        .modal-footer
+          %button{ class: 'btn btn-default', data: { dismiss: 'modal' } }
+            Close
+          = f.submit 'Save', class: 'btn btn-default'

@@ -1,0 +1,42 @@
+#fabric_errors.hidden
+.fabric-form-group
+  - if @fabric_category
+    = form_for @fabric_category, url: create_fabric_group_path(id: @fabric_category), method: :patch, remote: true, class: 'fabric-constructor-form' do |f|
+      %fieldset.inputs
+        %ol
+          %li
+            %table.col-lg-offset-5
+              %tr
+                %td.fabric-tuxedo-label
+                  %h3 Tuxedo?
+                %td.fabric-tuxedo-checkbox
+                  = f.check_box :tuxedo, { id: 'category_tuxedo_select' }
+
+        %fieldset.inputs#tuxedo_price_field
+          %ol
+            %li
+              %h3.fabric-label Tuxedo Price
+              .price
+                %table.col-lg-6.col-lg-offset-3
+                  %tr
+                    %td
+                      .sgd-currency-field
+                        %h4.category-currency-label SGD Price
+                        = f.text_field :SGD, value: f.object.tuxedo_price.nil? ? nil : f.object&.tuxedo_price['SGD'], autocomplete: :off, class: 'category-tuxedo-sgd-currency'
+                    %td
+                      .gbp-currency-field
+                        %h4.category-currency-label GBP Price
+                        = f.text_field :GBP, value: f.object.tuxedo_price.nil? ? nil : f.object&.tuxedo_price['GBP'], autocomplete: :off, class: 'category-tuxedo-gbp-currency'
+      %br
+
+      %h3.fabric-label.fabric-tabs-label
+        Customization Tabs
+      %br
+      %div#fabric_tabs{ 'data-id': f.object.id }
+        = f.fields_for :fabric_tabs, f.object.fabric_tabs.order(:order) do |tab|
+          = render 'fabric_editor/fabric_tab_fields', f: tab
+        .links
+          = link_to_add_association 'Add Customization Tab', f, :fabric_tabs, class: 'btn btn-success col-lg-6 col-lg-offset-3'
+      %br
+      %br
+      = f.submit 'Save Changes', data: { disable_with: 'Updating...' }, id: 'submit_fabric_construction_form', class: 'btn btn-primary col-lg-6 col-lg-offset-3'

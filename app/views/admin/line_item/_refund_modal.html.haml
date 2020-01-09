@@ -1,0 +1,17 @@
+.modal.fade{ id: "refund-modal", tabindex: "-1", role: "dialog", 'aria-labelledby' => "Refund", 'aria-hidden' => "true"} 
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button{ type: 'button', class: "close", data: { dismiss: "modal" } }
+          %span{ 'aria-hidden' => "true" } &times;
+          %span{ class: "sr-only" } Close
+        %h4{ class: 'modal-title', id: 'Refund' }
+          Please, enter refunded amount:
+      
+      .modal-body#refund-modal-body
+        
+      .modal-footer
+        %button{ class: 'btn btn-default', data: { dismiss: 'modal' } }
+          Close
+        %button{ type: :button, class: 'btn btn-primary', id: 'refund-submit-button' }
+          Submit

@@ -1,0 +1,109 @@
+= form_for @fabric_option_value, class: 'form-inline' do |f|
+  .fabric-option-value
+    %fieldset.inputs
+      %ol
+        %li
+          %label
+            Customization Option ID
+          = f.select :fabric_option_id, @fabric_option_hash, include_blank: true
+
+    %fieldset.inputs
+      %ol
+        %li
+          %label
+            Depends On
+          - if @dependable_array.present?
+            = f.select :depends_on_option_value_ids, @dependable_array, { }, { multiple: true, class: 'selectpicker-for-depends-on' }
+          .text-muted Note: To select Depends On Option Values, Customization Option Value must be assigned to some Customization Option and submitted first.
+
+    %fieldset.inputs
+      %ol
+        %li
+          %label
+            Title
+          = f.text_field :title, placeholder: 'Fill in title'
+
+    %fieldset.inputs
+      %ol
+        %li
+          %label
+            Order
+          = f.number_field :order
+
+    %fieldset.inputs
+      %ol
+        %li
+          %label
+            Tuxedo
+          = f.select :tuxedo, FabricOptionValue::TUXEDO_SELECTION.map { |key, value| [value, key] }
+
+    %fieldset.inputs
+      %ol
+        %li
+          %label
+            Premium
+          = f.select :premium, FabricOptionValue::PREMIUM_SELECTION.map { |key, value| [value, key] }
+
+    %fieldset.inputs
+      %ol
+        %li
+          %label
+            Manufacturer
+          = f.select :manufacturer, FabricOptionValue::MANUFACTURERS.map { |key, value| [value, key] }
+
+    %fieldset.inputs
+      %ol
+        %li
+          %label
+            Outfitter Selection
+          = f.select :outfitter_selection, FabricOptionValue::OUTFITTER_SELECTION.map { |key, value| [value, key] }
+
+    %fieldset.inputs
+      %ol
+        %li
+          %label
+            Active
+          = f.select :active, { 'No' => false, 'Yes' => true }
+
+    %fieldset.inputs
+      %ol
+        %li
+          %label
+            Manufacturer Code
+          = f.text_field :manufacturer_code, placeholder: 'Manufacturer Code'
+
+    %fieldset.inputs
+      %ol
+        %li
+          %label
+            Image url
+          = f.text_field :image_url, placeholder: 'Paste image URL in here', class: 'image-url-field'
+    %fieldset.inputs
+      %ol
+        %li
+          %td
+            = image_tag f.object.image_url, size: '300x200', class: 'image-field'
+
+        .form-group
+          - unless @fabric_option_value.price.nil?
+            - @fabric_option_value.price.each do |currency, value|
+              %li
+                .price
+                  %table
+                    %tr
+                      %td
+                        %label
+                          Currency
+                        = text_field_tag 'price_array[][currency]', currency, id: 'fabric_currency_field', class: 'form-control mb-2 mr-sm-2', placeholder: 'Currency', size: 35
+                      %td
+                        %label
+                          Value
+                        = text_field_tag 'price_array[][value]', value, class: 'form-control mb-2 mr-sm-2', placeholder: 'Value', size: 35
+                  %br
+                  = button_tag 'Remove currency', id: 'remove_currency_button', class: 'btn btn-danger'
+                  %br
+
+        %li.fabric-prices
+        = button_tag 'Add currency', id: 'add_currency_button', class: 'btn btn-success'
+
+  = f.submit "Submit", class: 'btn btn-primary', data: { 'disable-with' => 'Processing...' }

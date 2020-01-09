@@ -1,0 +1,12 @@
+var order_numbers = "<%= j @customer.orders.pluck(:number).join(', ') %>"
+var email = "<%= j @customer.email %>"
+var url = "<%= j items_customer_profile_index_path(customer_id: @customer.id) %>"
+var review = "<%= @review %>"
+
+$('#customer_order').val(order_numbers)
+$('#customer_email').val(email)
+$('.submit-form').data('review', review)
+$('.items').data('url', url)
+$('.fits-form').html("<%= j render partial: '/fits/form' %>")
+$('.items').removeClass('hidden')
+$.methods.callForMeasurements()

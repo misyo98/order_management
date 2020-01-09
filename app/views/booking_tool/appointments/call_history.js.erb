@@ -1,0 +1,10 @@
+content = "<%= j render 'call_history', calls: @calls %>"
+
+vex.open({
+  content: content,
+  unsafeContent: '',
+  showCloseButton: false,
+  escapeButtonCloses: false,
+  overlayClosesOnClick: true,
+  appendLocation: 'body'
+});

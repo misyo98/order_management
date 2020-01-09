@@ -1,0 +1,10 @@
+.nested-fields
+  .form-row.clearfix
+    .form-group.col-md-3
+      = label_tag 'Category',  nil, class: 'col-sm col-form-label-sm'
+      = select_tag 'fits[category_id][category_id]', options_for_select(categories.collect{ |c| [c.name, c.id] }), class: 'select2-input fit-selector', include_blank: true
+    .form-group.col-md-2
+      = label_tag 'Fit',  nil, class: 'col-sm col-form-label-sm'
+      = select_tag 'fits[category_id][fit]', options_for_select(Fit.fits.map { |f, _| [f.to_s.humanize, f] }), class: 'select2-input', include_blank: true
+    .form-group.col-md-1
+      = link_to_remove_association 'X', f, class: 'form-control btn btn-danger'

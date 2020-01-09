@@ -1,0 +1,82 @@
+%ul{ id: "#{dom_id(f.object)}" }
+  .nested-fields
+    .fabric-options-group
+      %span
+        %table
+          %tr
+            %td
+              %i.far.fa-caret-square-up.fa-2x.expand-fabric-box
+            %td
+              %h4
+                = f.object.persisted? ? "Customization Option ID: #{f.object.id}" : 'New Customization Option:'
+            %td
+              %h4.fabric-option-title-header
+                = f.object.title.present? ? f.object.title : nil
+        %br
+        .fabric-option
+          .field
+            = f.hidden_field :id
+          .field
+            = f.label :depends_on_option_value_ids
+            = f.select :depends_on_option_value_ids, @option_dependables, { }, { multiple: true, size: 55, class: 'selectpicker-for-depends-on' }
+            .text-muted Note: You have to save all newly added Option Values in order to select them here.
+            %br
+          .field
+            = f.label :title
+            = f.text_field :title, class: 'form-control fabric-option-title'
+            %br
+          .field
+            = f.label :tuxedo
+            = f.select :tuxedo, FabricOption::TUXEDO_SELECTION.map { |key, value| [value, key] }, {}, { class: 'form-control' }
+            %br
+          .field
+            = f.label :outfitter_selection
+            = f.select :outfitter_selection, FabricOption::OUTFITTER_SELECTION.map { |key, value| [value, key] }, {}, { class: 'form-control' }
+            %br
+          .field
+            = f.label :button_type
+            = f.select :button_type, FabricOption::BUTTON_TYPES.map { |key, value| [value, key] }, {}, { class: 'form-control editor-button-type-select' }
+            .text-button-fields.hidden
+              %br
+              = f.label :max_characters
+              = f.number_field :max_characters, placeholder: 'Type maximum number of characters', class: 'form-control text-button-max-characters'
+              %br
+              = f.label :allowed_characters
+              = f.text_field :allowed_characters, placeholder: 'Type allowed special characters', class: 'form-control text-button-allowed-characters'
+            .price-button-fields.hidden
+              = f.label :price
+              = f.number_field :price, placeholder: 'Type price in here', step: :any, class: 'form-control price-button-price-field'
+            %br
+          .field
+            = f.label :premium
+            = f.select :premium, FabricOption::PREMIUM_SELECTION.map { |key, value| [value, key] }, {}, { class: 'form-control' }
+            %br
+          .field
+            = f.label :fusible
+            = f.select :fusible, FabricOption::FUSIBLE_SELECTION.map { |key, value| [value, key] }, {}, { class: 'form-control' }
+            %br
+          .field
+            = f.label :manufacturer
+            = f.select :manufacturer, FabricOption::MANUFACTURERS.map { |key, value| [value, key] }, {}, { class: 'form-control' }
+            %br
+          .field
+            = f.label :using_dropdown_list
+            = f.check_box :using_dropdown_list, { class: 'form-control using-dropdown-list' }
+            %br
+            .field.dropdown-list-select-field
+              = f.label :dropdown_list
+              = f.select :dropdown_list_id, DropdownList.all.map { |list| [list.title, list.id] }, {}, { class: ' form-control dropdown-list-select' }
+            %br
+          = link_to_remove_association 'Remove Customization Option', f, class: 'btn btn-danger col-lg-6 col-lg-offset-3'
+          %br
+          .fabric-option-values
+            %h3.fabric-label
+              Customization Option Values
+            #fabric_option_values{ 'data-id': f.object.id }
+              = f.fields_for :fabric_option_values, f.object.fabric_option_values.order(:order) do |option_value|
+                = render 'fabric_editor/fabric_option_value_fields', f: option_value
+              .links
+                %br
+                = link_to_add_association 'Add Customization Option Value', f, :fabric_option_values, class: 'btn btn-success col-lg-6 col-lg-offset-3'
+                %br
+                %br

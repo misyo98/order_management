@@ -1,0 +1,15 @@
+%table.table
+  %thead
+    %tr
+      %th Appointment ID
+      %th Caller Name
+      %th Call Date
+  %tbody
+    - calls.each do |call_hash|
+      %tr
+        %td.appointment-id
+          = "Appointment ##{call_hash['appointment_id']}"
+        %td.col-caller-name
+          = call_hash['caller_name']
+        %td.col-date
+          = Time.parse(call_hash['call_date']).strftime('%B %d, %Y %H:%M')

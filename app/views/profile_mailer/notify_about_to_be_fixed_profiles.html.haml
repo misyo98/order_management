@@ -1,0 +1,9 @@
+%h1
+  = "Dear #{@user.full_name},"
+
+%p A measurement profile(s) you submitted has an issue and requires urgent attention:
+
+- @profile_categories.each do |profile, profile_categories|
+  - customer = profile.customer
+  %li
+    = link_to customer.full_name, new_measurement_url(customer_id: customer.id, review: false)

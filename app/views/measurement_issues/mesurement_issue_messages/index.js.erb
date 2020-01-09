@@ -1,0 +1,13 @@
+content = "<%= j render 'index' %>"
+
+vex.open({
+  content: content,
+  unsafeContent: '',
+  showCloseButton: true,
+  escapeButtonCloses: true,
+  overlayClosesOnClick: true,
+  appendLocation: 'body',
+  // afterOpen: function($vexContent) {
+  //   $vexContent.parents('.vex.vex-theme-flat-attack').css('font-size', '1em');
+  // }
+});

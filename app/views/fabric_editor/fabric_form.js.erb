@@ -1,0 +1,11 @@
+$('.fabric-group-box').html("<%= j render(:partial => 'fabric_editor/fabric_form') %>");
+$('.fabric-tab, .fabric-option, .fabric-option-value').slideUp(0);
+$('.fabric-tab, .fabric-option, .fabric-option-value').addClass('was-hidden');
+$('.expand-fabric-box').removeClass('fa-caret-square-up')
+$('.expand-fabric-box').addClass('fa-caret-square-down')
+$('.selectpicker-for-depends-on').selectpicker({
+  title: 'Depends On'
+});
+$.fabric_customization.maybe_fields_for_tuxedo_price();
+$.fabric_customization.maybe_dropdown_lists();
+$.fabric_customization.editor_maybe_fields_for_button_type();

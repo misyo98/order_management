@@ -1,0 +1,20 @@
+%p
+  = "Dear #{@recipient.first_name},"
+
+%p We have items for you available for a fitting appointment with one of our outfitters.
+%p
+  = "Your order number is #{@order_number}"
+
+%p
+  %b
+    = 'Please book your fitting appointment here:'
+    %br
+      = link_to "#{@link}", "#{@link}?order_token=#{@token}"
+
+%p The fitting appointment will only take around 15-20 minutes. Should you require any alterations we will alter your items with our skilled tailors.
+
+%p We are looking forward to seeing you again!
+%br
+
+%p Best regards,
+%p Edit Suits Co.

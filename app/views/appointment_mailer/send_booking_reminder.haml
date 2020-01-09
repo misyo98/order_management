@@ -1,0 +1,5 @@
+- @appointments.each do |apt|
+  %div
+    - url = "#{@url}#{apt.id}"
+    = link_to url, url
+  %br

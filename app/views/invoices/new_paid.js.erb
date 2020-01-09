@@ -1,0 +1,14 @@
+modal = "<%= j render 'paid_modal', invoice: @invoice %>";
+container = document.getElementById('invoice-modal-container');
+
+if (container) {
+  $(container).html(modal);
+} else {
+  container = document.createElement("div");
+  container.setAttribute("id", "invoice-modal-container");
+  container.innerHTML = modal
+  document.body.appendChild(container);
+}
+
+$('#paid-modal').modal('show');
+$('.datepicker').datepicker();

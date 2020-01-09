@@ -1,0 +1,7 @@
+- item.errors.each do |error_key, message|
+  %li
+    = "#{error_key.to_s.humanize} #{message}"
+
+= content_tag :div, id: 'errorForm', name: 'line_item', data: { url: line_item_path(item), method: :patch, id: item.id, state_event: params[:state_event] } do
+  - item.errors.each do |error_key, message|
+    = input_for_error(error_key)

@@ -1,0 +1,11 @@
+<% if params[:scope] == 'browsers_and_other' %>
+  $('#ops-table').html("<%= j render 'booking_tool/appointments/browsers_and_other_table', appointments: @appointments, sales_people: @sales_people %>")
+<% elsif params[:scope] == 'no_shows_and_cancelled' %>
+  $('#no-shows-and-cancelled-table').html("<%= j render 'booking_tool/appointments/no_shows_and_cancelled_table', appointments: @appointments, sales_people: @sales_people %>")
+<% else %>
+  $('#outfitters-table').html("<%= j render 'booking_tool/appointments/outfitters_table', appointments: @appointments, sales_people: @sales_people %>")
+<% end %>
+
+$.appointments.toggleTabs("<%= j params[:scope] %>")
+$.appointments.enableSelect2()
+$('.best_in_place').best_in_place()

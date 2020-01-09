@@ -1,0 +1,37 @@
+= render partial: '/shared/top_menu'
+
+%br
+.col-sm-12
+  = render 'booking_tool/appointments/search_header/search'
+  %br
+.col-sm-12
+  %ul.nav.nav-pills
+    %li{ class: maybe_active_class('outfitters') }
+      = link_to 'Outfitters', booking_tool_appointments_path(scope: :outfitters, q: outfitter_params), data: { target: 'outfitters-table' } unless current_user.phone_support?
+    %li{ class: maybe_active_class('browsers_and_other') }
+      = link_to 'Browsers & Other', booking_tool_appointments_path(scope: :browsers_and_other, q: browsers_and_other_params), data: { target: 'browsers-and-other-table' }
+    %li{ class: maybe_active_class('no_shows_and_cancelled') }
+      = link_to 'No Shows / Cancelled', booking_tool_appointments_path(scope: :no_shows_and_cancelled, q: no_shows_and_cancelled_params), data: { target: 'no-shows-and-cancelled-table' }
+    %li{ class: maybe_active_class('dropped') }
+      = link_to 'Dropped', booking_tool_appointments_path(scope: :dropped, q: dropped_params, order: 'created_at desc'), data: { target: 'dropped-table' }
+    %li{ class: maybe_active_class('callback') }
+      = link_to 'Callback', booking_tool_appointments_path(scope: :callback, q: callback_params), data: { target: 'callback-table' }
+    %li{ class: maybe_active_class('all') }
+      = link_to 'All appointments', booking_tool_appointments_path(scope: :all, q: all_params), data: { target: 'all-table' }
+
+.tab-content
+  .tab-pane.fade#outfitters-table{ class: maybe_active_tab_class('outfitters') }
+    = render 'booking_tool/appointments/outfitters_table', appointments: @appointments, sales_people: @sales_people if outfitters?
+  .tab-pane.fade#dropped-table{ class: maybe_active_tab_class('dropped') }
+    = render 'booking_tool/appointments/dropped_table', appointments: @appointments, sales_people: @sales_people if dropped?
+  .tab-pane.fade#callback-table{ class: maybe_active_tab_class('callback') }
+    = render 'booking_tool/appointments/callback_table', appointments: @appointments, sales_people: @sales_people if callback?
+  .tab-pane.fade#all-table{ class: maybe_active_tab_class('all') }
+    = render 'booking_tool/appointments/all_table', appointments: @appointments, sales_people: @sales_people if all?
+  .tab-pane.fade#browsers-and-other-table{ class: maybe_active_tab_class('browsers_and_other') }
+    = render 'booking_tool/appointments/browsers_and_other_table', appointments: @appointments, sales_people: @sales_people if browsers_and_other?
+  .tab-pane.fade#no-shows-and-cancelled-table{ class: maybe_active_tab_class('no_shows_and_cancelled') }
+    = render 'booking_tool/appointments/no_shows_and_cancelled_table', appointments: @appointments, sales_people: @sales_people if no_shows_and_cancelled?
+.col-sm-10
+  .row
+    = display_pagination_html(@pagination_scope) if @pagination_scope && @pagination_scope.total_pages > 1

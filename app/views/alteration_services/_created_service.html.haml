@@ -1,0 +1,7 @@
+%tr
+  %td
+    = service.name
+  %td
+    = service_tailor&.price
+  %td
+    %input#alteration_summary_alteration_service_ids_{name: "alteration_summary[alteration_service_ids][]", type: "checkbox", checked: 'true', value: "#{service.id}"}

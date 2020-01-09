@@ -1,0 +1,37 @@
+%table.table.table-striped.table-hover{cellspacing: "0", width: "100%"}
+  %thead
+    %tr
+      %th.col-md-1 ID
+      %th.col-md-1 Fabric Brand
+      %th.col-md-1 Fabric Book
+      %th.col-md-1 Fabric Code
+      %th.col-md-1 Manufacturer Fabric Code
+      %th.col-md-1 Fabric Tier ID
+      %th.col-md-1 Fabric Type
+      %th.col-md-1 Manufacturer
+      %th.col-md-1 Fusible
+      %th.col-md-1 Premium
+      %th.col-md-1 Season
+      %th.col-md-1 USD for Meter
+      %th.col-md-1 Fabric Addition
+      %th.col-md-1 Valid From
+
+  %tbody
+    - @deleted_fabric_infos.each do |fabric_info|
+      %tr
+        %td= link_to fabric_info.id, fabric_info_path(fabric_info)
+        %td= link_to fabric_info.fabric_brand&.title, fabric_brand_path(fabric_info.fabric_brand_id) if fabric_info.fabric_brand_id
+        %td= link_to fabric_info.fabric_book&.title, fabric_book_path(fabric_info.fabric_book_id) if fabric_info.fabric_book_id
+        %td= fabric_info.fabric_code
+        %td= fabric_info.manufacturer_fabric_code
+        %td= link_to fabric_info.fabric_tier_id, fabric_tier_path(fabric_info.fabric_tier_id) if fabric_info.fabric_tier_id
+        %td= fabric_info.fabric_type&.dasherize&.humanize
+        %td= FabricInfo::MANUFACTURERS[fabric_info.manufacturer.to_sym] if fabric_info.manufacturer
+        %td= to_yes_or_no(fabric_info.fusible)
+        %td= to_yes_or_no(fabric_info.premium)
+        %td= fabric_info.season
+        %td= fabric_info.usd_for_meter
+        %td= fabric_info.fabric_addition
+        %td= fabric_info.valid_from
+
+    = paginate @deleted_fabric_infos

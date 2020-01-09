@@ -1,0 +1,15 @@
+%table.table
+  %thead
+    %tr
+      %th Author
+      %th Comment
+      %th Created at
+  %tbody
+    - @mesurement_issue_messages.each do |message|
+      %tr
+        %td
+          = message.author&.full_name
+        %td
+          = message.body
+        %td
+          = message.created_at.to_s(:long)

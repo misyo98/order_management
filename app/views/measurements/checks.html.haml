@@ -1,0 +1,34 @@
+= render partial: '/shared/top_menu'
+
+.container
+  .items
+    %h2 Select Categories
+    .form
+      - @categories.each do |category|
+        %label.checkbox-inline
+          = category.name
+        = check_box_tag :fit, nil, false, { id: "#{category.name}-fit", class: 'fits', data: { category: category.name } }
+
+  .value_inputs
+    - MeasurementCheck::VALUE_FIELDS.each do |title, field_id|
+      .col-sm-2.control-label
+        = label_tag title.parameterize.underscore, title
+        = text_field_tag title.parameterize.underscore, nil, { id: field_id, class: 'measurement_values form-control' }
+  %hr{ style: 'height:20px; visibility:hidden; margin-bottom:40px;' }
+  %table.table.table-bordered.table-hover.auto-width
+    %thead.thead-inverse
+      %th Category
+      %th Measurement
+      %th Min/Max
+    %tbody
+      - @checks.each do |check|
+        %tr{ data: { category: check.category_name }, class: 'hidden' }
+          %td.col-xs-1
+            = check.category_name
+          %td.col-xs-4
+            = check.param_title
+          %td.col-xs-4
+            .checks{ data: { min: check.min, max: check.max, name: check_name(check) }, class: check.abs_value? ? 'full_values' : 'checkable' }
+
+- content_for :header do
+  = javascript_include_tag 'checks'

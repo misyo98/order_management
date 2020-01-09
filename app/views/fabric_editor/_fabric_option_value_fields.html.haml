@@ -1,0 +1,68 @@
+%ul{ id: "#{dom_id(f.object)}" }
+  .nested-fields
+    .fabric-option-values-group
+      %span
+        %table
+          %tr
+            %td
+              %i.far.fa-caret-square-up.fa-2x.expand-fabric-box
+            %td
+              %h4
+                = f.object.persisted? ? "Customization Option Value ID: #{f.object.id}" : 'New Customization Option Value:'
+            %td
+              %h4.fabric-option-value-title-header
+                = f.object.title.present? ? f.object.title : nil
+        %br
+        .fabric-option-value
+          .field
+            = f.hidden_field :id
+          .field
+            = f.label :depends_on_option_value_ids
+            = f.select :depends_on_option_value_ids, @option_dependables.dup.delete_if { |title, id| title == f.object.title }, { }, { multiple: true, size: 55, class: 'selectpicker-for-depends-on' }
+            .text-muted Note: You have to save all newly added Option Values in order to select them here.
+            %br
+          .field
+            = f.label :title
+            = f.text_field :title, class: 'form-control fabric-option-value-title'
+            %br
+          .field
+            = f.label :tuxedo
+            = f.select :tuxedo, FabricOptionValue::TUXEDO_SELECTION.map { |key, value| [value, key] }, {}, { class: 'form-control' }
+            %br
+          .field
+            = f.label :manufacturer
+            = f.select :manufacturer, FabricOptionValue::MANUFACTURERS.map { |key, value| [value, key] }, {}, { class: 'form-control' }
+            %br
+          .field
+            = f.label :outfitter_selection
+            = f.select :outfitter_selection, FabricOptionValue::OUTFITTER_SELECTION.map { |key, value| [value, key] }, {}, { class: 'form-control' }
+            %br
+          .field
+            = f.label :image_url
+            = f.text_field :image_url, autocomplete: :off, class: 'form-control image-url-field'
+            %br
+          .field
+            %td
+              = image_tag f.object.image_url, size: '200x200', class: 'img-responsive center-block image-field'
+            %br
+          .field
+            = f.label :premium
+            = f.select :premium, FabricOptionValue::PREMIUM_SELECTION.map { |key, value| [value, key] }, {}, { class: 'form-control' }
+            %br
+          %fieldset.inputs
+            %ol
+              %li
+                .price
+                  %table
+                    %tr
+                      %td
+                        .sgd-currency-field
+                          %h4 SGD Price
+                          = f.text_field :SGD, value: f.object.price.nil? ? nil : f.object&.price['SGD'], autocomplete: :off, class: 'fabric-sgd-currency'
+                      %td
+                        .gbp-currency-field
+                          %h4 GBP Price
+                          = f.text_field :GBP, value: f.object.price.nil? ? nil : f.object&.price['GBP'], autocomplete: :off, class: 'fabric-gbp-currency'
+          = link_to_remove_association 'Remove Customization Option Value', f, class: 'btn btn-danger col-lg-6 col-lg-offset-3'
+          %br
+          %br

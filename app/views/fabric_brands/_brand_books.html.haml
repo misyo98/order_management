@@ -1,0 +1,7 @@
+%table.table.table-striped.table-hover{cellspacing: "0", width: "100%"}
+  %thead
+    %th.col-md-1 Used with Fabric Book
+  %tbody
+    - @fabric_books.each do |book|
+      %tr
+        %td= book.title

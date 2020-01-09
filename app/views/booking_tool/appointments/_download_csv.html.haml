@@ -1,0 +1,28 @@
+#result
+%br/
+= link_to 'Generate CSV', url, class: 'btn btn-default', id: 'generate-csv', remote: true
+= link_to 'Download CSV', export_csv_booking_tool_appointments_path, class: 'hidden btn btn-default', id: 'download-csv'
+
+:javascript
+  var pusher = new Pusher("#{Rails.application.secrets[:pusher_key]}", {
+    cluster: 'eu',
+    encrypted: true
+  });
+  var channel = pusher.subscribe('appointments-csv-channel');
+
+  document.getElementById('generate-csv').onclick = function() { notifyAboutCsv() };
+  function notifyAboutCsv() {
+    var elem = document.getElementById('generate-csv');
+    elem.parentElement.removeChild(elem);
+    html_str = ['Your CSV file is under construction. We will notify you when it іs ready. ',
+                 'Do not refresh the page, until csv is being generated. You will see the button for downloading the csv file once it is done.'
+               ]
+    $('#result').append(html_str);
+    $('#result').prop('class', 'alert alert-warning')
+  }
+
+  channel.bind('csv-generated-event', function(data) {
+    $('#result').html('Now you can download your CSV. Click the button Download CSV below.');
+    $('#download-csv').attr('href', $('#download-csv').attr('href') + '?file_id=' + data.id );
+    $('#download-csv').removeClass('hidden');
+  });

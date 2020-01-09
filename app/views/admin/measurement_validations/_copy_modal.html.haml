@@ -1,0 +1,25 @@
+- grouped_category_params = form_grouped_category_params
+.modal.fade{ id: "copy-validation-modal", tabindex: "-1", role: "dialog", 'aria-hidden' => "true" }
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button{ type: "button", class: "close", data: { dismiss: "modal" } }
+          %span{ 'aria-hidden' => "true" } &times;
+          %span{ class: "sr-only" } Close
+
+      = form_tag create_validation_copy_category_param_measurement_validation_path(category_param_id: category_param_id, id: validation_id),
+        method: :post, format: :js do
+        .modal-body
+          %h2.text-center Select Category Param
+          %br
+            .form-group.row
+              %label.col-sm-2.col-form-label
+                Category Param:
+              .col-sm-4
+                = select_tag :measurement, grouped_options_for_select(grouped_category_params), placeholder: 'Category Param',
+                  autocomplete: :off, class: 'form-control'
+
+        .modal-footer
+          %button{ class: 'btn btn-default', data: { dismiss: 'modal' } }
+            Close
+          = submit_tag 'Submit', class: 'btn btn-default'

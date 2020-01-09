@@ -1,0 +1,35 @@
+= render 'admin/line_item/error_modal'
+%table.table
+  %thead
+    %tr
+      %th Item ID
+      %th Order ID
+      %th Name
+      %th Category
+      %th Status
+      %th Item Comment
+      %th Manufacturer Fabric Code
+      %th Required Action
+      %th
+  %tbody
+    - line_items.each do |item|
+      - item = LineItemDecorator.decorate(item)
+      %tr{ id: "vex_line_item_#{item.id}", data: { item_id: item.id } }
+        %td.col-id
+          = item.id
+        %td.col-order-id
+          = item.order_id
+        %td.col-name
+          = item.name
+        %td.col-category
+          = item.category
+        %td.col-status
+          = item.status
+        %td.col-comment
+          = item.comment_field
+        %td.col-manufacturer-order-number
+          = item.manufacturer_fabric_code
+        %td.col-required_action
+          = item.required_action
+        %td.col-actions
+          = item.allowed_state_event_links

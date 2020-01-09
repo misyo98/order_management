@@ -1,0 +1,68 @@
+$('.measurement-form-container').show()
+
+if ($('#measurement-submission-form').length != 0) {
+
+  var last_category = $(".category-table").last();
+  <% Category.all.order(:order).select(:id, :name, :order).each do |category| %>
+    <% id = category.id %>
+    <% order = category.order %>
+    var id = <%= id %>
+    var order = <%= order %>
+    <% next if id.in?(@selected_ids) && id.in?(@existing_ids) %>
+
+    <% if id.in?(@selected_ids) && !id.in?(@existing_ids) %>
+
+      if ($('#category-table-' + order).length == 0) {
+
+        var html = "<%= j render '/profile/category_table', category: category %>"
+        var previous_category = $('#category-table-' + (parseInt(order) - 1))
+        var next_category = $('#category-table-' + (parseInt(order) + 1))
+        if (previous_category.length != 0) {
+          $(html).insertAfter(previous_category)
+        } else if (next_category.length != 0) {
+          $(html).insertBefore(next_category)
+        } else {
+          $(html).insertAfter(last_category);
+        }
+        $.methods.maybeUpdateDefaultChecks('#category-table-' + order + ' .checkable')
+        $.methods.setDefaultAbsChecks('#category-table-' + order + ' .full_values')
+        $.methods.setDefaultReadonlies()
+        $.methods.setPercentageWarnings()
+        $.prefill.check_for_selector('#category-table-' + order + ' .calculatable')
+        $.methods.addChinosOutseamWarning()
+        $.methods.addProminentChestWarning()
+        $.fitting_garments.toggle_columns($('.category-checkboxes[value="' + id + '"]').closest('.row').find('.fitting-garment-check'))
+
+      }
+
+    <% elsif !id.in?(@selected_ids) && id.in?(@existing_ids) %>
+      $('#category-table-' + order).remove()
+    <% end %>
+  <% end %>
+
+
+} else {
+
+  $('.measurement-form-container').html("<%= j render 'form' %>");
+  $.methods.maybeUpdateDefaultChecks()
+  $.methods.setDefaultAbsChecks()
+  $.methods.setDefaultReadonlies()
+  $.methods.setPercentageWarnings()
+  $.methods.addChinosOutseamWarning()
+  $.methods.addProminentChestWarning()
+
+  <% if @review %>
+    $('#adjustment_height_height_inches').attr('readonly', 'readonly')
+    setTimeout($.methods.performValidations(), 2000);
+    $.methods.setRealPercentageWarnings();
+    $.measurement_issues.resolve_submit_buttons_state();
+  <% else %>
+    setTimeout($.methods.performValidations(), 2000);
+    $.methods.setRealPercentageWarnings()
+    // $.methods.performCalculations()
+  <% end %>
+  $('.fitting-garment-check:checked').each(function() {
+    $.fitting_garments.toggle_columns($(this));
+  });
+
+}

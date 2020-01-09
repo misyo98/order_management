@@ -1,0 +1,3 @@
+<% @formatted_order_params.each do |id, order| %>
+  $('#alteration_service_' + '<%= raw id %>').find('.col-order').html('<%= raw order %>')
+<% end %>

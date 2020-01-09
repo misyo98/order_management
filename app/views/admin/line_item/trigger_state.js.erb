@@ -1,0 +1,46 @@
+<% if @item.errors.any? %>
+  $.removeScrollingTouch();
+  errors = "<%= j render 'admin/line_item/error_list', item: @item %>"
+  $('#state-error-modal-body').html(errors)
+  $('#state-error-modal').modal('show');
+<% else %>
+  status_col_html = "<%= j render 'admin/line_item/columns/status_col', item: @item %>"
+  required_action_col_html = "<%= j render 'admin/line_item/columns/required_action_col', item: @item %>"
+  actions_col_html = "<%= j render 'admin/line_item/columns/actions_col', item: @item %>"
+  rc_order_status_col_html = "<%= j render 'admin/line_item/columns/rc_order_status_col', item: @item %>"
+  fabric_status_col_html = "<%= j render 'admin/line_item/columns/fabric_status_col', item: @item %>"
+  manufacturer_number_col_html = "<%= j render 'admin/line_item/columns/manufacturer_number_col', item: @item %>"
+  manufacturer_col_html = "<%= j render 'admin/line_item/columns/manufacturer_col', item: @item %>"
+  remind_to_get_measured_html = "<%= j render 'admin/line_item/columns/remind_to_get_measured_col', item: @item %>"
+
+  <% @order_items.each do |item| %>
+    id = <%= item.id.to_s %>
+    target_id = '#line_item_' + id
+
+    measurement_status_col_html = "<%= j render 'admin/line_item/columns/measurement_status_col', item: item %>"
+
+    measurement_status_td = $(target_id).find('td.col-measurement_status').html(measurement_status_col_html)
+
+  <% end %>
+
+
+  id = <%= @item.id.to_s %>
+
+  if ($('.vex').length) {
+    target_id = '#vex_line_item_' + id
+  } else {
+    target_id = '#line_item_' + id
+  }
+
+  $(target_id).find('td.col-status').html(status_col_html)
+  $(target_id).find('td.col-required_action').html(required_action_col_html)
+  $(target_id).find('td.col-manufacturer_order_status').html(rc_order_status_col_html)
+  $(target_id).find('td.col-fabric_status').html(fabric_status_col_html)
+  $(target_id).find('td.col-manufacturer_order_number').html(manufacturer_number_col_html)
+  $(target_id).find('td.col-manufacturer').html(manufacturer_col_html)
+  $(target_id).find('td.col-actions').html(actions_col_html)
+  $(target_id).find('td.col-remind_to_get_measured').html(remind_to_get_measured_html)
+
+  $.purrSuccess()
+  $.addScrollingTouch();
+<% end %>

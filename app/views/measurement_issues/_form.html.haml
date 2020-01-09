@@ -1,0 +1,27 @@
+.issue-form{ id: "measurement-issue-#{issueable.id}" }
+  = form_for measurement_issue, remote: true, authenticity_token: true, class: 'measurement-issue-form' do |f|
+    .field
+      = f.label 'Issue'
+      %br
+      = f.select :issue_subject_id, IssueSubject.all.order(:order).pluck(:title, :id), class: 'form-control input-md'
+      = f.hidden_field :issueable_type
+      = f.hidden_field :issueable_id
+
+    #message-fields
+      %h5 Comments:
+      = f.fields_for :messages do |message_fields|
+        - if message_fields.object.persisted?
+          = render 'existing_message_fields', f: message_fields
+        - else
+          = render 'message_fields', f: message_fields
+      .links
+        = link_to_add_association 'add comment', f, :messages
+    - if f.object.persisted?
+      .field.clearfix
+        = f.check_box :fixed, { class: 'pull-right' }
+        = f.label :fixed
+      - if current_user.can?(:review, Measurement)
+        .field.clearfix
+          = link_to 'Remove issue', measurement_issue_path(measurement_issue), method: :delete, remote: true, class: 'btn-xs btn-danger remove-measurement-issue'
+    .field
+      %button.btn-default.issue-submit{ type: :button } Save

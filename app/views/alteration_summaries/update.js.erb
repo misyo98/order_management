@@ -1,0 +1,7 @@
+<% if @requested_action == 'remake_requested' %>
+  window.location.href = "<%= j customer_path(id: @profile.customer_id) %>"
+<% elsif @no_pdf_sheet == true %>
+  window.location.href = "<%= j customer_path(id: @profile.customer_id) %>"
+<% else %>
+  window.location.href = "<%= j alteration_summary_path(id: @summary.id, format: :pdf, request_url: @request_url) %>"
+<% end %>

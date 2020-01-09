@@ -1,0 +1,13 @@
+.panel_contents
+  = search_form_for(@q, url: dropdown_list_values_path, method: :get, id: "q_search", class: "filter_form") do |f|
+    %span.filter-row
+      = f.label :dropdown_list_title, 'Dropdown List Title'
+      = f.search_field :dropdown_list_title_cont
+    %span.filter-row
+      = f.label :title, 'Title'
+      = f.search_field :title_cont
+    %span.filter-row
+      = f.label :manufacturer_code_cont, 'Manufacturer Code'
+      = f.search_field :manufacturer_code_cont
+
+    = f.submit 'Filter', class: 'btn btn-primary', id: 'dropdown-list-values-filter-button'

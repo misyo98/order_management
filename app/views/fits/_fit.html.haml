@@ -1,0 +1,14 @@
+.form-group.row{ style: fit_visibility(f) }
+  = fit_label(f)
+  .col-xs-1
+    = category_check_box(f)
+  .col-xs-1
+    %label.switch
+      = f.check_box :with_fitting_garment, { class: ['form-check-input fitting-garment-check', @review && 'unclickable'], disabled: @review }, true
+      %span.slider.round
+  .col-xs-1
+    = fit_select(f)
+    = f.hidden_field :category_id
+  .col-xs-1
+  - if f.object.submitted
+    %span.form-check-input Submitted

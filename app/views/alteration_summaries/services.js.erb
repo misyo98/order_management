@@ -1,0 +1,18 @@
+table = "<%= j render 'alteration_services', summary: @summary, services: @services, categories: @categories %>"
+
+vex.open({
+  content: table,
+  unsafeContent: '',
+  showCloseButton: true,
+  escapeButtonCloses: false,
+  overlayClosesOnClick: false,
+  appendLocation: 'body',
+});
+
+$(document).ready(function() {
+  alteration_services_select2();
+});
+
+$(document).on("cocoon:after-insert", function(_, row) {
+  alteration_services_select2();
+});

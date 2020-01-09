@@ -1,0 +1,29 @@
+%button.btn.btn-primary.btn-sm.with_space_bottom#hide-columns Hide columns
+
+= form_for @profile, url: @profile.url(@customer), method: @profile.http_method, html: { class: 'measurement-form form-horizontal', multipart: true, id: 'measurement-submission-form' }, remote: true do |f|
+  - @categories.each do |category|
+    = render partial: '/profile/category_table', locals: { category: category }
+
+  %h2 Select customer images
+  %tr
+    %td
+      = f.fields_for :images do |image|
+        - if image.object.persisted?
+          = link_to image_tag(image.object.image_url, height: '120'), image.object.image_url, class: :fancybox, rel: :group
+        - else
+          .block
+            = render partial: 'image', locals: { f: image }
+    %td
+      - if f.object.persisted?
+        .issue-container{ data: { issueable_id: @profile.id } }
+          .issues-list
+            = render '/measurement_issues/issues_list', issues: @profile.measurement_issues, issueable: @profile
+          - if @review
+            .clearfix
+              = link_to 'Add Issue', new_measurement_issue_path(issueable_type: @profile.class.name, issueable_id: @profile.id), remote: true, class: 'add-issue-link'
+  %br
+  .clearfix
+
+  = hidden_field_tag :new_measurement, true
+  = hidden_field_tag :requested_state_transition, ''
+  = render 'profile/submit_buttons/buttons', f: f, state: @profile.lowest_category_status, review: @review, previous_state: @profile.previous_state

@@ -1,0 +1,83 @@
+= render 'download_csv', url: generate_csv_booking_tool_appointments_path(scope: :all, q: all_params) if current_user.admin?
+%table.table
+  %thead
+    %tr
+      %th First Name
+      %th Last Name
+      - if can_see_email?
+        %th Email
+      %th Phone
+      %th.appointment-order-comments
+        Order Comments
+      %th Appointment date
+      %th Appointment time
+      %th Booking type
+      %th Existing customer? (last purchase date)
+      %th Customer ID
+      %th Previous Order IDs
+      %th Previous outfitter
+      %th Cancelled
+      %th Purchased
+      %th Has Active Booking?
+      %th Reason for no purchase
+      %th Wedding Date
+      %th Updated by outfitter
+      %th.appointment-comments
+        Appointment comments
+      %th Order amount & currency
+      %th Acquisition Channel
+      %th Call count(last call date)
+      %th History
+  %tbody
+    - appointments.each do |appointment|
+      - appointment = BookingTool::AppointmentDecorator.decorate(appointment, context: { sales_people: sales_people })
+      %tr{ id: "ops-#{appointment.id}" }
+        %td
+          = appointment.first_name
+        %td
+          = appointment.last_name
+        - if can_see_email?
+          %td
+            = appointment.email
+        %td
+          = appointment.phone
+        %td
+          = appointment.maybe_order_comment
+        %td.app-day
+          = appointment.day
+        %td
+          = appointment.time
+        %td
+          = appointment.booking_type
+        %td
+          = appointment.existing_customer
+          = appointment.maybe_last_purchase_date
+        %td
+          = appointment.maybe_customer_link
+        %td
+          = appointment.previous_order_numbers
+        %td
+          = appointment.previous_outfitter
+        %td
+          = appointment.formatted_cancelled
+        %td
+          = appointment.formatted_purchased
+        %td
+          = appointment.formatted_active_booking
+        %td
+          = appointment.resolve_no_purchase_reason_field
+        %td
+          = appointment.wedding_date
+        %td
+          = appointment.outfitter_that_updated
+        %td
+          = appointment.comment_field
+        %td
+          = appointment.recent_order
+        %td
+          = appointment.maybe_acquisition_channel
+        %td.call-count
+          = appointment.call_count_with_date
+        %td
+          = appointment.maybe_booking_history_link
+%br

@@ -1,0 +1,5 @@
+%h4.fabric-select-prompt You need to select Category from the dropdown below.
+.select-fabric-category-box
+  = select_tag :category, options_from_collection_for_select(@fabric_categories, 'id', 'title'), :prompt => 'Please select category', class: 'form-control', id: 'selected-fabric-category'
+%br
+.fabric-group-box.col-lg-7.col-lg-offset-2

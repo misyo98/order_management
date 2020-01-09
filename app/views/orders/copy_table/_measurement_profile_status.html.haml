@@ -1,0 +1,7 @@
+- Category.all.visible.each do |category|
+  - profile_category = profile_categories.find { |profile_category| profile_category.category_id == category.id }
+  %tr
+    %td
+      = category.name.upcase
+    %td
+      = profile_category&.status&.upcase || 'N/A'

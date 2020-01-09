@@ -1,0 +1,5 @@
+- if invoice
+  = check_box_tag 'summary', summary.id, invoice.alteration_summary_ids.include?(summary.id), class: 'summary-invoice-check-box',
+    data: { id: invoice.id }
+- else
+  = check_box_tag 'summary', summary.id, false, class: 'summary-check-box'

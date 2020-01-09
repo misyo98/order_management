@@ -1,0 +1,30 @@
+= render 'fabric_managers/filters'
+
+- if @fabric_managers.any?
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Manufacturer Fabric Code
+        %th Fabric Code
+        %th Fabric Brand
+        %th Fabric Book
+        %th Status
+        %th Estimated Restock Date
+        %th Actions
+    %tbody
+      - @fabric_managers.decorate.each do |fabric_manager|
+        %tr{ id: "fabric_manager_#{fabric_manager.id}" }
+          %td
+            = fabric_manager.manufacturer_fabric_code
+          %td
+            = fabric_manager.fabric_infos.last&.fabric_code
+          %td
+            = link_to "#{fabric_manager.fabric_brand_title}", fabric_brand_path(fabric_manager.fabric_brand_id) if fabric_manager.fabric_brand
+          %td
+            = link_to "#{fabric_manager.fabric_book_title}", fabric_book_path(fabric_manager.fabric_book_id) if fabric_manager.fabric_book
+          %td
+            = fabric_manager.status_field
+          %td
+            = fabric_manager.estimated_restock_date_field
+          %td
+            = link_to 'Delete', fabric_manager_path(fabric_manager, q: params[:q]), method: :delete, remote: true

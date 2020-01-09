@@ -1,0 +1,24 @@
+- if response[:object].any?
+  %h4 Execution failed! Object errors:
+  - response[:object].each do |error|
+    %li
+      .text-muted
+        = error
+
+- elsif response[:validation_result_errors].any?
+  %h4 Executed sucessfully! Applied validation errors:
+  - response[:validation_result_errors].each do |error|
+    %li
+      .text-muted
+        = error
+
+- else
+  %h4 Condition executed sucessfully but didn't match anything
+
+%hr
+
+- if response[:log].present?
+  - response[:log].each do |key, value|
+    %li
+      .text-muted
+        = "#{key.to_s.humanize} was evaluated as: '#{value}'"

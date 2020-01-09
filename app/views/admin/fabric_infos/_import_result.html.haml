@@ -1,0 +1,28 @@
+.fabric-infos-progress-message.alert.alert-warning.hidden
+.fabric-infos-imported-message.alert.alert-success.hidden
+.progress.hidden
+  .progress-bar.progress-bar-striped.active{ 'aria-valuemax' => '100', 'aria-valuemin' => '0', 'aria-valuenow' => '0', :role => 'progressbar', :style => 'width:0%' }
+    0%
+%br/
+
+:javascript
+  var import_progress_channel = pusher.subscribe('fabric-infos-import-progress-channel');
+
+  import_progress_channel.bind('fabric-infos-import-progress-event', function(data) {
+    $('.progress').removeClass('hidden');
+    $('.progress-bar').attr('aria-valuenow', data['progress']);
+    $('.progress-bar').css('width', data['progress'] + '%')
+    $('.progress-bar').text(data['progress'] + '%')
+    $('.fabric-infos-progress-message').html('Fabric Infos Import in process! Please do not start a new one at the moment.');
+    $('.fabric-infos-progress-message').removeClass('hidden');
+  });
+
+  var import_channel = pusher.subscribe('fabric-infos-import-channel');
+
+  import_channel.bind('fabric-infos-imported-event', function(data) {
+    $('.progress').addClass('hidden');
+    $('.flash_notice').remove()
+    $('.fabric-infos-imported-message').html(data['message']);
+    $('.fabric-infos-imported-message').removeClass('hidden');
+    $('.fabric-infos-progress-message').addClass('hidden');
+  });

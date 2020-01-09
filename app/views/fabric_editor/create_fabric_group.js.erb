@@ -1,0 +1,33 @@
+<% if @fabric_category.errors.any? %>
+  errors = "<%= j render 'fabric_editor/fabric_errors', fabric_category: @fabric_category %>";
+  $('#fabric_errors').removeClass('hidden')
+  $('#fabric_errors').html(errors);
+  $.purrError(errors);
+  $('html, body').animate({ scrollTop: 0 }, 'slow');
+<% else %>
+  $.purrSuccess('Successfully edited')
+  $('.fabric-group-box').html("<%= j render(:partial => 'fabric_editor/fabric_form') %>");
+  $('#fabric_tabs, #fabric_options, #fabric_option_values').sortable({
+    delay: 100,
+    update: function(e, ui) {
+      var id, table;
+      table = $(this).attr('id');
+      parent_id = $(this).data('id');
+      return $.ajax({
+        url: table + '/reorder' + '?parent_id=' + parent_id,
+        type: 'PATCH',
+        data: $(this).sortable('serialize')
+      });
+    }
+  });
+  $('.fabric-tab, .fabric-option, .fabric-option-value').slideUp(0);
+  $('.fabric-tab, .fabric-option, .fabric-option-value').addClass('was-hidden');
+  $('.expand-fabric-box').removeClass('fa-caret-square-up')
+  $('.expand-fabric-box').addClass('fa-caret-square-down')
+  $('.selectpicker-for-depends-on').selectpicker({
+    title: 'Depends On'
+  });
+  $.fabric_customization.maybe_fields_for_tuxedo_price();
+  $.fabric_customization.maybe_dropdown_lists();
+  $.fabric_customization.editor_maybe_fields_for_button_type();
+<% end %>

@@ -1,0 +1,5 @@
+if ($("#comment-form").length == 1) {
+  $("#comment-form").submit()
+}
+else
+  window.location.href = "<%= j customer_path(@profile.customer.id) %>"

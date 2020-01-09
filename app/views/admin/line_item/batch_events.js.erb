@@ -1,0 +1,20 @@
+$('.action_items').find('.batch-state-trigger').each(function() {
+  $(this).remove();
+});
+
+<% state_buttons = @response_hash[:events].inject([]) do |buttons, event| %>
+                      <% event = EventLinkDecorator.decorate(event) %>
+                      <% buttons << event.default_link(@response_hash[:item_ids]) %>
+                      <% buttons %>
+                   <% end %>
+
+<% extra_state_buttons = @response_hash[:extra_events].inject([]) do |buttons, event| %>
+                          <% event = EventLinkDecorator.decorate(event) %>
+                          <% buttons << event.extra_link(@response_hash[:item_ids]) %>
+                          <% buttons %>
+                        <% end %>
+
+<% (state_buttons + extra_state_buttons).each do |button| %>
+  var button = "<%= j button %>"
+  $('.action_items').prepend(button)
+<% end %>

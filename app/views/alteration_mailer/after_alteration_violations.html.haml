@@ -1,0 +1,15 @@
+%h1
+  = "#{@user.name}, alteration validation violations"
+
+%p
+  = "#{@submitter.name} just submitted an alteration for #{@customer.email}. He has submitted his measurements on #{@customer.profile.created_at.strftime('%B %d, %Y %H:%M')}."
+%p
+  = "The following requested alterations are not respecting the listed validation rules:"
+  %br
+  - @violations.each do |error, param|
+    = "#{param} - #{error}"
+    %br
+
+%p
+  See the submitted alteration
+  %a{ href: customer_url(@customer) } here.

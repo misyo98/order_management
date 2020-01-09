@@ -1,0 +1,10 @@
+content = "<%= j render 'dropped_events', dropped_dates: @dropped_dates %>"
+
+vex.open({
+  content: content,
+  unsafeContent: '',
+  showCloseButton: false,
+  escapeButtonCloses: false,
+  overlayClosesOnClick: true,
+  appendLocation: 'body'
+});

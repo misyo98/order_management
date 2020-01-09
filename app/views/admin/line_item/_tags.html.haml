@@ -1,0 +1,10 @@
+%div{id: "tags-links-#{line_item.id}"}
+  = render 'admin/line_item/tag_links', tags: tags
+%button.assign-tags.btn.btn-primary{type: 'button', data: { target: "#tags-form-#{line_item.id}" }} Assign Tags
+.tag-form.hidden{id: "tags-form-#{line_item.id}"}
+  = select_tag 'tags[]', options_for_select(tags.collect { |t| [t.name, t.name] }, tags.map(&:name)),
+      multiple: true, class: 'form-control tags-select', id: "tags-select-#{line_item.id}"
+  .clear-both
+  %br
+  %button.update-tags.btn.btn-sm{type: 'button', data: { url: tags_line_item_path(line_item), target: "#tags-select-#{line_item.id}" }} Update Tags
+  %button.cancel-update-tags.btn.btn-sm{type: 'button', data: { target: "#tags-form-#{line_item.id}" }} Cancel

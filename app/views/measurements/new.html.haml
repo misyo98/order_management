@@ -1,0 +1,43 @@
+= render partial: '/shared/top_menu'
+= render partial: '/shared/loader'
+
+.container
+  #fakeloader
+  %h2 Select customer
+  %fieldset
+    .form-group.row
+      = label_tag 'Customer name', nil, class:'col-sm-2 col-form-label'
+      .col-xs-4
+        = select_tag :customer_id, options_for_select(@customers.collect{ |c| [c.name_for_select, c.id] }, @customer&.id), include_blank: true,
+                      id: 'customer_select', class:'form-control',
+                      data: { 'info-url' => info_customers_path, 'load-url' => load_customers_customers_path,
+                              'customer-id' => @customer&.id, 'customer-name' => @customer&.name_for_select },
+                      disabled: @customer
+    .form-group.row
+      = label_tag 'Order number', nil, class:'col-sm-2 col-form-label'
+      .col-xs-4
+        = text_field_tag :customer_orders, @customer&.order_numbers, id: 'customer_order', class:'form-control'
+    .form-group.row
+      = label_tag 'Email', nil, class:'col-sm-2 col-form-label'
+      .col-xs-4
+        = text_field_tag :customer_email, @customer&.email, id: 'customer_email', class:'form-control', disabled: true
+    .form-group.row
+      = label_tag 'Outfitter name', nil, class:'col-sm-2 col-form-label'
+      .col-xs-4
+        = text_field_tag :outfitter, @outfitter.name, class:'form-control', disabled: true
+
+  .submit-form{ data: { 'review': "#{@review}" } }
+
+  .items{ class: items_classes }
+    %h2 Select items
+    .row
+      .col-xs-3
+      .col-xs-1
+        With Fitting Garment
+      .col-xs-1
+    %br
+    .fits-form
+
+  .measurement-form-container
+
+  .spinner

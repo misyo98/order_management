@@ -1,0 +1,17 @@
+.modal.fade{ id: "batch-update-buckets-modal", tabindex: "-1", role: "dialog", 'aria-labelledby' => "buckets-label", 'aria-hidden' => "true"} 
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button{ type: 'button', class: "close", data: { dismiss: "modal" } }
+          %span{ 'aria-hidden' => "true" } &times;
+          %span{ class: "sr-only" } Close
+        %h4{ class: 'modal-title', id: 'buckets-label' }
+          Select Cost Bucket
+      
+      .modal-body
+
+      .modal-footer
+        %button{ class: 'btn btn-default', data: { dismiss: 'modal' } }
+          Close
+        %button{ class: 'btn btn-primary batch-update-buckets', data: { dismiss: 'modal', url: batch_update_buckets_remaining_cogs_path } }
+          Save

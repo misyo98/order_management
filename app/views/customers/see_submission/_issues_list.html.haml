@@ -1,0 +1,10 @@
+- issues.each do |issue|
+  .issue-submission-panel
+    = render 'measurement_issues/issue_label', issue: issue
+    %b= issue.issue_subject.title
+    - if issue.messages.any?
+      %p Comments:
+      - issue.messages.each do |message|
+        %b= "#{message.author&.full_name}: "
+        = message.body
+        %br

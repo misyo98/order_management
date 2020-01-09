@@ -1,0 +1,175 @@
+#header.header
+  %h1#site_title.site_title
+    = link_to 'Order Management App', root_path
+  %ul.header-item.tabs.mobile
+    %li
+      %button.navbar-toggle.button_mobile_burger{"aria-controls" => "tabs", "aria-expanded" => "true", "data-toggle" => "collapse", href: "#tabs", type: "button"}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+  %ul#tabs.header-item.tabs
+    %li#dashboard
+      = link_to 'Dashboard', dashboard_path
+    - if appointment_access?
+      %li#appointments.has_nested.current
+        %a#dropdownMenu4.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#"}
+          Appointment list
+          %span.caret
+        %ul.dropdown-menu{"aria-labelledby" => "dropdownMenu4"}
+          %li#appointments{ class: current_page?(booking_tool_appointments_path) ? 'current' : '' }
+            = link_to 'Appointment list', booking_tool_appointments_path
+          - unless current_user.phone_support?
+            %li#new_measurement{ class: current_page?(new_measurement_path) ? 'current' : '' }
+              = link_to 'New measurement profile', new_measurement_path
+          - unless current_user.phone_support?
+            %li#checks_measurements{ class: current_page?(checks_measurements_path) ? 'current' : '' }
+              = link_to 'Measurements Check', checks_measurements_path
+    - if can? :edit, Allowance
+      %li#allowances
+        = link_to 'Allowances', allowances_path
+    - if can? :read, Customer
+      %li#call_list
+        = link_to 'Call List', call_list_path
+    - if accounting_access?
+      %li#accountings.has_nested
+        %a#dropdownMenu2.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#"}
+          Accountings
+          %span.caret
+        %ul.dropdown-menu{"aria-labelledby" => "dropdownMenu2"}
+          - if can? :index, Accounting
+            %li#accounting
+              = link_to 'Accounting', accounting_path
+          - if can? :index, CostBucket
+            %li#cost_buckets
+              = link_to 'Cost Buckets', cost_buckets_path
+          - if can? :index, EstimatedCog
+            %li#estimated_cogs
+              = link_to 'Estimated COGS', estimated_cogs_path
+          - if can? :index, FxRate
+            %li#fx_rates
+              = link_to 'FX Rates', fx_rates_path
+          - if can? :index, RealCog
+            %li#real_cogs
+              = link_to 'Real COGS', real_cogs_path
+          - if can? :index, RealCog
+            %li#remaining_cogs
+              = link_to 'Remaining COGS', remaining_cogs_path
+          - if can? :index, VatRate
+            %li#vat_rates
+              = link_to 'Vat Rates', vat_rates_path
+    - if can? :read, AlterationSummary
+      %li#alterations.has_nested
+        %a#dropdownMenu3.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#"}
+          Alteration
+          %span.caret
+        %ul.dropdown-menu{"aria-labelledby" => "dropdownMenu3"}
+          - if can? :read, AlterationSummary
+            %li#alteration_summaries
+              = link_to 'All Alteration', alteration_summaries_path
+          - if can? :not_updated, AlterationSummary
+            %li#alteration_not_updates
+              = link_to 'Not Updated', alteration_not_updates_path
+          - if can? :read, Invoice
+            %li#invoices
+              = link_to 'Invoices', invoices_path
+    - if can? :send, EmailsQueue
+      %li#emails_queues
+        = link_to 'Emails Queue', emails_queues_path
+    - if can? :read, LineItem
+      %li#line_items
+        = link_to 'Orders', line_items_path
+    - if settings_access?
+      %li#settings.has_nested
+        %a#dropdownMenu1.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#"}
+          Settings
+          %span.caret
+        %ul.dropdown-menu{"aria-labelledby" => "dropdownMenu1"}
+          - if can? :index, AlterationService
+            %li#alteration_services
+              = link_to 'Alteration Services', alteration_services_path
+          - if can? :index, AlterationTailor
+            %li#alteration_tailors
+              = link_to 'Alteration Tailors', alteration_tailors_path
+          - if can? :index, CategoryParam
+            %li#category_params
+              = link_to 'Category Params', category_params_path
+          - if can? :index, CourierCompany
+            %li#courier_companies
+              = link_to 'Courier Companies', courier_companies_path
+          - if can? :index, FittingGarment
+            %li#fitting_garments
+              = link_to 'Fitting Garments', fitting_garments_path
+          - if can? :index, IssueSubject
+            %li#issue_subjects
+              = link_to 'Issue Subjects', issue_subjects_path
+          - if can? :index, MeasurementIssue
+            %li#issues
+              = link_to 'Issues', issues_path
+          - if can? :index, MeasurementCheck
+            %li#measurement_cheks
+              = link_to 'Measurement Checks', measurement_checks_path
+          - if can? :index, LineItemScope
+            %li#queues
+              = link_to 'Queues', queues_path
+          - if can? :index, RefundReason
+            %li#refund_reasons
+              = link_to 'Refund Reasons', refund_reasons_path
+          - if can? :index, SalesLocation
+            %li#sales_locations
+              = link_to 'Sales Locations', sales_locations_path
+          - if can? :index, LineItemScope
+            %li#state_in_queue_check
+              = link_to 'State in queue check', state_in_queue_check_path
+          - if can? :index, StatesTimeline
+            %li#states_timelines
+              = link_to 'States Timelines', states_timelines_path
+          - if can? :index, Tag
+            %li#tags
+              = link_to 'Tags', tags_path
+          - if can? :index, FabricInfo
+            %li#fabric_settings.has_nested
+              %a#dropdownMenu5.dropdown-toggle2{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#"}
+                Fabric Settings
+                %span.caret
+              %ul.dropdown-menu{"aria-labelledby" => "dropdownMenu5"}
+                %li#fabric_infos{ class: current_page?(fabric_infos_path) ? 'current' : '' }
+                  = link_to 'Fabric Infos', fabric_infos_path
+                %li#customization_editor{ class: current_page?(fabric_category_select_path) ? 'current' : '' }
+                  = link_to 'Customization Editor', fabric_category_select_path
+                %li#fabric_tabs{ class: current_page?(fabric_tabs_path) ? 'current' : '' }
+                  = link_to 'Customization Tabs', fabric_tabs_path
+                %li#fabric_options{ class: current_page?(fabric_options_path) ? 'current' : '' }
+                  = link_to 'Customization Options', fabric_options_path
+                %li#fabric_option_values{ class: current_page?(fabric_option_values_path) ? 'current' : '' }
+                  = link_to 'Customization Option Values', fabric_option_values_path
+                %li#fabric_books{ class: current_page?(fabric_books_path) ? 'current' : '' }
+                  = link_to 'Fabric Books', fabric_books_path
+                %li#fabric_brands{ class: current_page?(fabric_brands_path) ? 'current' : '' }
+                  = link_to 'Fabric Brands', fabric_brands_path
+                %li#fabric_tiers{ class: current_page?(fabric_tiers_path) ? 'current' : '' }
+                  = link_to 'Fabric Tiers', fabric_tiers_path
+                %li#fabric_categories{ class: current_page?(fabric_categories_path) ? 'current' : '' }
+                  = link_to 'Fabric Categories', fabric_categories_path
+                %li#enabled_fabric_categories{ class: current_page?(enabled_fabric_categories_path) ? 'current' : '' }
+                  = link_to 'Enabled Fabric Categories', enabled_fabric_categories_path
+                %li#dropdown_lists{ class: current_page?(dropdown_lists_path) ? 'current' : '' }
+                  = link_to 'Dropdown Lists', dropdown_lists_path
+                %li#dropdown_list_values{ class: current_page?(dropdown_list_values_path) ? 'current' : '' }
+                  = link_to 'Dropdown List Values', dropdown_list_values_path
+                %li#fabric_managers{ class: current_page?(fabric_management_path) ? 'current' : '' }
+                  = link_to 'Fabrics OOS/Discontinued', fabric_management_path
+    - if can? :read, Customer
+      %li#customers
+        = link_to 'Customers', customers_path
+    - if can? :edit, User
+      %li#users
+        = link_to 'Users', users_path
+  %ul#utility_nav.header-item.tabs
+    %li#current_user
+      - if can? :read, User
+        = link_to current_user.full_name, user_path(current_user)
+      - else
+        %span= current_user.full_name
+    %li#logout
+      = link_to 'Logout', destroy_user_session_path, data: { method: :delete }, rel: 'nofollow'

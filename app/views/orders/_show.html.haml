@@ -1,0 +1,42 @@
+- all_orders_needed = all_customer_orders_needed?(params[:scope])
+- items = resolve_items_collection(@order, all_orders_needed)
+%table.table
+  %thead
+    %tr
+      - if all_orders_needed
+        %th Order ID
+      %th Item ID
+      %th Name
+      %th Category
+      %th Status
+      %th Manufacturer Fabric Code
+      %th Required Action
+      - if pes_number_needed?(params[:scope])
+        %th Manufacturer Order Number
+      %th
+  %tbody
+    - items.each do |item|
+      - order = item.order
+      - item = LineItemDecorator.decorate(item)
+      %tr{ id: "vex_line_item_#{item.id}", data: { item_id: item.id } }
+        - if all_orders_needed
+          %td.col-order-id
+            = order.id
+        %td.col-id
+          = item.id
+        %td.col-name
+          = item.name
+        %td.col-category
+          = item.category
+        %td.col-status
+          = item.status
+        %td.col-manufacturer-order-number
+          = item.manufacturer_fabric_code
+        %td.col-required_action
+          = item.required_action
+        - if pes_number_needed?(params[:scope])
+          %td.col-manufacturer-order-number
+            = item.manufacturer_order_number('show')
+        %td.col-actions
+          = item.allowed_state_event_links(with_copy_button: copy_button_needed?(order, params[:scope]))
+        %td.out-of-space{ id: "copy-table-container-#{item.id}" }

@@ -1,0 +1,8 @@
+= semantic_form_for :user_params, url: dashboard_path, method: :get, html: { class: 'dashboard-summary-form' }, builder: ActiveAdmin::FormBuilder do |f|
+  = f.inputs do
+    = f.input :user,  as: :select2, collection: User.pluck(:email, :id), selected: params[:user_id], input_html: { name: :user_id }
+    = f.input :start_date, as: :datepicker, input_html: { name: :start_date, size: 22, value: params[:start_date], autocomplete: :off }
+    = f.input :end_date, as: :datepicker, input_html: { name: :end_date, size: 22, value: params[:end_date], autocomplete: :off }
+    / = f.input :category_ids, as: :select2_multiple, collection: Category.visible.pluck(:name, :id), selected: params.try(:[], :user_params).try(:[], :category_ids), required: false, label: 'Categories'
+  = f.actions do
+    = f.submit 'Get summary'

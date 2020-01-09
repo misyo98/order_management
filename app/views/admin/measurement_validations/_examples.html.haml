@@ -1,0 +1,117 @@
+%h3 General Flow:
+
+%p
+  In this form you're basically telling the system: This is a condition that indicates error in measurements.
+  So your condition needs to evaluate into TRUE state in order to assign error on the current field.
+  On this level you always operate with current measurement field(e.g. Shirt - Neck) and validation check will
+  fire only when input value for this measurement field will change. Resulting validation errors will also be
+  assigned only to this particular field.
+
+%h3 Left Operand:
+
+%p
+  Must evaluate to number. You can use either raw numbers: 5, 5.6, etc. Or key-values(e.g {{final_garment}}).
+  If you use the key-value you don't need to specify category and measurement (e.g {{shirt.waist_button_position}})
+  because it will be added automatically and always be the same as the current mesaurement field.
+  %ul
+    Available options:
+    %li Number(e.g 5, 5.6)
+    %li {value} will map to current measurements raw body input value
+    %li {allowance} will map to current measurements allowance input value
+    %li {final_garment} will map to current measurements final garment input value
+
+%h3 Comparison Oparator:
+
+%p
+  Will be used to compare left operand with right operand(expression).
+  %ul
+    Available options:
+    %li > (Greater than)
+    %li < (Less than)
+    %li == (Equal)
+    %li != (Not equal)
+    %li >= (Greater than or equal)
+    %li <= (Less than or equal)
+
+%h3 Expression:
+
+%p
+  Must evaluate to number! You can use regural arithmetic expression here. Also, it follows regular arithmetic rules
+  in terms of round brackets, sequence of adding/multiplying and so on. Also you can use dynamic measurement values
+  and custom parameters.
+  %br
+  Dynamic measurement value example: {{shirt.waist_button_position.value}}
+  %br
+  Custom parameter example: {{difference}}
+  %br
+  In order to use custom parameter in the expression, you need to define it's name in the Extra parameters section
+  and describe there in the expression field how it should be calculated.
+
+%h3 AND(&&) Condition:
+
+%p
+  Non-mandatory. Must evaluate to true or false! This is a second condition which you can add if you want to
+  apply some error only in case this condition is true. You can use dynamic measurement values here, but not
+  extra parameters(e.g {{body_shape_postures.square_back_neck.body}} == 'yes'). Body position values from the dropdown
+  should be used like in the last example - downcased and in single quotes(e.g 'yes', 'no', 'slight_humpback').
+  Full list of dropdown body values you can find in the 'Formatted Dropdown Values' section above.
+
+%h3 Error message:
+
+%p
+  Free text field that represents what will be shown in the measurement field when condition is matched. Simple text
+  with ability to use key {{expression_result}} that will be evaluated to the actual expression result.
+
+%h3 Examples:
+
+%p
+  {{value}} > ({{jacket.chest.final_garment}} + {{jacket.neck.value}}) - 5
+%p
+  5 >= ({{jacket.chest.final_garment}} + {{jacket.neck.value}}) - 5
+%p
+  5 == (({{jacket.chest.final_garment}} + {{jacket.neck.value}}) - {{difference}}) + 1.75
+
+%h3 Extra parameters:
+
+%p
+  Name it as a variable - downcased and seperated by underline if more than one word.
+  Examples: difference, chino_cuff_difference.
+%p
+  In the expression field you can use dynamic measurement values(e.g {{jacket.neck.value}}) and operators.
+  Basically, this will be evaluated as ruby code, so you can use two neat constructions that should
+  cover all your needs - case when and ternary operator.
+
+%h4 Case When example:
+
+%p
+  case
+  %br
+  when {{body_shape_postures.square_back_neck.body}} == 'yes'
+  %br
+  1.75
+  %br
+  when {{body_shape_postures.square_back_neck.body}} == 'no'
+  %br
+  2
+  %br
+  end
+
+%p
+  %b Also might be written as:
+  %br
+  case
+  %br
+  when {{body_shape_postures.square_back_neck.body}} == 'yes' then 1.75
+  %br
+  when {{body_shape_postures.square_back_neck.body}} == 'no' then 2
+  %br
+  end
+
+%h4 Ternary operator example:
+
+%p
+  {{jacket.neck.value}} >= 5 ? 1.75 : 2
+%p
+  Explanaition: it follows basic ruby rules and fits pattern:
+  %br
+  %b TRUE_OR_FALSE_EXPRESSION ? RESULT_IF_TRUE : RESULT_IF_FALSE

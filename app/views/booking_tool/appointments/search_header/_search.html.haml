@@ -1,0 +1,9 @@
+= form_tag(booking_tool_appointments_path, method: :get, class: 'form-inline') do
+  = hidden_field_tag 'scope', (params[:scope] || :outfitters)
+
+  = render 'booking_tool/appointments/search_header/dropped' if dropped?
+  = render 'booking_tool/appointments/search_header/all' if all?
+  = render 'booking_tool/appointments/search_header/outfitters' if outfitters?
+  = render 'booking_tool/appointments/search_header/callback' if callback?
+  = render 'booking_tool/appointments/search_header/browsers_and_other' if browsers_and_other?
+  = render 'booking_tool/appointments/search_header/no_shows_and_cancelled' if no_shows_and_cancelled?

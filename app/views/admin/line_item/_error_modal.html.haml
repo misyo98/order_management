@@ -1,0 +1,17 @@
+.modal.fade{ id: "state-error-modal", tabindex: "-1", role: "dialog", 'aria-labelledby' => "ItemError", 'aria-hidden' => "true"} 
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button{ type: 'button', class: "close close_modal_button", data: { dismiss: "modal" } }
+          %span{ 'aria-hidden' => "true" } &times;
+          %span{ class: "sr-only" } Close
+        %h4{ class: 'modal-title', id: 'ItemError' }
+          State cannot be changed because of the reasons below:
+      
+      .modal-body#state-error-modal-body
+        
+      .modal-footer
+        %button{ class: 'btn btn-default close_modal_button', data: { dismiss: 'modal' } }
+          Close
+        %button{ type: :submit, class: 'btn btn-primary', id: 'state-error-submit-button' }
+          Submit

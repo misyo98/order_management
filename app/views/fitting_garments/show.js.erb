@@ -1,0 +1,39 @@
+<% measurements = %>
+  <% if @category_param_id %>
+    <% @fitting_garment.fitting_garment_measurements.select { |m| m.category_param_id == @category_param_id.to_i } %>
+  <% else %>
+    <% @fitting_garment.fitting_garment_measurements %>
+  <% end %>
+
+<% measurements.each do |f_g_m| %>
+  var $tr = $('tr[data-category-param-id="<%= raw f_g_m.category_param_id %>"]');
+  var selected_garment_id = $tr.closest('table').find('.fitting-garment-selector').val();
+  var changes_val = parseFloat($tr.find('.fitting-garment-changes').val()) || 0
+  var fit_id = '<%= j raw select_fit_id(f_g_m.category_param.category) %>'
+  var fit = $('#' + fit_id).find('option:selected').val().replace(/_/g, "-");
+  $tr.find('.fitting-garment-value').val('<%= raw f_g_m.value %>');
+  $tr.find('.fitting-garment-measurement-id').val('<%= raw f_g_m.id %>');
+
+  <% if f_g_m.value.present? %>
+    var final_garment_value = (parseFloat('<%= raw f_g_m.value %>') + changes_val) || 0
+    $tr.find('.final-garments').val(final_garment_value);
+    $.final_garment_calculations.calculate($tr.find('.final-garments'));
+    $tr.find('.fitting-garment-changes').attr('readonly', false);
+    $tr.find('.allowances').attr('readonly', 'readonly');
+  <% else %>
+    $tr.find('.fitting-garment-changes').attr('readonly', 'readonly');
+    $tr.find('.allowances').val($tr.find('.allowances').data(fit));
+    $tr.find('.allowances').attr('readonly', false);
+    $.calculations.general($tr.find('.measurements-input'));
+  <% end %>
+
+  <% unless @category_param_id %>
+    $tr.find('td.fitting-selector').removeClass('alert-td-msg');
+    $tr.find('span.alert-text-msg').remove();
+  <% end %>
+
+  if (selected_garment_id == '<%= raw @fitting_garment.id %>') {
+    $tr.find('td.fitting-selector').removeClass('alert-td-msg');
+    $tr.find('span.alert-text-msg').remove();
+  };
+<% end %>

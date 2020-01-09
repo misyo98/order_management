@@ -1,0 +1,13 @@
+modal = "<%= j render 'admin/measurement_validations/copy_modal', validation_id: @validation_id, category_param_id: @category_param_id %>";
+container = document.getElementById('copy-validation-modal-container');
+
+if (container) {
+  $(container).html(modal);
+} else {
+  container = document.createElement("div");
+  container.setAttribute("id", "copy-validation-modal-container");
+  container.innerHTML = modal
+  document.body.appendChild(container);
+}
+
+$('#copy-validation-modal').modal('show');

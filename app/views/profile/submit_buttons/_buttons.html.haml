@@ -1,0 +1,46 @@
+- if state.nil?
+  = f.button 'Save to be checked', type: :submit, name: 'to_be_checked', value: 'to_be_checked', form: 'measurement-submission-form',
+      class: 'btn btn-outline-primary btn-lg  btn-primary new_line trigger-loader',
+      id: 'save-to-be-reviewed-button',
+      data: { 'disable-with' => 'Processing...' }
+
+- if state == 'to_be_checked' && review
+  = f.button 'Save to be submitted', type: :submit, name: 'to_be_submitted', value: 'to_be_submitted', form: 'measurement-submission-form',
+      class: 'btn btn-outline-primary btn-lg  btn-primary new_line trigger-loader',
+      id: 'save-to-be-submitted-button',
+      data: { 'disable-with' => 'Processing...' }
+  = f.button 'Save to be reviewed', type: :submit, name: 'to_be_reviewed', value: 'to_be_reviewed', form: 'measurement-submission-form',
+      class: 'btn btn-outline-primary btn-lg btn-primary new_line trigger-loader',
+      id: 'save-to-be-reviewed-button',
+      data: { 'disable-with' => 'Processing...' }
+  = f.button 'Checked NOT OK', type: :submit, name: 'to_be_fixed', value: 'to_be_fixed', form: 'measurement-submission-form',
+      class: 'btn btn-outline-primary btn-lg btn-primary new_line trigger-loader',
+      id: 'reviewed-not-ok-button',
+      data: { 'disable-with' => 'Processing...' }
+
+- if state == 'to_be_checked' && !review
+  = f.button 'Save to be checked', type: :submit, name: 'to_be_checked', value: 'to_be_checked', form: 'measurement-submission-form',
+      class: 'btn btn-outline-primary btn-lg  btn-primary new_line trigger-loader',
+      id: 'save-to-be-reviewed-button',
+      data: { 'disable-with' => 'Processing...' }
+
+- if state == 'to_be_fixed'
+  = f.button 'Save to be checked', type: :submit, name: previous_state, value: previous_state, form: 'measurement-submission-form',
+      class: 'btn btn-outline-primary btn-lg  btn-primary new_line trigger-loader',
+      id: 'save-to-be-reviewed-button',
+      data: { 'disable-with' => 'Processing...' }
+
+- if state.in?(['to_be_submitted', 'to_be_reviewed'])
+  = f.button 'Reviewed OK', type: :submit, name: 'submitted', value: 'submitted', form: 'measurement-submission-form',
+      class: 'btn btn-outline-primary btn-lg  btn-primary new_line trigger-loader',
+      id: 'reviewed-ok-button',
+      data: { 'disable-with' => 'Processing...' }
+  = f.button 'Reviewed NOT OK', type: :submit, name: 'to_be_fixed', value: 'to_be_fixed', form: 'measurement-submission-form',
+      class: 'btn btn-outline-primary btn-lg btn-primary new_line trigger-loader',
+      id: 'reviewed-not-ok-button',
+      data: { 'disable-with' => 'Processing...' }
+- if state.in?(['submitted', 'confirmed'])
+  = f.button 'Save to be checked', type: :submit, name: 'to_be_checked', value: 'to_be_checked', form: 'measurement-submission-form',
+      class: 'btn btn-outline-primary btn-lg  btn-primary new_line trigger-loader',
+      id: 'save-to-be-reviewed-button',
+      data: { 'disable-with' => 'Processing...' }

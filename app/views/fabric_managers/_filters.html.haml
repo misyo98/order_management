@@ -1,0 +1,13 @@
+= search_form_for @q, url: fabric_management_path do |f|
+  = f.label :manufacturer_fabric_code_cont, 'Manufacturer Fabric Code'
+  = f.search_field :manufacturer_fabric_code_cont, autocomplete: :off
+
+  = f.label :fabric_brand_title_eq, 'Fabric Brand'
+  = f.select :fabric_brand_title_eq, options_for_select(FabricBrand.pluck(:title), params[:q]&.dig(:fabric_brand_title_eq)),
+    include_blank: true
+
+  = f.label :status_eq, 'Status'
+  = f.select :status_eq, options_for_select(FabricManager.statuses.map { |key, value| [key.humanize, value] }, params[:q]&.dig(:status_eq)),
+    include_blank: true
+
+  = f.submit

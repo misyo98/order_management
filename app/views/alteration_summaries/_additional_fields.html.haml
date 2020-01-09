@@ -1,0 +1,10 @@
+= hidden_field_tag :to_be_validated_summary_id, @summary.id, id: 'to_be_validated_summary_id'
+- summary_categories = @summary.alterations.map(&:measurement).map(&:category_name).uniq
+
+- unless 'Height'.in? summary_categories
+  - height_inches = @summary.profile.measurements.detect { |m| m.category_param.param.parameterized_name == 'height_inches' }
+  = hidden_field_tag :height_inches_field, height_inches.post_alter_garment || height_inches.final_garment, id: 'garment_height_height_inches'
+
+- unless 'Jacket'.in? summary_categories
+  - jacket_chest = @summary.profile.measurements.detect { |m| m.category_param.param.parameterized_name == 'chest' && m.category_name == 'Jacket' }
+  = hidden_field_tag :jacket_chest_field, jacket_chest.post_alter_garment || jacket_chest.final_garment, id: 'garment_jacket_chest' if jacket_chest

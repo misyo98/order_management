@@ -1,0 +1,6 @@
+%div{ style: 'margin-bottom: 15px;' }
+  %h3
+    = "Comment for #{category.name}"
+  - comment = resolve_comment_object(objects: @comments, category_id: category.id)
+  = text_field_tag 'comment', comment.body,
+    class: ['form-control', comment.body.present? && 'present-comment-warning'], disabled: true

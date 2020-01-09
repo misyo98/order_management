@@ -1,0 +1,6 @@
+%label.custom-file
+  .inner.customer-image-preview
+    = image_tag f.object.image_url, height: '400' if f.object.image?
+    = f.file_field :image, multiple: true, accept: 'image/png, image/gif, image/jpeg', name: "images_attributes[image][]", class: 'custom-file-input image-input'
+    = f.hidden_field :image_cache
+    %span.custom-file-control

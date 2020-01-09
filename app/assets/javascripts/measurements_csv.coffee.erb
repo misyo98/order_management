@@ -1,0 +1,36 @@
+$(document).ready ->
+  if $('.measurements-csv-container').length
+    pusher = new Pusher("<%= Rails.application.secrets[:pusher_key] %>", { cluster: 'eu', encrypted: true })
+
+    initCsv = ->
+      $('.measurements-csv-progress-message').html('Measurements CSV construction is being initialized...')
+      $('.progress').removeClass('hidden')
+      $('.measurements-csv-progress-message').removeClass('hidden')
+      $('.measurements-download-container').removeClass('hidden')
+
+    document.getElementById('generate_measurements_csv_button').onclick = ->
+      initCsv()
+
+    $('form#q_search').submit ->
+      $(this).children(':input[type=submit]').attr('disabled', true)
+
+    import_progress_channel = pusher.subscribe('measurements-csv-progress-channel')
+
+    import_progress_channel.bind 'measurements-csv-progress-event', (data) ->
+      $('.progress-bar').attr('aria-valuenow', data['progress'])
+      $('.progress-bar').css('width', data['progress'] + '%')
+      $('.progress-bar').text(data['progress'] + '%')
+      $('.measurements-csv-progress-message').html('Measurements CSV is being generated! Please do not start a new one at the moment.')
+      $('.progress').removeClass('hidden')
+      $('.measurements-download-container').removeClass('hidden')
+      $('.measurements-csv-progress-message').removeClass('hidden')
+
+    channel = pusher.subscribe('measurements-csv-channel')
+
+    channel.bind 'measurements-csv-generated-event', (data) ->
+      $('.progress').addClass('hidden')
+      $('.measurements-csv-progress-message').addClass('hidden')
+      $('.measurements-download-container').removeClass('hidden')
+      $('#result').html('Measurements CSV is ready. Click the button below to download it.')
+      $('#measurements_download_csv').attr('href', $('#measurements_download_csv').attr('href') + '?data_id=' + data.id)
+      $('#measurements_download_csv').removeClass('hidden')

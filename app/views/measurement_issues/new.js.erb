@@ -1,0 +1,11 @@
+var target = $('.issue-container[data-issueable-id=' + "<%= j raw @issueable.id %>" +']').find('.add-issue-link')
+form = "<%= j render '/measurement_issues/form', issueable: @issueable, measurement_issue: @measurement_issue %>"
+
+target.popover({
+  placement: 'bottom',
+  title: 'New Issue <a href="javascript:;" class="close">&times;</a>',
+  html: true,
+  content: form,
+  trigger: 'manual'
+});
+target.popover('show');

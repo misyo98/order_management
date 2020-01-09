@@ -1,0 +1,31 @@
+= form_for @fabric_category, class: 'form-inline' do |f|
+  %fieldset.inputs
+    %ol
+      %li
+        %label
+          Category Title
+        = f.text_field :title, placeholder: 'Fill in category title'
+
+  %fieldset.inputs
+    %ol
+      %li
+        %label
+          Tuxedo
+        = f.check_box :tuxedo, { id: 'category_tuxedo_select' }
+
+  %fieldset.inputs#tuxedo_price_field
+    %ol
+      %li
+        .price
+          %table
+            %tr
+              %td
+                .sgd-currency-field
+                  %h4 SGD Price
+                  = f.text_field :SGD, value: f.object.tuxedo_price.nil? ? nil : f.object&.tuxedo_price['SGD'], autocomplete: :off, class: 'category-tuxedo-sgd-currency'
+              %td
+                .gbp-currency-field
+                  %h4 GBP Price
+                  = f.text_field :GBP, value: f.object.tuxedo_price.nil? ? nil : f.object&.tuxedo_price['GBP'], autocomplete: :off, class: 'category-tuxedo-gbp-currency'
+
+  = f.submit "Submit", class: 'btn btn-primary', data: { 'disable-with' => 'Processing...' }

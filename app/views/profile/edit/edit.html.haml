@@ -1,0 +1,22 @@
+= render partial: '/shared/loader'
+
+.container
+  #fakeloader
+  .header-nav
+    = link_to 'Back to profile', customer_path(@customer), class: 'header-nav-link btn btn-primary', data: { turbolinks: false }
+    = link_to 'Dashboard', root_path, class: 'header-nav-link btn btn-primary', data: { turbolinks: false }
+
+  = render partial: 'profile/edit/customer_info'
+
+  %h3 Categories for alteration
+  .categories-checkboxes
+    = render partial: 'profile/edit/checkboxes', locals: { categories: @available_categories, custom_class: 'alteration-categories', selected_categories: @item_params[:category_names] }
+
+  .measurement-form-container#alteration-form
+    = render partial: 'profile/edit/form', locals: { url: alter_customer_profile_path(customer_id: @customer, id: @profile) }
+    - if @profile.images.any?
+      %h3 Images
+      - @profile.images.each do |image|
+        %span.inline-block{ id: "profile-image-#{image.id}" }
+          = link_to(image_tag(image.image_url, height: '120'), image.image_url, class: 'custom-fancybox', rel: :group)
+

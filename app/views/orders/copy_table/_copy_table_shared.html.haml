@@ -1,0 +1,43 @@
+- profile = @order.customer.profile
+%table.table.copy-table
+  %tr
+    %td Customer Details
+  %tr
+    %td First Name
+    %td
+      = @order.customer.first_name
+  %tr
+    %td Last Name
+    %td
+      = @order.customer.last_name
+  %tr
+    %td Email
+    %td
+      = @order.customer.email
+  %tr
+    %td Last Updated at
+    %td
+      = profile.updated_at.to_s(:long_ordinal)
+  %tr
+    %td Measurement profile status
+  = render 'orders/copy_table/measurement_profile_status', profile_categories: profile.categories
+  %tr
+    %td Self-measured
+    %td
+      = profile.custom_measured? ? 'YES' : 'NO'
+  %tr
+    %td Category - Measurement
+    %td Garment Post Alteration
+  - @category_params.each do |category_id, params_array|
+    - params_array.each do |category_param|
+      - measurement = profile.measurements.find { |measurement| measurement.category_param_id == category_param.id }
+      - if measurement
+        = render 'orders/copy_table/measurement_row', measurement: measurement
+      - else
+        = render 'orders/copy_table/empty_measurement_row', category_param: category_param
+    %tr
+      %td
+        = "#{Category.find_by(id: category_id).name} - Comments"
+      %td
+        - if @comments[category_id] || @alteration_comments[category_id]
+          = formatted_order_comments(@comments[category_id], @alteration_comments[category_id])

@@ -1,0 +1,11 @@
+<% decorated_summary = @summary.decorate %>
+<% if @summary.errors.any? %>
+  errors = "<%= j render 'alteration_summaries/alteration_service_errors', summary: @summary %>";
+  $('#alteration-service-tailor-errors').html(errors);
+  $.purrError(errors);
+<% else %>
+  $('#alteration-service-tailor-errors').html('');
+  $.purrSuccess();
+  vex.close();
+  $('tr#alteration_summary_' + '<%= j raw @summary.id %>').find('td.col-amount').html('<%= j raw decorated_summary.amount_field %>');
+<% end %>

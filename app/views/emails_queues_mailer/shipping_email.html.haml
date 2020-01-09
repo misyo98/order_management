@@ -1,0 +1,24 @@
+%p
+  = "Dear #{@recipient.first_name},"
+
+%p We have dispatched a shipment to you with our delivery partner.
+
+%p
+  %b
+    = "The tracking number of your shipment is: #{@number}"
+
+%p
+  %b
+    = 'You can track the status of the shipment here: '
+    %br
+      = link_to "#{@link}", "#{@link}"
+
+%p In the case that you might require changes to the fit, please provide us with a description of the problem within 30 days so that we can render assistance.
+
+%p Also, should the fit be right, please do let us know so that we can immediately proceed with any potential remaining item(s) in your order.
+
+%p As always, we will definitely appreciate feedback on the fit and quality of our products and service. 
+%br
+
+%p Best regards,
+%p Edit Suits Co.

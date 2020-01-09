@@ -1,0 +1,11 @@
+<% @invoice.alteration_summaries.each do |summary| %>
+  <% decorated_summary = summary.decorate %>
+  number_html = "<%= j render 'alteration_summaries/columns/invoice_number', summary: decorated_summary %>"
+  status_html = "<%= j render 'alteration_summaries/columns/invoice_status', summary: decorated_summary %>"
+
+  tr = $('#alteration_summary_' + <%= raw summary.id.to_s %>)
+  tr.find('td.col-invoice_number').html(number_html)
+  tr.find('td.col-invoice_status').html(status_html)
+<% end %>
+$('.summary-check-box').prop('checked', false)
+$.purrSuccess('Invoice created');

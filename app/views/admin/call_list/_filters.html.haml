@@ -1,0 +1,18 @@
+.panel_contents
+  = form_tag(call_list_path, method: :get, id: "q_search", class: "filter_form") do
+    = label_tag 'q_shipping_postcode_contains', 'Postcode:', class: 'label'
+    = text_field_tag 'q2[shipping_postcode_contains]', params[:q2].try(:[], :shipping_postcode_contains), id: 'q_postcode'
+
+    = label_tag 'q_first_name_contains', 'First Name:', class: 'label'
+    = text_field_tag 'q[first_name_contains]', params[:q].try(:[], :first_name_contains), id: 'q_first_name'
+
+    = label_tag 'q_last_name_contains', 'Last Name:', class: 'label'
+    = text_field_tag 'q[last_name_contains]', params[:q].try(:[], :last_name_contains), id: 'q_last_name'
+    
+    = label_tag 'q_orders_created_at_lteq', 'Last Order Before:', class: 'label'
+    = text_field_tag 'q[last_order_created_at_lteq]', params[:q].try(:[], :last_order_created_at_lteq), id: 'q_last_order_created_at', class: 'datepicker'
+    
+    = label_tag 'q_orders_currency_eq', 'Currency:', class: 'label'
+    = select_tag 'q[last_order_currency_eq]', options_for_select(Order::CURRENCIES, params[:q].try(:[], :orders_currency_eq)), id: 'q_orders_currency', include_blank: true
+   
+    = submit_tag 'Filter'

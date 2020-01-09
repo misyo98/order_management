@@ -1,0 +1,28 @@
+.nested-fields
+  .form-row.clearfix
+    .form-group.col-md-3
+      = label_tag 'Measurement',  nil, class: 'col-sm col-form-label-sm'
+      = select_tag "measurements[#{category_param&.id}][category_param_id]", options_for_select(category_params.collect{ |c_p| [c_p.to_s, c_p.id] }, category_param&.id), class: 'select2-input measurement-selector', include_blank: true
+    .form-group.col-md-2
+      = label_tag 'Raw Value', nil, class: 'col-sm col-form-label-sm'
+      = number_field_tag "measurements[#{category_param&.id}][value]", nil, class: 'form-control'
+      %small.form-text.text-muted
+        {{value}}
+    .form-group.col-md-2
+      = label_tag 'Allowance', nil, class: 'col-sm col-form-label-sm'
+      = number_field_tag "measurements[#{category_param&.id}][allowance]", nil, class: 'form-control'
+      %small.form-text.text-muted
+        {{allowance}}
+    .form-group.col-md-2
+      = label_tag 'Final Garment', nil, class: 'col-sm col-form-label-sm'
+      = number_field_tag "measurements[#{category_param&.id}][final_garment]", nil, class: 'form-control'
+      %small.form-text.text-muted
+        {{final_garment}}
+    .form-group.col-md-2
+      = label_tag 'Body dropdown value',  nil, class: 'col-sm col-form-label-sm'
+      = select_tag "measurements[#{category_param&.id}][category_param_value_id]", grouped_options_for_select(grouped_dropdown_value_opts), class: 'select2-input', include_blank: true
+      %small.form-text.text-muted
+        Only for Body shapes & postures
+    .form-group.col-md-1
+      = label_tag 'Remove', nil, class: 'col-sm col-form-label-sm'
+      = link_to_remove_association 'X', f, class: 'form-control btn btn-danger'
