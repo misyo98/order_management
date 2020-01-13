@@ -18,9 +18,9 @@ gem 'draper'
 gem 'responders', '~> 2.2'
 gem 'whenever', '~> 0.9.4'
 gem 'woocommerce_api'
-gem "figaro"
+gem 'figaro'
 gem 'sidekiq'
-gem "paranoia", "~> 2.2"
+gem 'paranoia', '~> 2.2'
 gem 'descriptive_statistics', '~> 2.4.0', require: 'descriptive_statistics/safe'
 gem 'twitter-bootstrap-rails', '~> 3.2', '>= 3.2.2'
 gem 'bootstrap-sass', '~> 3.3.7'
@@ -35,7 +35,7 @@ gem 'httparty'
 gem 'therubyracer',  platforms: :ruby
 gem 'cocoon', '~> 1.2', '>= 1.2.11'
 gem 'pusher'
-gem "json_on_rails", "~> 0.2.0"
+gem 'json_on_rails', '~> 0.2.0'
 gem 'amoeba', '~> 3.0'
 gem 'paper_trail-association_tracking'
 
@@ -44,7 +44,7 @@ gem 'activeadmin', '1.0.0.pre4'
 gem 'active_bootstrap_skin', '~> 0.1.4'
 gem 'activeadmin-select2', '~> 0.1.0'
 gem 'active_admin_sidebar', '~> 0.1.0.rc3'
-gem "active_admin_import"
+gem 'active_admin_import'
 
 #jQuery Libraries
 gem 'select2-rails', '~> 4.0', '>= 4.0.3'

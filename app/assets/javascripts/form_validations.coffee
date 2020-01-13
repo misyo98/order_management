@@ -25,6 +25,8 @@ $.validations =
 
   default_min_max: (obj, prefix) ->
     checkable_param_name = obj.closest('tr').find('.checkable').attr('data-name')
+    status = obj.closest('tr').find('.checkable').attr('status')
+    console.log(status)
     standard = parseFloat($('#' + checkable_param_name).val())
     min = standard * parseFloat(obj.closest('tr').find('.checkable').attr('data-min'))
     max = standard * parseFloat(obj.closest('tr').find('.checkable').attr('data-max'))
@@ -32,7 +34,10 @@ $.validations =
     pattern = new RegExp(prefix)
     error_name = (obj.attr('id')).replace(pattern, 'error_')
 
-    if value < min || value > max
+    if status == 'confirmed' || status == 'submitted'
+      $.validations.unset_error(obj, error_name)
+      $.measurement_error_checkboxes.unset_checkbox(obj.closest('tr'))
+    else if value < min || value > max
       $.validations.set_error(obj, error_name, 'Value is out of min-max range')
       $.measurement_error_checkboxes.set_checkbox(obj.closest('tr'))
     else
@@ -91,7 +96,10 @@ $.validations =
     $.validations.unset_error($('#garment_shirt_shirt_sleeve_length_left_sleeve'), 'sleeve_too_long')
     $.validations.unset_error($('#garment_jacket_jacket_sleeve_length_left_sleeve'), 'sleeve_too_long')
 
-    if difference < 0.5
+    if status == 'confirmed' || status == 'submitted'
+      $.validations.unset_error(obj, error_name)
+      $.measurement_error_checkboxes.unset_checkbox(obj.closest('tr'))
+    else if difference < 0.5
       $.validations.set_error(
         $('#garment_shirt_shirt_sleeve_length_left_sleeve'),
         'sleeve_too_short',

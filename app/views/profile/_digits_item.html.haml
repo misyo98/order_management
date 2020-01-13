@@ -1,6 +1,7 @@
 - category_param = category_param(f.object.category_param_id)
 - fitting_garment_different = selected_garment_fit_ids.any? && !f.object.fitting_garment_measurement_id.in?(selected_garment_fit_ids)
-%tr{data: { category_param_id: f.object.category_param_id }}
+- status  = @profile.categories.where({category_id: Category.where({ id:             category_param.category_id}).ids }).first.status
+%tr{ data: { category_param_id: f.object.category_param_id } }
   %td
     = category_name(f.object.category_param_id)
   %td
@@ -27,7 +28,7 @@
       = adjustment_field(f)
   %td
     = garment_or_final_garment_field(f, with_fitting_garment)
-  %td{ data: check_html_data(f), class: check_classes(@checks[f.object.category_param_id]) }
+  %td{ data: check_html_data(f), status: status, class: check_classes(@checks[f.object.category_param_id]) }
     = check_html(@checks[f.object.category_param_id])
   %td.issues
     - unless @review
